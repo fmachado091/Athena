@@ -1,5 +1,8 @@
 # Integrantes Athena
-Integrantes Feios:
+Integrante Feio:
 César
-Integrante Lindo:
+Integrantes Normais:
+Alencar
+César
+Saquarema
 Victor
