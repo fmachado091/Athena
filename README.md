@@ -1,6 +1,7 @@
 # Integrantes Athena
 Integrantes:
-Alencar
+Alencai
 César
+Saquarema
 Victor
 Felipe
