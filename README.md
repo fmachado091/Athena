@@ -1,6 +1,8 @@
 # Integrantes Athena
-Integrantes:
-Alencai
+Integrante Feio:
+César
+Integrantes Normais:
+Alencar
 César
 Saquarema
 Victor
