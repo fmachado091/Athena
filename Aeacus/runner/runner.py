@@ -1,5 +1,6 @@
 import subprocess
 import resource
+import pprint
 
 
 def set_limits():
@@ -16,9 +17,15 @@ def set_limits():
 
 
 saida = open("saida.txt", "w")
+erro = open("erro.txt", "w")
+entrada = open("entrada.txt", "w")
 process = subprocess.Popen(
     "./programa.out",
     preexec_fn=set_limits,
+    stdin=entrada,
     stderr=subprocess.PIPE,
-    stdout=saida,
+    stdout=subprocess.PIPE,
 )
+out, err = process.communicate()
+print "returncode of subprocess:"
+print process.poll()
