@@ -1,6 +1,5 @@
 import subprocess
 import resource
-import pprint
 
 
 def set_limits():
