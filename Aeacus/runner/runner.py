@@ -26,5 +26,10 @@ process = subprocess.Popen(
     stdout=subprocess.PIPE,
 )
 out, err = process.communicate()
+code = process.poll()
 print "returncode of subprocess:"
-print process.poll()
+print code
+if (code == -9):
+    print "Tempo limite excedido"
+if (code == -6):
+    print "Memoria excedida"
