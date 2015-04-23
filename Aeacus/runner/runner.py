@@ -30,6 +30,10 @@ code = process.poll()
 print "returncode of subprocess:"
 print code
 if (code == -9):
-    print "Tempo limite excedido"
-if (code == -6):
-    print "Memoria excedida"
+    print "Time Limit Exceeded"
+elif (code == -6):
+    print "Memory Exceeded"
+elif (code == -11):
+    print "Segmentation Fault"
+elif (code == -8):
+    print "Division by zero"
