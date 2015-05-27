@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Athena | Cadastro</title>
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/signin.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <form class="form-signin">
+            <h2 class="form-signin-heading" align="center">Cadastro</h2>
+            <div class="form-group">
+                <label for="inputName">Dados pessoais</label>
+                <input type="text" id="inputName" class="form-control" placeholder="Nome completo" required autofocus><br/>
+                <input type="email" id="inputEmail" class="form-control" placeholder="Endereço de email" required>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword">Senha</label>
+                <input type="password" id="inputPassword" class="form-control" placeholder="Senha (6 a 8 caracteres)" required>
+                <input type="password" id="inputPasswordCheck" class="form-control" placeholder="Confirmação de senha" required>
+            </div>
+            <div class="checkbox form-group">
+              <label><input type="checkbox" checked>Receber confirmações via email</label>
+            </div>
+            <div class="form-group">
+                <p>
+                    Ao clicar em "Registrar-se", você está concordando com os <a href="#">termos de uso</a> da plataforma Athena.
+                </p>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Registrar-se</button>
+            </div>
+        </form>
+    </div> <!-- end of container -->
+</body>
+</html>

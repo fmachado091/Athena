@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Athena | Perfil</title>    
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/signin.css" rel="stylesheet">
+    <script src="static/js/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#show").click(function(){
+                $("div.alterar_senha").show();
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <form class="form-signin">
+            <h2 class="form-signin-heading" align="center">Alterar informações</h2>
+            <br/>
+            <div class="form-group">
+                <label for="inputName" class="sr-only">Nome completo</label>
+                <a href="#" onClick="document.getElementById('inputName').disabled=false">Alterar nome</a>
+                <input type="text" id="inputName" class="form-control" value="Usuario Teste" disabled>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail" class="sr-only">Endere&ccedil;o de email</label>
+                <a href="#" onClick="document.getElementById('inputEmail').disabled=false">Alterar email</a>
+                <input type="email" id="inputEmail" class="form-control" value="usuarioteste@ces29.org.br" disabled>
+            </div>
+            <div class="form-group">
+                <a href="#" id="show">Alterar senha</a>
+                <div class="alterar_senha" style="display: none;">
+                    <label for="inputPassword" class="sr-only">Senha</label>
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Nova senha (6 a 8 caracteres)">
+                    <label for="inputPassword" class="sr-only">Confirmação de senha</label>
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Confirmação de senha">
+                </div>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Salvar</button>
+        </form>
+    </div> <!-- end of container -->
+</body>
+</html>
