@@ -1,6 +1,7 @@
 import subprocess
 import os
 
+
 def unzip(file):
     command = 'unzip ' + file + ' -d ' + os.path.dirname(file)
     process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
@@ -8,7 +9,7 @@ def unzip(file):
 
 
 def unrar(file):
-    command = 'unrar e ' + file  + ' ' + os.path.dirname(file)
+    command = 'unrar e ' + file + ' ' + os.path.dirname(file)
     process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
     process.wait()
 
