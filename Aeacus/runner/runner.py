@@ -22,8 +22,8 @@ process = subprocess.Popen(
     "./programa.out",
     preexec_fn=set_limits,
     stdin=entrada,
-    stderr=subprocess.PIPE,
-    stdout=subprocess.PIPE,
+    stderr=erro,
+    stdout=saida,
 )
 out, err = process.communicate()
 code = process.poll()
