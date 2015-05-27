@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+    <meta name="author" content="">
+    <!--FAVICON: <link rel="icon" href="">-->
+	<title>Athena | Teste do Juiz</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<style type="text/css">
+		.caixa {
+			height: 200px;
+			padding: 10px;
+			border: 1px solid #000;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-12">
+				<img src="img/ita_logo.jpg" style="height: 50px;">
+			</div>
+		</div>
+	</div>
+	<br>
+	<div class="container-fluid">
+		<div class="row">
+			<form>
+				<div class="col-xs-12 col-sm-5 caixa">
+					<div class="form-group">
+						<label for="inputFile">Arquivo de entrada</label>
+						<input type="file" id="inputFile">
+    					<p class="help-block">Arquivo de entrada para testar no programa.</p>
+					</div>
+					<div class="form-group">
+						<label for="outputFile">Arquivo de saída</label>
+						<input type="file" id="outputFile">
+    					<p class="help-block">Arquivo de saída para ser comparado com a saída do programa.</p>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-2 caixa" style="border: none;">
+					<h4 class="text-center"><strong>Resultado</strong></h4>
+					<p class="text-center" style="line-height: 100px;">
+						Resultado aqui
+					</p>
+					<p align="center">
+						<input class="btn btn-default" type="submit" value="Submit">
+					</p>
+				</div>
+				<div class="col-xs-12 col-sm-5 caixa">
+					<form>
+						<div class="form-group">
+							<label for="sourceCode">Código-fonte</label>
+							<input type="file" id="sourceCode">
+	    					<p class="help-block">Código-fonte <strong>.c</strong> ou <strong>.cpp</strong> a ser testado.</p>
+						</div>
+					</form>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
