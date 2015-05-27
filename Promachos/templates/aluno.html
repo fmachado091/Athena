@@ -6,9 +6,9 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <title>Athena | Aluno</title>
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <script src="js/jquery.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="static/css/bootstrap.min.css">
+  <script src="static/js/jquery.min.js"></script>
+  <script src="static/js/bootstrap.min.js"></script>
   <style type="text/css">
     .bs-example{
         margin: 20px;
@@ -67,153 +67,172 @@
 <body>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-xs-12">
-      <img src="img/ita_logo.jpg" style="height: 50px;">
+    <div class="col-xs-6">
+      <img src="static/img/ita_logo.jpg" style="height: 50px;">
+    </div>
+    <div class="col-xs-6" style="text-align: right;">
+      <p style="line-height: 40px;"><a href="#">logout</a></p>
     </div>
   </div>
-</div>
-<div class="col-xs-12">
-  
-</div>
-<br>
-<div class="bs-example">
-<ul class="nav nav-tabs">
-<li class="active"><a data-toggle="tab" href="#sectionA">Workspace</a></li>
-<li><a data-toggle="tab" href="#sectionB">CES-10</a></li>
-<li><a data-toggle="tab" href="#sectionC">CES-11</a></li>
-</ul>
-<div class="tab-content">
-  <div id="sectionA" class="tab-pane fade in active">
-    <div class="bs-example" data-example-id="thumbnails-with-custom-content">
-      <div class="row">
-        <div class="col-sm-6 col-md-1">
-          <div style="text-align: right;">
-          <!--<img src="img/thumb.png" alt="thumbnail">-->
-          <p><h4>Menu</h4></p>
-          <p>
-          <a href="#">Home</a><br>
-          <a href="perfil.html">Perfil</a><br>
-          <a href="#">Inscrições</a><br>
-          <a href="#">Turmas</a><br>
-          <a href="#">Preferências</a><br>
-          <a href="#">Submissões</a><br>
-          <a href="#">Sobre o site</a><br>
-          <a href="#">Ajuda</a>
-          </p>
-          </div>
-        </div>
-
-        <div class="col-sm-6 col-md-4">
-          <div class="thumbnail thumbnail_work">
-          <!--<img src="img/thumb.png" alt="thumbnail">-->
-            <div class="caption">
-            <p><h3>Últimas submissões</h3></p>
-            <br>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <br>
-            <p><a href="#">Ver mais</a></p>
+  <div class="row">
+    <div class="col-xs-12">
+      &nbsp;
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active">
+            <a href="#workspace" aria-controls="workspace" role="tab" data-toggle="tab">Workspace</a>
+          </li>
+          <li role="presentation">
+            <a href="#ces-10" aria-controls="ces-10" role="tab" data-toggle="tab">CES-10</a>
+          </li>
+          <li role="presentation">
+            <a href="#ces-11" aria-controls="ces-11" role="tab" data-toggle="tab">CES-11</a>
+          </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane fade in active" id="workspace">
+            <div class="row">
+              <div class="col-xs-12">
+                &nbsp;
+              </div>
             </div>
-          </div>
-        </div>
+            <div class="row">
+              <div class="col-xs-2 col-md-1" style="text-align: right;">
+                <p><h4>Menu</h4></p>
+                <p>
+                  <a href="#">Home</a><br>
+                  <a href="perfil.html">Perfil</a><br>
+                  <a href="#">Inscrições</a><br>
+                  <a href="#">Turmas</a><br>
+                  <a href="#">Preferências</a><br>
+                  <a href="#">Submissões</a><br>
+                  <a href="#">Sobre o site</a><br>
+                  <a href="#">Ajuda</a>
+                </p>
+              </div>
 
-        <div class="col-sm-6 col-md-3">
-          <div class="thumbnail thumbnail_work">
-          <!--<img src="img/thumb.png" alt="thumbnail">-->
-            <div class="caption">
-            <h3>Atividades pendentes</h3>
-            <br>
-            <p>[21/04] <a href="#">CES-10</a> > <a href="#">Lab 3</a></p>
-            <p>[21/04] <a href="#">CES-11</a> > <a href="#">Lab 2</a></p>
-            <p>[28/04] <a href="#">CES-10</a> > <a href="#">Lab 4</a></p>
-            <br>
-            </div>
-          </div>
-        </div>
+              <div class="col-xs-10 col-md-4">
+                <div class="thumbnail thumbnail_work">
+                  <div class="caption">
+                  <p><h3>Últimas submissões</h3></p>
+                  <br>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <br>
+                  <p><a href="#">Ver mais</a></p>
+                  </div>
+                </div>
+              </div>
 
-        <div class="col-sm-6 col-md-4">
-          <div class="thumbnail thumbnail_work">
-          <!--<img src="img/thumb.png" alt="thumbnail">-->
-            <div class="caption">
-            <h3>Notificações</h3>
-            <br>
-            <p>[22/04/2015] - <a href="#">CES-11</a> > <a href="#">Lab 2</a> adiado</p>
-            <p>[21/04/2015] - <a href="#">CES-10</a> > <a href="#">Lab 2</a> corrigido</p>
-            <p>[21/04/2015] - <a href="#">CES-11</a> > <a href="#">Lab 1</a> corrigido</p>
-            <p>[14/04/2015] - <a href="#">CES-10</a> > <a href="#">Lab 1</a> corrigido</p>
-            <br>
-            </div>
-          </div>
+              <div class="col-xs-12 col-md-3">
+                <div class="thumbnail thumbnail_work">
+                  <div class="caption">
+                  <h3>Atividades pendentes</h3>
+                  <br>
+                  <p>[21/04] <a href="#">CES-10</a> > <a href="#">Lab 3</a></p>
+                  <p>[21/04] <a href="#">CES-11</a> > <a href="#">Lab 2</a></p>
+                  <p>[28/04] <a href="#">CES-10</a> > <a href="#">Lab 4</a></p>
+                  <br>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xs-12 col-md-4">
+                <div class="thumbnail thumbnail_work">
+                  <div class="caption">
+                  <h3>Notificações</h3>
+                  <br>
+                  <p>[22/04/2015] - <a href="#">CES-11</a> > <a href="#">Lab 2</a> adiado</p>
+                  <p>[21/04/2015] - <a href="#">CES-10</a> > <a href="#">Lab 2</a> corrigido</p>
+                  <p>[21/04/2015] - <a href="#">CES-11</a> > <a href="#">Lab 1</a> corrigido</p>
+                  <p>[14/04/2015] - <a href="#">CES-10</a> > <a href="#">Lab 1</a> corrigido</p>
+                  <br>
+                  </div>
+                </div>
+              </div>
+            </div> <!-- end of row -->
+          </div> <!-- end of workspace tab -->
+
+          <div role="tabpanel" class="tab-pane fade" id="ces-10">
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="list">
+                  <ul>
+                    <a href="ativ_exemplo.html">
+                      <li class="list">
+                        <img src="static/img/aluno/check.jpg" width="100px" height="100px">
+                        <h3>Lab 1</h3>
+                        <p><b>Situação:</b> Enviado<br/><b>Data limite:</b> 07/04<br/><b>Nota:</b> 98.4/100.0</p>
+                      </li>
+                    </a>
+
+                    <a href="ativ_exemplo.html">
+                      <li class="list">
+                        <img src="static/img/aluno/check.jpg" width="100px" height="100px">
+                        <h3>Lab 2</h3>
+                        <p><b>Situação:</b> Enviado<br/><b>Data limite:</b> 14/04<br/><b>Nota:</b> Não disponível</p>
+                      </li>
+                    </a>
+
+                    <a href="ativ_exemplo.html">
+                      <li class="list">
+                        <img src="static/img/aluno/not_check.jpg" width="100px" height="100px">
+                        <h3>Lab 3</h3>
+                        <p><b>Situação:</b> Não enviado<br/><b>Data limite:</b> 21/04<br/><b>Nota:</b> Não disponível</p>
+                      </li>
+                    </a>
+
+                    <a href="ativ_exemplo.html">
+                      <li class="list">
+                        <img src="static/img/aluno/not_check.jpg" width="100px" height="100px">
+                        <h3>Lab 4</h3>
+                        <p><b>Situação:</b> Não enviado<br/><b>Data limite:</b> 28/04<br/><b>Nota:</b> Não disponível</p>
+                      </li>
+                    </a>
+                  </ul>
+                </div>
+              </div> <!-- end of col -->
+            </div> <!-- end of row -->
+          </div> <!-- end of ces-10 tab -->
+          
+          <div role="tabpanel" class="tab-pane fade" id="ces-11">
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="list">
+                  <ul>
+                    <a href="ativ_exemplo.html">
+                      <li class="list">
+                        <img src="static/img/aluno/check.jpg" width="100px" height="100px">
+                        <h3>Lab 1</h3>
+                        <p><b>Situação:</b> Enviado<br/><b>Data limite:</b> 14/04<br/><b>Nota:</b> Não disponível</p>
+                      </li>
+                    </a>
+
+                    <a href="ativ_exemplo.html">
+                      <li class="list">
+                        <img src="static/img/aluno/not_check.jpg" width="100px" height="100px">
+                        <h3>Lab 2</h3>
+                        <p><b>Situação:</b> Não enviado<br/><b>Data limite:</b> 21/04<br/><b>Nota:</b> Não disponível</p>
+                      </li>
+                    </a>
+                  </ul>
+                </div>
+              </div> <!-- end of col -->
+            </div> <!-- end of row -->
+          </div> <!-- end of ces-11 tab -->
         </div>
       </div>
-    </div> <!-- /.bs-example -->
-  </div> <!-- end of sectionA -->
-
-<div id="sectionB" class="tab-pane fade">
-<h3>CES-10</h3>
-<div class="list">
-<ul>
-<a href="ativ_exemplo.html">
-<li class="list">
-<img src="img/aluno/check.jpg" width="100px" height="100px">
-<h3>Lab 1</h3>
-<p><b>Situação:</b> Enviado<br/><b>Data limite:</b> 07/04<br/><b>Nota:</b> 98.4/100.0</p>
-</li>
-</a>
-
-<a href="ativ_exemplo.html">
-<li class="list">
-<img src="img/aluno/check.jpg" width="100px" height="100px">
-<h3>Lab 2</h3>
-<p><b>Situação:</b> Enviado<br/><b>Data limite:</b> 14/04<br/><b>Nota:</b> Não disponível</p>
-</li>
-</a>
-
-<a href="ativ_exemplo.html">
-<li class="list">
-<img src="img/aluno/not_check.jpg" width="100px" height="100px">
-<h3>Lab 3</h3>
-<p><b>Situação:</b> Não enviado<br/><b>Data limite:</b> 21/04<br/><b>Nota:</b> Não disponível</p>
-</li>
-</a>
-
-<a href="ativ_exemplo.html">
-<li class="list">
-<img src="img/aluno/not_check.jpg" width="100px" height="100px">
-<h3>Lab 4</h3>
-<p><b>Situação:</b> Não enviado<br/><b>Data limite:</b> 28/04<br/><b>Nota:</b> Não disponível</p>
-</li>
-</a>
-</ul>
-</div>
-</div> <!-- end of sectionB -->
-
-<div id="sectionC" class="tab-pane fade">
-<h3>CES-11</h3>
-<div class="list">
-<ul>
-<a href="ativ_exemplo.html">
-<li class="list">
-<img src="img/aluno/check.jpg" width="100px" height="100px">
-<h3>Lab 1</h3>
-<p><b>Situação:</b> Enviado<br/><b>Data limite:</b> 14/04<br/><b>Nota:</b> Não disponível</p>
-</li>
-</a>
-
-<a href="ativ_exemplo.html">
-<li class="list">
-<img src="img/aluno/not_check.jpg" width="100px" height="100px">
-<h3>Lab 2</h3>
-<p><b>Situação:</b> Não enviado<br/><b>Data limite:</b> 21/04<br/><b>Nota:</b> Não disponível</p>
-</li>
-</a>
-</ul>
-</div>
-</div> <!-- end of sectionC -->
-</div>
+    </div>
+  </div>
 </div>
 </body>
 </html>
