@@ -1,16 +1,17 @@
 import subprocess
 import os
-from pyunpack import Archive
 
 def unzip(file):
     command = 'unzip ' + file + ' -d ' + os.path.dirname(file)
     process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
     process.wait()
 
+
 def unrar(file):
     command = 'unrar e ' + file  + ' ' + os.path.dirname(file)
     process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
     process.wait()
+
 
 def descompactar():
     path = os.path.realpath('code')
@@ -29,15 +30,19 @@ def descompactar():
         elif fileExt == '.rar':
             unrar(file)
 
+
 def find_sources():
     path = os.path.realpath('code')
     process = subprocess.Popen(
-        'find ' + path + ' -name "*.h" -o -name "*.cpp" -o -name "*.c" -o -name "*.a" ',
+        'find ' +
+        path +
+        ' -name "*.h" -o -name "*.cpp" -o -name "*.c" -o -name "*.a" ',
         stdout=subprocess.PIPE, shell=True
     )
     process.wait()
     out, err = process.communicate()
     return out
+
 
 def move_file_to_code_root(file_path):
     path = os.path.abspath('code')
@@ -49,6 +54,7 @@ def move_file_to_code_root(file_path):
         process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
         process.wait()
 
+
 descompactar()
 
 files = find_sources().split('\n')
@@ -57,7 +63,7 @@ files = filter(None, files)
 for file in files:
     move_file_to_code_root(file)
 files = find_sources().split('\n')
-command = "g++ " 
+command = "g++ "
 for file in files:
     command += file + " "
 command += " -g -pthread -pg -std=c++0x -o programa.out"
