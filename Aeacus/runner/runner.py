@@ -17,7 +17,7 @@ def set_limits():
 
 saida = open("saida.txt", "w")
 erro = open("erro.txt", "w")
-entrada = open("entrada.txt", "w")
+entrada = open("entrada.txt", "r")
 process = subprocess.Popen(
     "./programa.out",
     preexec_fn=set_limits,
@@ -25,8 +25,11 @@ process = subprocess.Popen(
     stderr=erro,
     stdout=saida,
 )
+process.wait()
 out, err = process.communicate()
 code = process.poll()
+print(out)
+print(err)
 print "returncode of subprocess:"
 print code
 if (code == -9):
