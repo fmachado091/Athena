@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Athena | Cadastro</title>
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/css/signin.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Athena | Cadastro</title>
+  <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/static/css/signin.css" rel="stylesheet">
 </head>
 
 <body>
-    <div class="container">
-    {% for field in form %}
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <h2 class="form-signin-heading" align="center">Cadastro</h2>
+      {% for field in form %}
       {{field.error}}
-
-    {% endfor %}
-
+      {% endfor %}
       <form class="form-signin" action="/cadastro/" method="post"> {% csrf_token %}
-
-        {{form}}
-
-	<input type="submit" value="Efetuar cadastro"/>
-
+        {{form.as_p}}
+        <input type="submit" value="Efetuar cadastro"/>
       </form>
-    </div> <!-- end of container -->
+    </div>
+  </div>
+</div> <!-- end of container -->
 </body>
 </html>
