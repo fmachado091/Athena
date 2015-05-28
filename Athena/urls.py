@@ -10,5 +10,11 @@ urlpatterns = [
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^home$', Promachos_views.HomeView.as_view()),
-    url(r'^login$', Promachos_views.LoginView.as_view()),
+    url(r'^login/$', 'Promachos.views.login_promachos'),
+    url(r'^auth/$',  'Promachos.views.auth_view_promachos'),    
+    url(r'^logout/$', 'Promachos.views.logout_promachos'),
+    url(r'^aluno/$', 'Promachos.views.loggedin_promachos'),
+    url(r'^invalido/$', 'Promachos.views.invalid_login_promachos'),    
+    url(r'^cadastro/$', 'Promachos.views.register_user_promachos'),
+    url(r'^registro_sucesso/$', 'Promachos.views.register_success_promachos'),
 ]
