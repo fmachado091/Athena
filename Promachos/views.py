@@ -20,7 +20,7 @@ def home(request):
             request, 'teste_juiz.html',
             {
                 'form': form,
-                'resultado':resultado,
+                'resultado': resultado,
             }
         )
 
