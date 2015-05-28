@@ -9,7 +9,7 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^home$', Promachos_views.HomeView.as_view()),
+    url(r'^home$', Promachos_views.home),
     url(r'^login/$', 'Promachos.views.login_promachos'),
     url(r'^auth/$',  'Promachos.views.auth_view_promachos'),    
     url(r'^logout/$', 'Promachos.views.logout_promachos'),
