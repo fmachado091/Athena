@@ -59,8 +59,12 @@ def mover(entrada, saida, codigo):
 
     # executar compile.py
     command = "python compile.py"
-    process = subprocess.Popen(command, stdout=subprocess.PIPE,
-     stderr=subprocess.PIPE, shell=True)
+    process = subprocess.Popen(
+        command,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        shell=True
+    )
     process.wait()
     out, err = process.communicate()
     ans += err + '\n'
