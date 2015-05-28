@@ -9,6 +9,6 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^home$', Promachos_views.HomeView.as_view()),
+    url(r'^home$', Promachos_views.home),
     url(r'^login$', Promachos_views.LoginView.as_view()),
 ]
