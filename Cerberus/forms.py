@@ -7,18 +7,29 @@ import re
 
 
 class MyRegistrationForm(UserCreationForm):
-    username = forms.RegexField(label=("Usuário"), max_length=30,
-    regex=r'^[\w.@+-]+$',
-    help_text = ("<br>No máximo 30 caracteres. Letras, dígitos e @/./+/-/_ apenas."),
-    error_messages = {'Inválido': ("Esse valor deve contar apenas letras,
-    números e os caracteres @/./+/-/_.")})
+    username = forms.RegexField(
+        label=("Usuário"),
+        max_length=30,
+        regex=r'^[\w.@+-]+$',
+        help_text = ("<br>No máximo 30 caracteres. Letras, dígitos e @/./+/-/_ apenas."),
+        error_messages = {'Inválido':
+        ("Esse valor deve contar apenas letras, números e os caracteres @/./+/-/_.")}
+    )
 
-    password1 = forms.CharField(label=("Senha"), widget=forms.PasswordInput)
-    password2 = forms.CharField(label=("Confirme a sua senha"),
-    widget=forms.PasswordInput,
-    help_text = ("<br>Insira a mesma senha para verificação."))
+    password1 = forms.CharField(
+        label=("Senha"),
+        widget=forms.PasswordInput
+    )
+    password2 = forms.CharField(
+        label=("Confirme a sua senha"),
+        widget=forms.PasswordInput,
+        help_text = ("<br>Insira a mesma senha para verificação.")
+    )
 
-    email = forms.EmailField(label=("Email"), required=True)
+    email = forms.EmailField(
+        label=("Email"),
+        required=True
+    )
 
     def clean_email(self):
         data = self.cleaned_data['email']
