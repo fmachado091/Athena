@@ -28,23 +28,25 @@
 	<br>
 	<div class="container-fluid">
 		<div class="row">
-			<form>
+			<form method="post" enctype="multipart/form-data">
 				<div class="col-xs-12 col-sm-5 caixa">
 					<div class="form-group">
-						<label for="inputFile">Arquivo de entrada</label>
-						<input type="file" id="inputFile">
+						<label for="input_file">Arquivo de entrada</label>
+						{% csrf_token %}
+						{{form}}
     					<p class="help-block">Arquivo de entrada para testar no programa.</p>
 					</div>
 					<div class="form-group">
-						<label for="outputFile">Arquivo de saída</label>
-						<input type="file" id="outputFile">
+						<label for="output_file">Arquivo de saída</label>
+						{% csrf_token %}
+						{{form}}
     					<p class="help-block">Arquivo de saída para ser comparado com a saída do programa.</p>
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-2 caixa" style="border: none;">
 					<h4 class="text-center"><strong>Resultado</strong></h4>
 					<p class="text-center" style="line-height: 100px;">
-						Resultado aqui
+						{{resultado}}
 					</p>
 					<p align="center">
 						<input class="btn btn-default" type="submit" value="Submit">
@@ -52,9 +54,10 @@
 				</div>
 				<div class="col-xs-12 col-sm-5 caixa">
 					<div class="form-group">
+						<p class="help-block">Código-fonte <strong>.c</strong> ou <strong>.cpp</strong> a ser testado.</p>
+						{% csrf_token %}
+						{{form}}
 						<label for="sourceCode">Código-fonte</label>
-						<input type="file" id="sourceCode">
-    					<p class="help-block">Código-fonte <strong>.c</strong> ou <strong>.cpp</strong> a ser testado.</p>
 					</div>
 				</div>
 			</form>
