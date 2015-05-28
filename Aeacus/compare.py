@@ -32,8 +32,6 @@ def mover(entrada, saida, codigo):
         for chunk in codigo.chunks():
             destination.write(chunk)
 
-    os.chdir("compiler")
-
     command = "mv codigo.cpp /code"
     process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
     process.wait()
@@ -45,6 +43,11 @@ def mover(entrada, saida, codigo):
     command = "mv saida.txt ../runner"
     process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
     process.wait()
+
+    directory = os.path.dirname(os.path.realpath(__file__))
+    os.chdir(directory)
+
+    os.chdir("compiler")
 
     # executar compile.py
     command = "python compile.py"
@@ -75,6 +78,6 @@ def mover(entrada, saida, codigo):
     else:
         return "saidas iguais"
 
-
+    os.chdir(directory)
 # falta fazer
 # enviar resultados para a pagina criada
