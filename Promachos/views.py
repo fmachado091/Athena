@@ -51,5 +51,3 @@ def register_user_promachos(request):
 
 def register_success_promachos(request):
     return cerberus_views.register_success(request)
-
-

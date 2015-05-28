@@ -9,6 +9,7 @@ import logging
 
 logr = logging.getLogger(__name__)
 
+
 def login(request):
     c = {}
     c.update(csrf(request))
@@ -47,31 +48,32 @@ def register_user(request):
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/registro_sucesso')
-        
+
     else:
         form = MyRegistrationForm()
     args = {}
     args.update(csrf(request))
-    
+
     args['form'] = form
-    
+
     return render_to_response('cadastro.html', args)
 
 
 def register_success(request):
     return render_to_response('registro_sucesso.html')
 
+
 def process_form_data(form_list):
     form_data = [form.cleaned_data for form in form_list]
-    
+
     logr.debug(form_data[0]['subject'])
     logr.debug(form_data[1]['sender'])
     logr.debug(form_data[2]['message'])
-    
-    send_mail(form_data[0]['subject'], 
+
+    send_mail(form_data[0]['subject'],
               form_data[2]['message'], form_data[1]['sender'],
               ['hibbert.michael@gmail.com'], fail_silently=False)
-    
+
     return form_data
 
 # Create your views here.

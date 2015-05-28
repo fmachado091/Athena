@@ -10,16 +10,19 @@ class MyRegistrationForm(UserCreationForm):
     def clean_email(self):
         data = self.cleaned_data['email']
 
-    matchObjProf = re.match(r'(.*)@ita.br$', data, re.M|re.I)
-    matchObjAluno = re.match(r'(.*)@aluno.ita.br$', data, re.M|re.I)
-    matchObjAdmin = re.match(r'(.*)@admin.ita.br$', data, re.M|re.I)
+    matchObjProf = re.match(r'(.*)@ita.br$', data, re.M | re.I)
+    matchObjAluno = re.match(r'(.*)@aluno.ita.br$', data, re.M | re.I)
+    matchObjAdmin = re.match(r'(.*)@admin.ita.br$', data, re.M | re.I)
 
-        if not matchObjProf and not
+        if (
+            not matchObjProf and not
             matchObjAluno and not
-            matchObjAdmin:
-            raise forms.ValidationError("Must be a @ita.br or @aluno.ita.br address")
+            matchObjAdmin
+        ):   
+            raise forms.ValidationError(
+                "Must be a @ita.br or @aluno.ita.br address"
+            )
         return data
-
 
     class Meta:
         model = User
