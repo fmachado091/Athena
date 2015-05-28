@@ -20,6 +20,13 @@ import os
 
 
 def mover(entrada, saida, codigo):
+    ans = ""
+
+    directory = os.path.dirname(os.path.realpath(__file__))
+    os.chdir(directory)
+
+    os.chdir("compiler")
+
     with open('entrada.txt', 'wb+') as destination:
         for chunk in entrada.chunks():
             destination.write(chunk)
@@ -32,32 +39,44 @@ def mover(entrada, saida, codigo):
         for chunk in codigo.chunks():
             destination.write(chunk)
 
-    command = "mv codigo.cpp /code"
+    command = "mv codigo.cpp code/"
     process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
     process.wait()
+    out, err = process.communicate()
+    ans += out + '\n'
 
     command = "mv entrada.txt ../runner"
     process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
     process.wait()
+    out, err = process.communicate()
+    ans += out + '\n'
 
     command = "mv saida.txt ../runner"
     process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
     process.wait()
-
-    directory = os.path.dirname(os.path.realpath(__file__))
-    os.chdir(directory)
-
-    os.chdir("compiler")
+    out, err = process.communicate()
+    ans += out + '\n'
 
     # executar compile.py
     command = "python compile.py"
-    process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+    process = subprocess.Popen(
+        command,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        shell=True
+    )
     process.wait()
+    out, err = process.communicate()
+    ans += err + '\n'
+    if err != '':
+        return ans
 
     # mover programa.out de /compiler para /runner
     command = "mv programa.out ../runner"
     process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
     process.wait()
+    out, err = process.communicate()
+    ans += out + '\n'
 
     # muda diretorio para pasta runner
     os.chdir("../runner")
@@ -66,18 +85,30 @@ def mover(entrada, saida, codigo):
     command = "python runner.py"
     process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
     process.wait()
+    out, err = process.communicate()
+    ans += out + '\n'
 
     # diff das saidas
     command = "diff saida.txt ../compiler/saida_esperada.txt"
     process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
     process.wait()
-    out, err = process.communicate()
-
-    if out != "":
-        return out
-    else:
-        return "saidas iguais"
+    outdiff, err = process.communicate()
+    ans += outdiff + '\n'
 
     os.chdir(directory)
-# falta fazer
-# enviar resultados para a pagina criada
+    os.chdir("compiler/code")
+
+    command = "rm * -fv"
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+    process.wait()
+    out, err = process.communicate()
+    ans += out + '\n'
+
+    os.chdir(directory)
+
+    ans += '\n'
+
+    if outdiff != "":
+        return ans
+    else:
+        return "saidas iguais"
