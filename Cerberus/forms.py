@@ -15,7 +15,7 @@ class MyRegistrationForm(UserCreationForm):
         regex=r'^[\w.@+-]+$',
         help_text =
         ("<br>No máximo 30 caracteres. Letras, dígitos e @/./+/-/_ apenas."),
-        error_messages = {'Inválido':(travis1 + travis2)}
+        error_messages = {'Inválido': (travis1 + travis2)}
     )
 
     password1 = forms.CharField(
