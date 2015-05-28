@@ -43,33 +43,35 @@ def mover(entrada, saida, codigo):
     process.wait()
 
 
-#executar compile.py
-command = "python compile.py"
-process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
-process.wait()
+    #executar compile.py
+    command = "python compile.py"
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+    process.wait()
 
-#mover programa.out de /compiler para /runner
-command = "mv programa.out ../runner"
-process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
-process.wait()
+    #mover programa.out de /compiler para /runner
+    command = "mv programa.out ../runner"
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+    process.wait()
 
-#muda diretorio para pasta runner
-os.chdir("../runner")
+    #muda diretorio para pasta runner
+    os.chdir("../runner")
 
-#executar runner.py
-command = "python runner.py"
-process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
-process.wait()
+    #executar runner.py
+    command = "python runner.py"
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+    process.wait()
 
-#diff das saidas
-command = "diff saida.txt ../compiler/saida_esperada.txt"
-process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
-process.wait()
-out, err = process.communicate()
+    #diff das saidas
+    command = "diff saida.txt ../compiler/saida_esperada.txt"
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+    process.wait()
+    out, err = process.communicate()
 
-if out!="":
-    print(out)
-else:
-    print("saidas iguais")
+    if out!="":
+        return out
+    else:
+        return "saidas iguais"
 
+
+#falta fazer
 #enviar resultados para a pagina criada
