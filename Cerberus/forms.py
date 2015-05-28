@@ -14,15 +14,15 @@ class MyRegistrationForm(UserCreationForm):
     matchObjAluno = re.match(r'(.*)@aluno.ita.br$', data, re.M | re.I)
     matchObjAdmin = re.match(r'(.*)@admin.ita.br$', data, re.M | re.I)
 
-        if (
-            not matchObjProf and not
-            matchObjAluno and not
-            matchObjAdmin
-        ):   
-            raise forms.ValidationError(
-                "Must be a @ita.br or @aluno.ita.br address"
-            )
-        return data
+    if (
+        not matchObjProf and not
+        matchObjAluno and not
+        matchObjAdmin
+    ):
+        raise forms.ValidationError(
+            "Must be a @ita.br or @aluno.ita.br address"
+        )
+    return data
 
     class Meta:
         model = User
