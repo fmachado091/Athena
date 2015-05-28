@@ -7,15 +7,15 @@ import re
 
 
 class MyRegistrationForm(UserCreationForm):
+    travis1 = "Esse valor deve contar apenas letras"
+    travis2 = ", números e os caracteres @/./+/-/_."
     username = forms.RegexField(
         label=("Usuário"),
         max_length=30,
         regex=r'^[\w.@+-]+$',
-        help_text = 
-            ("<br>No máximo 30 caracteres. Letras, dígitos e @/./+/-/_ apenas."),
-        error_messages = 
-            {'Inválido':
-            ("Esse valor deve contar apenas letras, números e os caracteres @/./+/-/_.")}
+        help_text =
+        ("<br>No máximo 30 caracteres. Letras, dígitos e @/./+/-/_ apenas."),
+        error_messages = {'Inválido':(travis1 + travis2)}
     )
 
     password1 = forms.CharField(
