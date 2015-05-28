@@ -16,15 +16,18 @@
 import subprocess
 import os
 
+
 def bytesTOtext(bytes, text):
     with open(text, 'wb+') as destination:
         for chunk in bytes.chunks():
             destination.write(chunk)
 
+
 def execute(command):
     process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
     process.wait()
     return process.communicate()
+
 
 def mover(entrada, saida, codigo):
     ans = ""
