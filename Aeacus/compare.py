@@ -11,13 +11,20 @@
 # e retorna a saida do diff se forem diferentes
 # se forem iguais retorna "saidas iguais"
 
-# vou supor que o arquivo com a saida eh o arquivo /compiler/saida_esperada.txt
-
 # enviar resultados para a pagina criada
 
 import subprocess
 import os
 
+def bytesTOtext(bytes, text):
+    with open(text, 'wb+') as destination:
+        for chunk in bytes.chunks():
+            destination.write(chunk)
+
+def execute(command):
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+    process.wait()
+    return process.communicate()
 
 def mover(entrada, saida, codigo):
     ans = ""
@@ -27,34 +34,17 @@ def mover(entrada, saida, codigo):
 
     os.chdir("compiler")
 
-    with open('entrada.txt', 'wb+') as destination:
-        for chunk in entrada.chunks():
-            destination.write(chunk)
+    bytesTOtext(entrada, 'entrada.txt')
+    bytesTOtext(saida, 'resposta.txt')
+    bytesTOtext(codigo, 'codigo.cpp')
 
-    with open('saida.txt', 'wb+') as destination:
-        for chunk in saida.chunks():
-            destination.write(chunk)
-
-    with open('codigo.cpp', 'wb+') as destination:
-        for chunk in codigo.chunks():
-            destination.write(chunk)
-
-    command = "mv codigo.cpp code/"
-    process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
-    process.wait()
-    out, err = process.communicate()
+    out, err = execute("mv codigo.cpp code/")
     ans += out + '\n'
 
-    command = "mv entrada.txt ../runner"
-    process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
-    process.wait()
-    out, err = process.communicate()
+    out, err = execute("mv entrada.txt ../runner")
     ans += out + '\n'
 
-    command = "mv saida.txt ../runner"
-    process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
-    process.wait()
-    out, err = process.communicate()
+    out, err = execute("mv resposta.txt ../runner")
     ans += out + '\n'
 
     # executar compile.py
@@ -72,36 +62,24 @@ def mover(entrada, saida, codigo):
         return ans
 
     # mover programa.out de /compiler para /runner
-    command = "mv programa.out ../runner"
-    process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
-    process.wait()
-    out, err = process.communicate()
+    out, err = execute("mv programa.out ../runner")
     ans += out + '\n'
 
     # muda diretorio para pasta runner
     os.chdir("../runner")
 
     # executar runner.py
-    command = "python runner.py"
-    process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
-    process.wait()
-    out, err = process.communicate()
+    out, err = execute("python runner.py")
     ans += out + '\n'
 
     # diff das saidas
-    command = "diff saida.txt ../compiler/saida_esperada.txt"
-    process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
-    process.wait()
-    outdiff, err = process.communicate()
+    outdiff, err = execute("diff saida.txt resposta.txt")
     ans += outdiff + '\n'
 
     os.chdir(directory)
     os.chdir("compiler/code")
 
-    command = "rm * -fv"
-    process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
-    process.wait()
-    out, err = process.communicate()
+    out, err = execute("rm * -fv")
     ans += out + '\n'
 
     os.chdir(directory)
