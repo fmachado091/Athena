@@ -13,13 +13,13 @@
 
 # enviar resultados para a pagina criada
 
-#from compiler import compile
+# from compiler import compile
 import subprocess
 import os
 
 
-def isBlank (myString):
-    return not( myString and myString.strip())
+def isBlank(myString):
+    return not(myString and myString.strip())
 
 
 def concat(s1, s2):
@@ -101,7 +101,7 @@ def mover(entrada, saida, codigo):
     ans += '\n'
 
     if not isBlank(outdiff):
-        ans = ans.replace("\n","<br />")
+        ans = ans.replace("\n", "<br />")
         return ans
     else:
-       return "saidas iguais"
+        return "saidas iguais"
