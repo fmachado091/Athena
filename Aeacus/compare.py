@@ -16,16 +16,13 @@
 # from compiler import compile
 import subprocess
 import os
+from Aeacus.compiler import compile
+
+DIRETORIO_DO_ARQUIVO = os.path.dirname(os.path.realpath(__file__))
 
 
 def _is_blank(myString):
     return not(myString and myString.strip())
-
-
-def _concat(s1, s2):
-    if not _is_blank(s2):
-        s1 += s2 + '\n'
-    return s1
 
 
 def _bytes_to_text(bytes, text):
@@ -40,68 +37,51 @@ def _execute(command):
     return process.communicate()
 
 
-def mover(entrada, saida, codigo):
-    ans = ''
+# remove arquivos de codigo de outras compilacoes
+def _deletar_codigo_antigo():
+    os.chdir(DIRETORIO_DO_ARQUIVO)
+    os.chdir("compiler/code")
 
-    directory = os.path.dirname(os.path.realpath(__file__))
-    os.chdir(directory)
+    return _execute("rm * -fv")
 
-    os.chdir("compiler")
 
-    _bytes_to_text(entrada, 'entrada.txt')
-    _bytes_to_text(saida, 'resposta.txt')
+def mover(entrada, resposta, codigo):
+
+    out, err = _deletar_codigo_antigo()
+    if not _is_blank(err):
+        return "error ao deletar arquivos antigos:\n" + out
+
+    # prepara arquivo de codigo e compila
+    os.chdir(DIRETORIO_DO_ARQUIVO)
+    os.chdir("compiler/code")
     _bytes_to_text(codigo, 'codigo.cpp')
 
-    out, err = _execute("mv codigo.cpp code/")
-    ans = _concat(ans, out)
-
-    out, err = _execute("mv entrada.txt ../runner")
-    ans = _concat(ans, out)
-
-    out, err = _execute("mv resposta.txt ../runner")
-    ans = _concat(ans, out)
-
-    # executar compile.py
-    command = "python compile.py"
-    process = subprocess.Popen(
-        command,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        shell=True
+    out, err = compile.compile_cpp(
+        os.path.join(DIRETORIO_DO_ARQUIVO, "compiler/code")
     )
-    process.wait()
-    out, err = process.communicate()
-    ans = _concat(ans, err)
+
     if not _is_blank(err):
-        return ans
+        return ("Error de compilacao!\n" + err).replace("\n", "<br>")
 
     # mover programa.out de /compiler para /runner
-    out, err = _execute("mv programa.out ../runner")
-    ans = _concat(ans, out)
+    os.chdir(DIRETORIO_DO_ARQUIVO)
+    _execute("mv compiler/programa.out runner")
 
-    # muda diretorio para pasta runner
-    os.chdir("../runner")
+    # prepara arquivos de entrada/saida e roda
+    os.chdir(DIRETORIO_DO_ARQUIVO)
+    os.chdir("runner")
+    _bytes_to_text(entrada, 'entrada.txt')
+    _bytes_to_text(resposta, 'resposta.txt')
 
-    # executar runner.py
     out, err = _execute("python runner.py")
-    ans = _concat(ans, out)
+    if not _is_blank(err):
+        return "erro de execucao\n" + out
 
     # diff das saidas
     outdiff, err = _execute("diff saida.txt resposta.txt")
-    ans = _concat(ans, outdiff)
-
-    os.chdir(directory)
-    os.chdir("compiler/code")
-
-    out, err = _execute("rm * -fv")
-    ans = _concat(ans, out)
-
-    os.chdir(directory)
-
-    ans += '\n'
 
     if not _is_blank(outdiff):
-        ans = ans.replace("\n", "<br />")
-        return ans
+        outdiff = outdiff.replace("\n", "<br>")
+        return outdiff
     else:
         return "saidas iguais"
