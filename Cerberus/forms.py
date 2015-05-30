@@ -46,8 +46,10 @@ class MyRegistrationForm(UserCreationForm):
 
     email = forms.EmailField(
         required=True,
-        error_messages = {
-            'invalid': ("O email deve ser do domínio @ita.br ou @aluno.ita.br"),
+        error_messages={
+            'invalid': (
+                 "O email deve ser do domínio @ita.br ou @aluno.ita.br"
+            ),
             'required': ("Este campo é obrigatório."),
             'unique': ("Um usuário já possui um cadastro com esse email."),
         }
@@ -98,4 +100,3 @@ class MyRegistrationForm(UserCreationForm):
         if commit:
             user.save()
         return user
-
