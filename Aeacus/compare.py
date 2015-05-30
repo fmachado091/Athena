@@ -20,6 +20,7 @@ from Aeacus.compiler import compile
 
 DIRETORIO_DO_ARQUIVO = os.path.dirname(os.path.realpath(__file__))
 
+
 def _is_blank(myString):
     return not(myString and myString.strip())
 
@@ -46,7 +47,7 @@ def _deletar_codigo_antigo():
 
 def mover(entrada, resposta, codigo):
 
-    out,err = _deletar_codigo_antigo()
+    out, err = _deletar_codigo_antigo()
     if not _is_blank(err):
         return "error ao deletar arquivos antigos:\n" + out
 

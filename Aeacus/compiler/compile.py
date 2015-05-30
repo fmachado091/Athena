@@ -34,7 +34,7 @@ def _descompactar(path_to_folder):
 def _find_sources(folder_path):
     process = subprocess.Popen(
         'find ' +
-		folder_path +
+        folder_path +
         ' -name "*.h" -o -name "*.cpp" -o -name "*.c" -o -name "*.a" ',
         stdout=subprocess.PIPE, shell=True
     )
@@ -55,25 +55,25 @@ def _move_file_to_code_root(folder_path, file_path):
 
 
 def compile_cpp(abs_path_to_folder):
-	_descompactar(abs_path_to_folder)
-	os.chdir(abs_path_to_folder)
-	files = _find_sources(abs_path_to_folder).split('\n')
+    _descompactar(abs_path_to_folder)
+    os.chdir(abs_path_to_folder)
+    files = _find_sources(abs_path_to_folder).split('\n')
     # remove strings vazias
-	files = filter(None, files)
-	for file_path in files:
-		_move_file_to_code_root(abs_path_to_folder, file_path)
-	files = _find_sources(abs_path_to_folder).split('\n')
-	command = "g++ "
-	for file in files:
-		command += os.path.basename(file) + " "
-	command += " -g -pthread -pg -std=c++0x -o programa.out"
+    files = filter(None, files)
+    for file_path in files:
+        _move_file_to_code_root(abs_path_to_folder, file_path)
+    files = _find_sources(abs_path_to_folder).split('\n')
+    command = "g++ "
+    for file in files:
+        command += os.path.basename(file) + " "
+    command += " -g -pthread -pg -std=c++0x -o programa.out"
 
-	process = subprocess.Popen(
-		command,
-		stdout=subprocess.PIPE,
-		stderr=subprocess.PIPE,
-		shell=True,
-	)
-	process.wait()
-	out, err = process.communicate()
-	return out, err
+    process = subprocess.Popen(
+        command,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        shell=True,
+    )
+    process.wait()
+    out, err = process.communicate()
+    return out, err
