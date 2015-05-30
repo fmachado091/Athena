@@ -22,15 +22,15 @@ def login(request):
         password = request.POST.get('password', '')
         user = auth.authenticate(username=username, password=password)
 
-    if user is not None:
-        auth.login(request, user)
-        return HttpResponseRedirect('/home')
-    else:
-        return render_to_response(
-            'login.html',
-            {"invalid_message": "Login inválido. Tente novamente."},
-            context_instance=RequestContext(request),
-        )
+        if user is not None:
+            auth.login(request, user)
+            return HttpResponseRedirect('/home')
+        else:
+            return render_to_response(
+                'login.html',
+                {"invalid_message": "Login inválido. Tente novamente."},
+                context_instance=RequestContext(request),
+            )
 
     return render_to_response('login.html',
                               {"invalid_message": ""},
