@@ -2,7 +2,7 @@ import subprocess
 import resource
 
 
-def set_limits():
+def _set_limits():
     megabyte = 1000*1000
     resource.setrlimit(resource.RLIMIT_CORE, (10*megabyte, 10*megabyte))
     resource.setrlimit(resource.RLIMIT_CPU, (1, 1))
@@ -20,7 +20,7 @@ erro = open("erro.txt", "w")
 entrada = open("entrada.txt", "r")
 process = subprocess.Popen(
     "./programa.out",
-    preexec_fn=set_limits,
+    preexec_fn=_set_limits,
     stdin=entrada,
     stderr=erro,
     stdout=saida,
