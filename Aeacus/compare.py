@@ -13,8 +13,19 @@
 
 # enviar resultados para a pagina criada
 
+# from compiler import compile
 import subprocess
 import os
+
+
+def isBlank(myString):
+    return not(myString and myString.strip())
+
+
+def concat(s1, s2):
+    if not isBlank(s2):
+        s1 += s2 + '\n'
+    return s1
 
 
 def bytesTOtext(bytes, text):
@@ -30,7 +41,7 @@ def execute(command):
 
 
 def mover(entrada, saida, codigo):
-    ans = ""
+    ans = ''
 
     directory = os.path.dirname(os.path.realpath(__file__))
     os.chdir(directory)
@@ -42,13 +53,13 @@ def mover(entrada, saida, codigo):
     bytesTOtext(codigo, 'codigo.cpp')
 
     out, err = execute("mv codigo.cpp code/")
-    ans += out + '\n'
+    ans = concat(ans, out)
 
     out, err = execute("mv entrada.txt ../runner")
-    ans += out + '\n'
+    ans = concat(ans, out)
 
     out, err = execute("mv resposta.txt ../runner")
-    ans += out + '\n'
+    ans = concat(ans, out)
 
     # executar compile.py
     command = "python compile.py"
@@ -60,36 +71,37 @@ def mover(entrada, saida, codigo):
     )
     process.wait()
     out, err = process.communicate()
-    ans += err + '\n'
-    if err != '':
+    ans = concat(ans, err)
+    if not isBlank(err):
         return ans
 
     # mover programa.out de /compiler para /runner
     out, err = execute("mv programa.out ../runner")
-    ans += out + '\n'
+    ans = concat(ans, out)
 
     # muda diretorio para pasta runner
     os.chdir("../runner")
 
     # executar runner.py
     out, err = execute("python runner.py")
-    ans += out + '\n'
+    ans = concat(ans, out)
 
     # diff das saidas
     outdiff, err = execute("diff saida.txt resposta.txt")
-    ans += outdiff + '\n'
+    ans = concat(ans, outdiff)
 
     os.chdir(directory)
     os.chdir("compiler/code")
 
     out, err = execute("rm * -fv")
-    ans += out + '\n'
+    ans = concat(ans, out)
 
     os.chdir(directory)
 
     ans += '\n'
 
-    if outdiff != "":
+    if not isBlank(outdiff):
+        ans = ans.replace("\n", "<br />")
         return ans
     else:
         return "saidas iguais"
