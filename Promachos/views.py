@@ -4,8 +4,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.core.context_processors import csrf
 from Cerberus.forms import MyRegistrationForm
-from django.core.mail import send_mail
-from django.template import RequestContext, loader
+from django.template import RequestContext
 from django.shortcuts import render, render_to_response
 from .forms import UploadFileForm
 from Aeacus import compare
