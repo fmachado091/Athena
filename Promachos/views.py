@@ -15,6 +15,7 @@ def home(request):
 
         resultado = compare.mover(entrada, saida, fonte)
         pprint.pprint(resultado)
+        print(resultado)
 
         return render(
             request, 'teste_juiz.html',
