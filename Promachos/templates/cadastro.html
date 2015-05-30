@@ -1,3 +1,4 @@
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,15 +16,50 @@
   <div class="row">
     <div class="col-xs-12">
       <h2 class="form-signin-heading" align="center">Cadastro</h2>
-      {% for field in form %}
-      {{field.error}}
-      {% endfor %}
       <form class="form-signin" action="/cadastro/" method="post"> {% csrf_token %}
-        {{form.as_p}}
-        <input type="submit" value="Efetuar cadastro"/>
+	<div align="center" style="padding-top: 15px;">
+		<label for="{{ form.username.label }}" class="sr-only"></label>
+        	<input type="username" name="username" id="username" class="form-control" value="{{ form.username.value|default_if_none:"" }}" placeholder="Nome de usuário" autofocus>
+		<font color="red">{{ form.username.errors.as_text }}</font><br><br>
+
+		<label for="{{ form.email.label }}" class="sr-only"></label>
+        	<input type="username" name="email" id="email" class="form-control" value="{{ form.email.value|default_if_none:"" }}" placeholder="Email" autofocus>
+		<font color="red">{{ form.email.errors.as_text }}</font><br><br>
+
+		<label for="{{ form.password1.label }}" class="sr-only"></label>
+        	<input type="password" name="password1" id="password1" class="form-control" value="{{ form.password1.value|default_if_none:"" }}" placeholder="Senha" autofocus>
+		<font color="red">{{ form.password1.errors.as_text }}</font><br><br>
+
+		<label for="{{ form.password2.label }}" class="sr-only"></label>
+        	<input type="password" name="password2" id="password2" class="form-control" placeholder="Confirme a sua senha" autofocus>
+		<font color="red">{{ form.password2.errors.as_text }}</font>
+		<font color="red">{{ success_message }}</font><br><br>
+		<!--div class="fieldWrapper">
+			{{ form.username.label_tag }}
+			{{ form.username }} <br><font color="red">{{ form.username.errors.as_text }}</font>
+		</div>
+		<div class="fieldWrapper">
+			{{ form.email.label_tag }}
+			{{ form.email }} <br><font color="red">{{ form.email.errors.as_text }}</font>
+
+		</div>
+		<div class="fieldWrapper">
+			{{ form.password1.label_tag }}
+			{{ form.password1 }} <br><font color="red">{{ form.password1.errors.as_text }}</font>
+		</div>
+		<div class="fieldWrapper">
+			{{ form.password2.label_tag }}
+			{{ form.password2 }} <br><font color="red">{{ form.password2.errors.as_text }}</font>
+		<!-->
+
+           <input type="submit" value="Efetuar cadastro">
+	   <button onclick="location.href='/login/'; return false;">Voltar ao login</button>
+        </div>
       </form>
     </div>
   </div>
 </div> <!-- end of container -->
 </body>
 </html>
+
+{% endblock %}

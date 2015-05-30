@@ -24,12 +24,12 @@
 
     <div class="container">
       <div align="center"><img src="/static/img/logo.jpg" width="10%" height="10%" /></div>
-      <form class="form-signin" action="/auth/" method="post"> {% csrf_token %}
+      <form class="form-signin" action="/login/" method="post"> {% csrf_token %}
         <h2 class="form-signin-heading" align="center">Login</h2>
         <label for="username" class="sr-only">Usuário</label>
-        <input type="username" name="username" id="username" class="form-control" placeholder="Endere&ccedil;o de email" required autofocus>
+        <input type="username" name="username" id="username" class="form-control" placeholder="Endere&ccedil;o de email" autofocus>
         <label for="password" class="sr-only">Senha</label>
-        <input type="password" name="password" id="password" class="form-control" placeholder="Senha" required>
+        <input type="password" name="password" id="password" class="form-control" placeholder="Senha">
         <div class="checkbox">
           <label>
             <input type="checkbox" value="remember-me"> Lembrar de mim
@@ -37,10 +37,11 @@
         </div>
         <a href="static/#">Esqueci a senha</a>
         <br/>
-        <!--<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>-->
+	        <!--<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>-->
         <div align="center" style="padding-top: 15px;">
-          <input type="submit" value="Login">
-	  <button onclick="location.href='/cadastro/'">Cadastre-se</button>
+	  <input type="submit" value="Login">
+	  <button onclick="location.href='/cadastro/'; return false;">Cadastre-se</button>
+	  <br><br><font color="red">{{ invalid_message }}</font><br>
         </div>
       </form>
     </div> <!-- /container -->
