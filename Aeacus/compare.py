@@ -18,23 +18,23 @@ import subprocess
 import os
 
 
-def isBlank(myString):
+def _is_blank(myString):
     return not(myString and myString.strip())
 
 
-def concat(s1, s2):
-    if not isBlank(s2):
+def _concat(s1, s2):
+    if not _is_blank(s2):
         s1 += s2 + '\n'
     return s1
 
 
-def bytesTOtext(bytes, text):
+def _bytes_to_text(bytes, text):
     with open(text, 'wb+') as destination:
         for chunk in bytes.chunks():
             destination.write(chunk)
 
 
-def execute(command):
+def _execute(command):
     process = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
     process.wait()
     return process.communicate()
@@ -48,18 +48,18 @@ def mover(entrada, saida, codigo):
 
     os.chdir("compiler")
 
-    bytesTOtext(entrada, 'entrada.txt')
-    bytesTOtext(saida, 'resposta.txt')
-    bytesTOtext(codigo, 'codigo.cpp')
+    _bytes_to_text(entrada, 'entrada.txt')
+    _bytes_to_text(saida, 'resposta.txt')
+    _bytes_to_text(codigo, 'codigo.cpp')
 
-    out, err = execute("mv codigo.cpp code/")
-    ans = concat(ans, out)
+    out, err = _execute("mv codigo.cpp code/")
+    ans = _concat(ans, out)
 
-    out, err = execute("mv entrada.txt ../runner")
-    ans = concat(ans, out)
+    out, err = _execute("mv entrada.txt ../runner")
+    ans = _concat(ans, out)
 
-    out, err = execute("mv resposta.txt ../runner")
-    ans = concat(ans, out)
+    out, err = _execute("mv resposta.txt ../runner")
+    ans = _concat(ans, out)
 
     # executar compile.py
     command = "python compile.py"
@@ -71,36 +71,36 @@ def mover(entrada, saida, codigo):
     )
     process.wait()
     out, err = process.communicate()
-    ans = concat(ans, err)
-    if not isBlank(err):
+    ans = _concat(ans, err)
+    if not _is_blank(err):
         return ans
 
     # mover programa.out de /compiler para /runner
-    out, err = execute("mv programa.out ../runner")
-    ans = concat(ans, out)
+    out, err = _execute("mv programa.out ../runner")
+    ans = _concat(ans, out)
 
     # muda diretorio para pasta runner
     os.chdir("../runner")
 
     # executar runner.py
-    out, err = execute("python runner.py")
-    ans = concat(ans, out)
+    out, err = _execute("python runner.py")
+    ans = _concat(ans, out)
 
     # diff das saidas
-    outdiff, err = execute("diff saida.txt resposta.txt")
-    ans = concat(ans, outdiff)
+    outdiff, err = _execute("diff saida.txt resposta.txt")
+    ans = _concat(ans, outdiff)
 
     os.chdir(directory)
     os.chdir("compiler/code")
 
-    out, err = execute("rm * -fv")
-    ans = concat(ans, out)
+    out, err = _execute("rm * -fv")
+    ans = _concat(ans, out)
 
     os.chdir(directory)
 
     ans += '\n'
 
-    if not isBlank(outdiff):
+    if not _is_blank(outdiff):
         ans = ans.replace("\n", "<br />")
         return ans
     else:
