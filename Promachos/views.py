@@ -17,23 +17,23 @@ logr = logging.getLogger(__name__)
 
 def login(request):
 
-    if request.method == 'POST':
+if request.method == 'POST':
 
-	    username = request.POST.get('username', '')
-	    password = request.POST.get('password', '')
-	    user = auth.authenticate(username=username, password=password)
+    username = request.POST.get('username', '')
+    password = request.POST.get('password', '')
+    user = auth.authenticate(username=username, password=password)
 
-	    if user is not None:
-		auth.login(request, user)
-		return HttpResponseRedirect('/home')
-	    else:
-		return render_to_response('login.html',
-					  {"invalid_message": "Login inválido. Tente novamente."},
-					  context_instance=RequestContext(request))
+    if user is not None:
+        auth.login(request, user)
+        return HttpResponseRedirect('/home')
+    else:
+        return render_to_response('login.html',
+                                  {"invalid_message": "Login inválido. Tente novamente."},
+                                  context_instance=RequestContext(request))
 
     return render_to_response('login.html',
-			      {"invalid_message": ""},
-			      context_instance=RequestContext(request))
+                              {"invalid_message": ""},
+                              context_instance=RequestContext(request))
 
 
 def register_user(request):
@@ -41,11 +41,11 @@ def register_user(request):
         form = MyRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-	    return render_to_response('cadastro.html',
-				      {"success_message": "O cadastro foi realizado com sucesso!"},
-			              context_instance=RequestContext(request))
+    return render_to_response('cadastro.html',
+                                      {"success_message": "O cadastro foi realizado com sucesso!"},
+                                      context_instance=RequestContext(request))
     else:
-	form = MyRegistrationForm()
+        form = MyRegistrationForm()
     args = {}
     args.update(csrf(request))
 

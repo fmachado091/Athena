@@ -34,6 +34,7 @@ class MyRegistrationForm(UserCreationForm):
             'required': ("Este campo é obrigatório."),
         }
     )
+
     password2 = forms.CharField(
         label=("Confirme a sua senha"),
         widget=forms.PasswordInput,
@@ -44,16 +45,16 @@ class MyRegistrationForm(UserCreationForm):
     )
 
     email = forms.EmailField(
-	required=True,
+        required=True,
         error_messages = {
             'invalid': ("O email deve ser do domínio @ita.br ou @aluno.ita.br"),
             'required': ("Este campo é obrigatório."),
-	    'unique': ("Um usuário já possui um cadastro com esse email."),
+            'unique': ("Um usuário já possui um cadastro com esse email."),
         }
     )
 
     def clean_email(self):
-	email = self.cleaned_data.get('email')
+        email = self.cleaned_data.get('email')
         username = self.cleaned_data.get('username')
 
         matchObjProf = re.match(r'(.*)@ita.br$', email, re.M | re.I)
@@ -67,12 +68,12 @@ class MyRegistrationForm(UserCreationForm):
                 "O email deve ser do domínio @ita.br ou @aluno.ita.br"
             )
 
-	if (
-	    User.objects.filter(email=email).exclude(username=username).count()
+        if (
+            User.objects.filter(email=email).exclude(username=username).count()
         ):
             raise forms.ValidationError(
-	    	"Um usuário já possui um cadastro com esse email."
-	    )
+                "Um usuário já possui um cadastro com esse email."
+            )
         return email
 
     def clean_password2(self):
@@ -97,3 +98,4 @@ class MyRegistrationForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
