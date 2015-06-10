@@ -9,6 +9,7 @@ from django.shortcuts import render, render_to_response
 from .forms import UploadFileForm
 from Aeacus import compare
 import pprint
+import re
 import logging
 
 logr = logging.getLogger(__name__)
@@ -24,7 +25,13 @@ def login(request):
 
         if user is not None:
             auth.login(request, user)
-            return HttpResponseRedirect('/home')
+
+            matchObjAluno = re.match(r'(.*)@aluno.ita.br$', user.email, re.M | re.I)
+
+            if matchObjAluno:
+                return HttpResponseRedirect('/home')
+            return HttpResponseRedirect('/professor')
+
         else:
             return render_to_response(
                 'login.html',
