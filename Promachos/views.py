@@ -1,34 +1,86 @@
-# from django.shortcuts import render
-from django.views.generic.base import TemplateView
-from django.shortcuts import render
+# -*- coding: utf-8 -*-
+
+from django.http import HttpResponseRedirect
+from django.contrib import auth
+from django.core.context_processors import csrf
+from Cerberus.forms import MyRegistrationForm
+from django.template import RequestContext
+from django.shortcuts import render, render_to_response
 from .forms import UploadFileForm
-# from Aeacus import judge
+from Aeacus import compare
+import pprint
+import logging
+
+logr = logging.getLogger(__name__)
+
+
+def login(request):
+
+    if request.method == 'POST':
+
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+        user = auth.authenticate(username=username, password=password)
+
+        if user is not None:
+            auth.login(request, user)
+            return HttpResponseRedirect('/home')
+        else:
+            return render_to_response(
+                'login.html',
+                {"invalid_message": "Login inválido. Tente novamente."},
+                context_instance=RequestContext(request),
+            )
+
+    return render_to_response('login.html',
+                              {"invalid_message": ""},
+                              context_instance=RequestContext(request))
+
+
+def register_user(request):
+    if request.method == 'POST':
+        form = MyRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render_to_response(
+                'cadastro.html',
+                {"success_message": "O cadastro foi realizado com sucesso!"},
+                context_instance=RequestContext(request),
+            )
+
+    else:
+        form = MyRegistrationForm()
+    args = {}
+    args.update(csrf(request))
+
+    args['form'] = form
+
+    return render_to_response('cadastro.html', args)
 
 
 def home(request):
 
     form = UploadFileForm()
     if request.method == 'POST':
-        # entrada = request.FILES.getlist('file')[0]
-        # saida = request.FILES.getlist('file')[1]
-        # fonte = request.FILES.getlist('file')[2]
+        entrada = request.FILES.getlist('file')[0]
+        saida = request.FILES.getlist('file')[1]
+        fonte = request.FILES.getlist('file')[2]
 
-        # resultado = judge.julgar(entrada, saida, fonte)
+        resultado = compare.mover(entrada, saida, fonte)
+        pprint.pprint(resultado)
+        print(resultado)
 
         return render(
             request, 'teste_juiz.html',
             {
                 'form': form,
-                # 'resultado':resultado,
+                'resultado': resultado,
             }
         )
 
     return render(request, 'teste_juiz.html', {'form': form})
 
 
-class LoginView(TemplateView):
-
-    template_name = "login.html"
-
-
-# Create your views here.
+def logout(request):
+    auth.logout(request)
+    return render_to_response('logout.html')

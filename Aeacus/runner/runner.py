@@ -2,7 +2,7 @@ import subprocess
 import resource
 
 
-def set_limits():
+def _set_limits():
     megabyte = 1000*1000
     resource.setrlimit(resource.RLIMIT_CORE, (10*megabyte, 10*megabyte))
     resource.setrlimit(resource.RLIMIT_CPU, (1, 1))
@@ -17,16 +17,19 @@ def set_limits():
 
 saida = open("saida.txt", "w")
 erro = open("erro.txt", "w")
-entrada = open("entrada.txt", "w")
+entrada = open("entrada.txt", "r")
 process = subprocess.Popen(
     "./programa.out",
-    preexec_fn=set_limits,
+    preexec_fn=_set_limits,
     stdin=entrada,
     stderr=erro,
     stdout=saida,
 )
+process.wait()
 out, err = process.communicate()
 code = process.poll()
+print(out)
+print(err)
 print "returncode of subprocess:"
 print code
 if (code == -9):
