@@ -84,3 +84,7 @@ def home(request):
 def logout(request):
     auth.logout(request)
     return render_to_response('logout.html')
+
+
+def professor(request):
+    return render_to_response('professor.html')
