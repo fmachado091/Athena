@@ -89,9 +89,7 @@
                   <div class="caption">
                   <p><h3>Notificações</h3></p>
                     <br>
-                    <p>[21/04/2015] - <a href="#">CES-10</a> > <a href="#">Lab 2</a> encerrado</p>
-                    <p>[21/04/2015] - <a href="#">CES-11</a> > <a href="#">Lab 1</a> encerrado</p>
-                    <p>[14/04/2015] - <a href="#">CES-10</a> > <a href="#">Lab 1</a> encerrado</p>
+                    <p>PROTOTIPO[21/04/2015] - <a href="#">CES-10</a> > <a href="#">Lab 2</a> encerrado</p>
                     <br>
                     <p><a href="#">Ver mais</a></p>
                   </div>
@@ -103,18 +101,13 @@
                   <div class="caption">
                   <p><h3>Abrir nova turma</h3></p>
                     <br>
-                    <form>
-                      <div class="form-group">
-                        <label for="nome_turma">Nome da turma:</label>
-                        <input type="text" id="nome_turma" placeholder="Ex.: CES-10" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="desc_turma">Descrição:</label>
-                        <textarea id="desc_turma" placeholder="Ex.: Turma da disciplina CES-10, ministrada pelo professor José Silva no ano de 2015 para a turma 1 do 1º FUND." rows="5"></textarea>
-                      </div>
-                      <p><button class="btn btn-lg btn-success btn-block" type="submit">Concluir</button></p>
-                    </form>
-                  </div>
+					<form method="post" enctype="multipart/form-data">
+						<input type="hidden" name="turma" value="True">
+						{% csrf_token %}
+						{{form}}
+						<input class="btn btn-default" type="submit" value="Submit">
+					</form>
+				 </div>
                 </div>
               </div>
             </div> <!-- end of row -->

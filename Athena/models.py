@@ -41,8 +41,8 @@ class Professor(models.Model):
 
 class Turma(models.Model):
 
-    nome = models.CharField(max_length=50, help_text="Nome da Turma")
-    descricao = models.CharField(max_length=2000, help_text="Texto da Turma")
+    nome = models.CharField(max_length=50)
+    descricao = models.CharField(max_length=2000)
     professor = models.ForeignKey(Professor, help_text="Professor da Turma")
     alunos = models.ManyToManyField(
         Aluno,
@@ -59,10 +59,9 @@ class Atividade(models.Model):
     def estaFechada(self):
         return self.data_limite <= timezone.now()
 
-    nome = models.CharField(max_length=50, help_text="Nome da atividade")
+    nome = models.CharField(max_length=50)
     descricao = models.CharField(
         max_length=1000,
-        help_text="Breve descricao da Atividade",
     )
     arquivo_roteiro = models.FileField(upload_to=atividade_path)
     arquivo_entrada = models.FileField(upload_to=atividade_path)

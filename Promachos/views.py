@@ -6,10 +6,9 @@ from django.core.context_processors import csrf
 from Cerberus.forms import MyRegistrationForm
 from django.template import RequestContext
 from django.shortcuts import render, render_to_response
-from .forms import UploadFileForm
+from .forms import UploadFileForm, TurmaCreationForm, AtividadeCreationForm
 from Aeacus import compare
 from Athena.models import Professor, Turma, Atividade
-from pprint import pprint
 import re
 import logging
 
@@ -77,8 +76,6 @@ def home(request):
             fonte = request.FILES.getlist('file')[2]
 
             resultado = compare.mover(entrada, saida, fonte)
-            pprint(resultado)
-            print(resultado)
 
             return render(
                 request, 'teste_juiz.html',
@@ -101,32 +98,58 @@ def logout(request):
 
 def professor(request):
 
-    if request.user.is_authenticated():
-        professor = Professor.objects.get(user=request.user)
-        turmas = Turma.objects.filter(professor=professor)
-        panes = []
-        for turma in turmas:
-            atividades = Atividade.objects.filter(turma=turma)
-            panes.append(
-                render_to_response(
-                    'pane_professor.html',
-                    {
-                        "turma": turma,
-                        "atividades": atividades,
-                    },
-                    context_instance=RequestContext(request),
-                ).content
-            )
-
-        pprint(panes)
-        return render_to_response(
-            'professor.html',
-            {"turmas": turmas,
-             "panes": panes},
-            context_instance=RequestContext(request),
-        )
-    else:
+    if request.user.is_authenticated() is False:
         return HttpResponseRedirect('/login')
+
+    professor = Professor.objects.get(user=request.user)
+    form = TurmaCreationForm()
+    if request.method == 'POST':
+        if('turma' in request.POST):
+            turma = Turma(
+                nome=request.POST['nome'],
+                descricao=request.POST['descricao'],
+                professor=professor,
+            )
+            turma.save()
+        elif ('atividade' in request.POST):
+            turma = Turma.objects.get(id=request.POST['id_turma'])
+            atividade = Atividade(
+                nome=request.POST['nome'],
+                descricao=request.POST['descricao'],
+                data_limite=request.POST['data_limite'],
+                arquivo_roteiro=request.FILES['arquivo_roteiro'],
+                arquivo_entrada=request.FILES['arquivo_entrada'],
+                arquivo_saida=request.FILES['arquivo_saida'],
+                turma=turma,
+            )
+            atividade.save()
+        elif ('deletar' in request.POST):
+            turma = Turma.objects.get(id=request.POST['id_turma'])
+            turma.delete()
+
+    turmas = Turma.objects.filter(professor=professor)
+    panes = []
+    for turma in turmas:
+        atividades = Atividade.objects.filter(turma=turma)
+        panes.append(
+            render_to_response(
+                'pane_professor.html',
+                {
+                    "turma": turma,
+                    "atividades": atividades,
+                    "form": AtividadeCreationForm(),
+                },
+                context_instance=RequestContext(request),
+            ).content
+        )
+
+    return render_to_response(
+        'professor.html',
+        {"turmas": turmas,
+         "panes": panes,
+         "form": form},
+        context_instance=RequestContext(request),
+    )
 
 
 def prof_ativ(request):
