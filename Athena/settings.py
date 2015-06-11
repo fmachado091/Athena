@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'Promachos',
     'Cerberus',
+	'Athena',
 )
 
 MIDDLEWARE_CLASSES = (
