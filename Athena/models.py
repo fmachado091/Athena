@@ -3,6 +3,18 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 
+def atividade_path(instance, filename):
+    return 'atividades/{0}/{1}'.format(instance.id, filename)
+
+
+def _submissao_path(instance, filename):
+    return 'codigos/{0}/{1}/{2}'.format(
+        instance.aluno.id,
+        instance.atividade.id,
+        filename,
+    )
+
+
 class Aluno(models.Model):
 
     nome = models.CharField(max_length=50, help_text="Nome do Aluno")
@@ -34,8 +46,6 @@ class Turma(models.Model):
 
 class Atividade(models.Model):
 
-    def _atividade_path(instance, filename):
-        return 'atividades/{0}/{1}'.format(instance.id, filename)
 
     def estaFechada(self):
         return self.data_limite <= timezone.now()
@@ -45,9 +55,9 @@ class Atividade(models.Model):
         max_length=1000,
         help_text="Breve descricao da Atividade",
     )
-    arquivo_roteiro = models.FileField(upload_to=_atividade_path)
-    arquivo_entrada = models.FileField(upload_to=_atividade_path)
-    arquivo_saida = models.FileField(upload_to=_atividade_path)
+    arquivo_roteiro = models.FileField(upload_to=atividade_path)
+    arquivo_entrada = models.FileField(upload_to=atividade_path)
+    arquivo_saida = models.FileField(upload_to=atividade_path)
     data_limite = models.DateField(help_text="Data limite para a entrega")
     turma = models.ForeignKey(
         Turma,
@@ -63,13 +73,6 @@ class Atividade(models.Model):
 
 class Submissao(models.Model):
 
-    def _atividade_path(instance, filename):
-        return 'codigos/{0}/{1}/{2}'.format(
-            instance.aluno.id,
-            instance.atividade.id,
-            filename,
-        )
-
     RESULTADOS = (
         ('AC', 'Aceito'),
         ('TLE', 'Tempo Limite Excedido'),
@@ -81,7 +84,7 @@ class Submissao(models.Model):
         auto_now=True,
         help_text='Data de submissao do codigo',
     )
-    # arquivo codigo
+    arquivo_codigo = models.FileField(upload_to=_submissao_path)
     resultado = models.CharField(
         max_length=3,
         choices=RESULTADOS,
