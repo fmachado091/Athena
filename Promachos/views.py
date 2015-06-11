@@ -8,7 +8,8 @@ from django.template import RequestContext
 from django.shortcuts import render, render_to_response
 from .forms import UploadFileForm
 from Aeacus import compare
-import pprint
+from Athena.models import Professor, Turma, Atividade
+from pprint import pprint
 import re
 import logging
 
@@ -76,7 +77,7 @@ def home(request):
             fonte = request.FILES.getlist('file')[2]
 
             resultado = compare.mover(entrada, saida, fonte)
-            pprint.pprint(resultado)
+            pprint(resultado)
             print(resultado)
 
             return render(
@@ -101,8 +102,29 @@ def logout(request):
 def professor(request):
 
     if request.user.is_authenticated():
-        return render_to_response('professor.html')
+        professor = Professor.objects.get(user=request.user)
+        turmas = Turma.objects.filter(professor=professor)
+        panes = []
+        for turma in turmas:
+            atividades = Atividade.objects.filter(turma=turma)
+            panes.append(
+                render_to_response(
+                    'pane_professor.html',
+                    {
+                        "turma": turma,
+                        "atividades": atividades,
+                    },
+                    context_instance=RequestContext(request),
+                ).content
+            )
 
+        pprint(panes)
+        return render_to_response(
+            'professor.html',
+            {"turmas": turmas,
+             "panes": panes},
+            context_instance=RequestContext(request),
+        )
     else:
         return HttpResponseRedirect('/login')
 
