@@ -105,11 +105,9 @@ class MyRegistrationForm(UserCreationForm):
     def save(self, commit=True):
         usuario = super(MyRegistrationForm, self).save(commit=False)
         usuario.email = self.cleaned_data['email']
-        pprint(self.fields['fullname'])
+        pprint(self.cleaned_data['fullname'])
         
         if commit:
             usuario.save()
-            professor = Professor(user=usuario, nome=self.fields['fullname'])
+            professor = Professor(user=usuario, nome=self.cleaned_data['fullname'])
             professor.save()
-
-        return user
