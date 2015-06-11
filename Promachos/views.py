@@ -8,6 +8,7 @@ from django.template import RequestContext
 from django.shortcuts import render, render_to_response
 from .forms import UploadFileForm
 from Aeacus import compare
+from Athena.models import Aluno, Professor, Turma, Atividade, Submissao
 import pprint
 import re
 import logging
@@ -101,6 +102,7 @@ def logout(request):
 def professor(request):
 
     if request.user.is_authenticated():
+		professor = Professor.objects.get(user.id=request.user.id)
         return render_to_response('professor.html')
 
     else:

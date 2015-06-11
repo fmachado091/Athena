@@ -18,7 +18,7 @@ def submissao_path(instance, filename):
 class Aluno(models.Model):
 
     nome = models.CharField(max_length=50, help_text="Nome do Aluno")
-    usuario = models.ForeignKey(
+    user = models.ForeignKey(
         User,
         help_text="Usuario de login relacionado ao Aluno",
     )
@@ -30,7 +30,7 @@ class Aluno(models.Model):
 class Professor(models.Model):
 
     nome = models.CharField(max_length=50, help_text="Nome do Professor")
-    usuario = models.ForeignKey(
+    user = models.ForeignKey(
         User,
         help_text="Usuario de login relacionado ao Professor",
     )
@@ -43,7 +43,7 @@ class Turma(models.Model):
 
     nome = models.CharField(max_length=50, help_text="Nome da Turma")
     descricao = models.CharField(max_length=2000, help_text="Texto da Turma")
-    dono = models.ForeignKey(Professor, help_text="Professor dono a Turma")
+    professor = models.ForeignKey(Professor, help_text="Professor dono a Turma")
     alunos = models.ManyToManyField(
         Aluno,
         help_text="Alunos inscritos na turma",
