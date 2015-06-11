@@ -18,6 +18,10 @@
       <h2 class="form-signin-heading" align="center">Cadastro</h2>
       <form class="form-signin" action="/cadastro/" method="post"> {% csrf_token %}
 	<div align="center" style="padding-top: 15px;">
+                <label for="{{ form.fullname.label }}" class="sr-only"></label>
+        	<input type="fullname" name="fullname" id="fullname" class="form-control" value="{{ form.fullname.value|default_if_none:"" }}" placeholder="Nome completo" autofocus>
+		<font color="red">{{ form.fullname.errors.as_text }}</font><br><br>
+
 		<label for="{{ form.username.label }}" class="sr-only"></label>
         	<input type="username" name="username" id="username" class="form-control" value="{{ form.username.value|default_if_none:"" }}" placeholder="Nome de usuário" autofocus>
 		<font color="red">{{ form.username.errors.as_text }}</font><br><br>

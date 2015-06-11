@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-
+from pprint import pprint
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from Athena.models import Professor
 import re
 
 
@@ -13,6 +14,15 @@ class MyRegistrationForm(UserCreationForm):
     password_error_messages = {
         'password_mismatch': ("As senhas inseridas não são compatíveis."),
     }
+
+    fullname = forms.CharField(
+        label=("Nome completo"),
+        max_length=50,
+        error_messages = {
+            'required': ("Este campo é obrigatório."),
+            'unique': ("Um usuário já possui um cadastro com esse nome."),
+        }
+    )
 
     username = forms.RegexField(
         label=("Usuário"),
@@ -90,12 +100,17 @@ class MyRegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2')
+        fields = ('fullname', 'username', 'email', 'password1', 'password2')
 
     def save(self, commit=True):
-        user = super(MyRegistrationForm, self).save(commit=False)
-        user.email = self.cleaned_data['email']
+        usuario = super(MyRegistrationForm, self).save(commit=False)
+        usuario.email = self.cleaned_data['email']
+        pprint(self.cleaned_data['fullname'])
 
         if commit:
-            user.save()
-        return user
+            usuario.save()
+            professor = Professor(
+                user=usuario,
+                nome=self.cleaned_data['fullname']
+            )
+            professor.save()
