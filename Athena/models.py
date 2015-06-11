@@ -43,7 +43,7 @@ class Turma(models.Model):
 
     nome = models.CharField(max_length=50, help_text="Nome da Turma")
     descricao = models.CharField(max_length=2000, help_text="Texto da Turma")
-    professor = models.ForeignKey(Professor, help_text="Professor dono a Turma")
+    professor = models.ForeignKey(Professor, help_text="Professor da Turma")
     alunos = models.ManyToManyField(
         Aluno,
         help_text="Alunos inscritos na turma",
