@@ -14,4 +14,5 @@ urlpatterns = [
     url(r'^logout/$', 'Promachos.views.logout'),
     url(r'^cadastro/$', 'Promachos.views.register_user'),
     url(r'^professor/$', 'Promachos.views.professor'),
+    url(r'^prof_ativ/$', 'Promachos.views.prof_ativ'),
 ]
