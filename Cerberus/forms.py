@@ -1,54 +1,54 @@
 # -*- coding: utf-8 -*-
-    from pprint import pprint
-    from django import forms
-    from django.contrib.auth.models import User
-    from django.contrib.auth.forms import UserCreationForm
-    from Athena.models import Professor
-    import re
+from pprint import pprint
+from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+from Athena.models import Professor
+import re
 
 
-    class MyRegistrationForm(UserCreationForm):
-        travis1 = "Esse valor deve conter apenas letras"
-        travis2 = ", números e os caracteres @/./+/-/_."
+class MyRegistrationForm(UserCreationForm):
+    travis1 = "Esse valor deve conter apenas letras"
+    travis2 = ", números e os caracteres @/./+/-/_."
 
-        password_error_messages = {
-            'password_mismatch': ("As senhas inseridas não são compatíveis."),
+    password_error_messages = {
+        'password_mismatch': ("As senhas inseridas não são compatíveis."),
+    }
+
+    fullname = forms.CharField(
+        label=("Nome completo"),
+        max_length=50,
+        error_messages = {
+            'required': ("Este campo é obrigatório."),
+            'unique': ("Um usuário já possui um cadastro com esse nome."),
         }
+    )
 
-        fullname = forms.CharField(
-            label=("Nome completo"),
-            max_length=50,
-            error_messages = {
-                'required': ("Este campo é obrigatório."),
-                'unique': ("Um usuário já possui um cadastro com esse nome."),
-            }
-        )
+    username = forms.RegexField(
+        label=("Usuário"),
+        max_length=30,
+        regex=r'^[\w.@+-]+$',
+        help_text =
+        ("<br>No máximo 30 caracteres. Letras, dígitos e @/./+/-/_ apenas."),
+        error_messages = {
+            'invalid': (travis1 + travis2),
+            'required': ("Este campo é obrigatório."),
+            'unique': ("Um usuário já possui um cadastro com esse nome."),
+        }
+    )
 
-        username = forms.RegexField(
-            label=("Usuário"),
-            max_length=30,
-            regex=r'^[\w.@+-]+$',
-            help_text =
-            ("<br>No máximo 30 caracteres. Letras, dígitos e @/./+/-/_ apenas."),
-            error_messages = {
-                'invalid': (travis1 + travis2),
-                'required': ("Este campo é obrigatório."),
-                'unique': ("Um usuário já possui um cadastro com esse nome."),
-            }
-        )
+    password1 = forms.CharField(
+        label=("Senha"),
+        widget=forms.PasswordInput,
+        error_messages = {
+            'required': ("Este campo é obrigatório."),
+        }
+    )
 
-        password1 = forms.CharField(
-            label=("Senha"),
-            widget=forms.PasswordInput,
-            error_messages = {
-                'required': ("Este campo é obrigatório."),
-            }
-        )
-
-        password2 = forms.CharField(
-            label=("Confirme a sua senha"),
-            widget=forms.PasswordInput,
-            help_text = ("<br>Insira a mesma senha para verificação."),
+    password2 = forms.CharField(
+        label=("Confirme a sua senha"),
+        widget=forms.PasswordInput,
+        help_text = ("<br>Insira a mesma senha para verificação."),
         error_messages = {
             'required': ("Este campo é obrigatório."),
         }
