@@ -109,7 +109,5 @@ class MyRegistrationForm(UserCreationForm):
 
         if commit:
             usuario.save()
-            professor = Professor(user=usuario, nome=self.fields['fullname'])
+            professor = Professor(user=usuario, nome=self.cleaned_data['fullname'])
             professor.save()
-
-        return usuario
