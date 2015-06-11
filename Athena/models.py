@@ -46,7 +46,6 @@ class Turma(models.Model):
 
 class Atividade(models.Model):
 
-
     def estaFechada(self):
         return self.data_limite <= timezone.now()
 
