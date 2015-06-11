@@ -51,7 +51,7 @@ class Turma(models.Model):
     )
 
     def __str__(self):
-        return '%s %s' % (self.nome, self.dono.nome)
+        return '%s %s' % (self.nome, self.professor.nome)
 
 
 class Atividade(models.Model):
