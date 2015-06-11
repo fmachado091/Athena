@@ -106,5 +106,6 @@ def professor(request):
     else:
         return HttpResponseRedirect('/login')
 
+
 def prof_ativ(request):
     return render_to_response('prof_ativ.html')
