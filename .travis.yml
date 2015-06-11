@@ -13,6 +13,9 @@ before_script:
     - psql -c "CREATE DATABASE testdb;" -U postgres
 script:
     - flake8 .
+
+    - python manage.py migrate auth
+    - python manage.py makemigrations Athena
     - python manage.py makemigrations
     - python manage.py migrate
     - python manage.py test
