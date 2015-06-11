@@ -4,8 +4,9 @@ from django.utils import timezone
 
 
 class Aluno(models.Model):
+
     nome = models.CharField(max_length=50, help_text="Nome do Aluno")
-    user = models.ForeignKey(
+    usuario = models.ForeignKey(
         User,
         help_text="Usuario de login relacionado ao Aluno",
     )
@@ -14,7 +15,7 @@ class Aluno(models.Model):
 class Professor(models.Model):
 
     nome = models.CharField(max_length=50, help_text="Nome do Professor")
-    user = models.ForeignKey(
+    usuario = models.ForeignKey(
         User,
         help_text="Usuario de login relacionado ao Professor",
     )
