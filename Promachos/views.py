@@ -8,7 +8,6 @@ from django.template import RequestContext
 from django.shortcuts import render, render_to_response
 from .forms import UploadFileForm
 from Aeacus import compare
-from Athena.models import Aluno, Professor, Turma, Atividade, Submissao
 import pprint
 import re
 import logging
