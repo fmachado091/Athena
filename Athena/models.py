@@ -47,7 +47,7 @@ class Turma(models.Model):
     alunos = models.ManyToManyField(
         Aluno,
         help_text="Alunos inscritos na turma",
-		blank=True,
+        blank=True,
     )
 
     def __str__(self):
@@ -77,7 +77,7 @@ class Atividade(models.Model):
         through='RelAlunoAtividade',
         help_text="""Relacao do aluno com a atividade,
             guarda se aluno submeteu atividade""",
-		blank=True,
+        blank=True,
     )
 
     def __str__(self):

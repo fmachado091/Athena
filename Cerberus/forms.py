@@ -106,8 +106,11 @@ class MyRegistrationForm(UserCreationForm):
         usuario = super(MyRegistrationForm, self).save(commit=False)
         usuario.email = self.cleaned_data['email']
         pprint(self.cleaned_data['fullname'])
-        
+
         if commit:
             usuario.save()
-            professor = Professor(user=usuario, nome=self.cleaned_data['fullname'])
+            professor = Professor(
+                user=usuario,
+                nome=self.cleaned_data['fullname']
+            )
             professor.save()
