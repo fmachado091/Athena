@@ -17,5 +17,7 @@ class TurmaCreationForm(ModelForm):
 class AtividadeCreationForm(ModelForm):
     class Meta:
         model = Atividade
-        fields = ['nome', 'descricao', 'arquivo_roteiro', 'arquivo_entrada',
-            'arquivo_saida', 'data_limite']
+        fields = [
+            'nome', 'descricao', 'arquivo_roteiro', 'arquivo_entrada',
+            'arquivo_saida', 'data_limite'
+        ]

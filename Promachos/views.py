@@ -9,7 +9,6 @@ from django.shortcuts import render, render_to_response
 from .forms import UploadFileForm, TurmaCreationForm, AtividadeCreationForm
 from Aeacus import compare
 from Athena.models import Professor, Turma, Atividade
-from pprint import pprint
 import re
 import logging
 
@@ -99,7 +98,7 @@ def logout(request):
 
 def professor(request):
 
-    if request.user.is_authenticated() == False:
+    if request.user.is_authenticated() is False:
         return HttpResponseRedirect('/login')
 
     professor = Professor.objects.get(user=request.user)
