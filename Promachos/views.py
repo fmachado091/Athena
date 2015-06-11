@@ -67,31 +67,38 @@ def register_user(request):
 
 def home(request):
 
-    form = UploadFileForm()
-    if request.method == 'POST':
-        entrada = request.FILES.getlist('file')[0]
-        saida = request.FILES.getlist('file')[1]
-        fonte = request.FILES.getlist('file')[2]
+    if request.user.is_authenticated():
+        form = UploadFileForm()
+        if request.method == 'POST':
+            entrada = request.FILES.getlist('file')[0]
+            saida = request.FILES.getlist('file')[1]
+            fonte = request.FILES.getlist('file')[2]
 
-        resultado = compare.mover(entrada, saida, fonte)
-        pprint.pprint(resultado)
-        print(resultado)
+            resultado = compare.mover(entrada, saida, fonte)
+            pprint.pprint(resultado)
+            print(resultado)
 
-        return render(
-            request, 'teste_juiz.html',
-            {
-                'form': form,
-                'resultado': resultado,
-            }
-        )
+            return render(
+                request, 'teste_juiz.html',
+                {
+                    'form': form,
+                    'resultado': resultado,
+                }
+            )
 
-    return render(request, 'teste_juiz.html', {'form': form})
+        return render(request, 'teste_juiz.html', {'form': form})
+
+    else: return HttpResponseRedirect('/login')
 
 
 def logout(request):
     auth.logout(request)
-    return render_to_response('logout.html')
+    return HttpResponseRedirect('/login')
 
 
 def professor(request):
-    return render_to_response('professor.html')
+
+    if request.user.is_authenticated():
+        return render_to_response('professor.html')
+
+    else: return HttpResponseRedirect('/login')
