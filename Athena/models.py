@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
+
 class Aluno(models.Model):
     nome = models.CharField(max_length=50, help_text="Nome do Aluno")
     user = models.ForeignKey(
@@ -22,12 +23,12 @@ class Professor(models.Model):
 class Turma(models.Model):
 
     nome = models.CharField(max_length=50, help_text="Nome da Turma")
-    descricao = models.CharField(max_length=2000, help_text="Descricao da Turma")
+    descricao = models.CharField(max_length=2000, help_text="Texto da Turma")
     dono = models.ForeignKey(Professor, help_text="Professor dono a Turma")
     alunos = models.ManyToManyField(
         Aluno,
         help_text="Alunos inscritos na turma",
-     )
+    )
 
 
 class Atividade(models.Model):
@@ -54,7 +55,7 @@ class Atividade(models.Model):
     alunos = models.ManyToManyField(
         Aluno,
         through='RelAlunoAtividade',
-        help_text= """Relacao do aluno com a atividade,
+        help_text="""Relacao do aluno com a atividade,
             guarda se aluno submeteu atividade""",
     )
 
@@ -76,7 +77,7 @@ class Submissao(models.Model):
         ('WA', 'Resposta Errada'),
     )
     data_envio = models.DateField(
-        auto_now = True,
+        auto_now=True,
         help_text='Data de submissao do codigo',
      )
     # arquivo codigo
@@ -101,4 +102,4 @@ class RelAlunoAtividade(models.Model):
         help_text='Se o aluno ja mandou alguma submissao para a atividade'
     )
     aluno = models.ForeignKey(Aluno, help_text="Aluno inscrito na atividade")
-    atividade = models.ForeignKey(Atividade, help_text="Atividade ligada a aluno")
+    atividade = models.ForeignKey(Atividade, help_text="Atividade do aluno")
