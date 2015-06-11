@@ -26,7 +26,8 @@ def login(request):
         if user is not None:
             auth.login(request, user)
 
-            matchObjAluno = re.match(r'(.*)@aluno.ita.br$', user.email, re.M | re.I)
+            matchObjAluno = re.match(
+                r'(.*)@aluno.ita.br$', user.email, re.M | re.I)
 
             if matchObjAluno:
                 return HttpResponseRedirect('/home')
@@ -88,7 +89,8 @@ def home(request):
 
         return render(request, 'teste_juiz.html', {'form': form})
 
-    else: return HttpResponseRedirect('/login')
+    else:
+        return HttpResponseRedirect('/login')
 
 
 def logout(request):
@@ -101,4 +103,5 @@ def professor(request):
     if request.user.is_authenticated():
         return render_to_response('professor.html')
 
-    else: return HttpResponseRedirect('/login')
+    else:
+        return HttpResponseRedirect('/login')
