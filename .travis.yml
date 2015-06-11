@@ -8,8 +8,10 @@ install:
     - pip install flake8 --quiet
     - pip install psycopg2 --quiet
     - pip install -q Django==$DJANGO --quiet
+    - pip install pyunpack --quiet
 before_script:
     - psql -c "CREATE DATABASE testDB;" -U postgres
+    - python manage.py migrate
 script:
     - flake8 .
     - python manage.py test
