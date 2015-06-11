@@ -102,7 +102,6 @@ def logout(request):
 def professor(request):
 
     if request.user.is_authenticated():
-        professor = Professor.objects.get(user.id=request.user.id)
         return render_to_response('professor.html')
 
     else:
