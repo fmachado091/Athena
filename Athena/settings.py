@@ -80,7 +80,7 @@ if 'TRAVIS' in os.environ:
     DATABASES = {
         'default': {
             'ENGINE':   'django.db.backends.postgresql_psycopg2',
-            'NAME':     'testDB',
+            'NAME':     'testdb',
             'USER':     'postgres',
             'PASSWORD': '',
             'HOST':     'localhost',

@@ -10,7 +10,7 @@ install:
     - pip install -q Django==$DJANGO --quiet
     - pip install pyunpack --quiet
 before_script:
-    - psql -c "CREATE DATABASE testDB;" -U postgres
+    - psql -c "CREATE DATABASE testdb;" -U postgres
 script:
     - flake8 .
     - python manage.py migrate
