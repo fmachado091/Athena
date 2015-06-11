@@ -79,7 +79,7 @@ class Submissao(models.Model):
     data_envio = models.DateField(
         auto_now=True,
         help_text='Data de submissao do codigo',
-     )
+    )
     # arquivo codigo
     resultado = models.CharField(
         max_length=3,
