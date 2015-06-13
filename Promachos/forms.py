@@ -6,7 +6,7 @@ from Athena.models import Turma, Atividade
 
 class UploadFileForm(forms.Form):
 
-	file = forms.FileField()
+    file = forms.FileField()
 
 
 class TurmaCreationForm(ModelForm):
@@ -24,7 +24,7 @@ class TurmaCreationForm(ModelForm):
                 'class': 'form-group',
             }),
             'descricao': forms.Textarea(attrs={
-                'placeholder': 'Ex.: Turma da disciplina de CES-10 ministrada por João',
+                'placeholder': 'Ex.: Turma de CES-10 ministrada por João',
                 'required': 'False',
                 'rows': '5',
                 'class': 'form-group',
