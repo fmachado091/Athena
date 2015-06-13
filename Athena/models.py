@@ -66,7 +66,7 @@ class Atividade(models.Model):
     arquivo_roteiro = models.FileField(upload_to=atividade_path)
     arquivo_entrada = models.FileField(upload_to=atividade_path)
     arquivo_saida = models.FileField(upload_to=atividade_path)
-    data_limite = models.DateField(help_text="Data limite para a entrega")
+    data_limite = models.DateField()
     turma = models.ForeignKey(
         Turma,
         help_text="Turma a qual a atividade pertence",

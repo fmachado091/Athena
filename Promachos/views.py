@@ -9,6 +9,7 @@ from django.shortcuts import render, render_to_response
 from .forms import UploadFileForm, TurmaCreationForm, AtividadeCreationForm
 from Aeacus import compare
 from Athena.models import Professor, Turma, Atividade
+from pprint import pprint
 import re
 import logging
 
@@ -104,14 +105,15 @@ def professor(request):
     professor = Professor.objects.get(user=request.user)
     form = TurmaCreationForm()
     if request.method == 'POST':
-        if('turma' in request.POST):
+        pprint(request.POST)
+        if('post_turma' in request.POST):
             turma = Turma(
                 nome=request.POST['nome'],
                 descricao=request.POST['descricao'],
                 professor=professor,
             )
             turma.save()
-        elif ('atividade' in request.POST):
+        elif ('post_atividade' in request.POST):
             turma = Turma.objects.get(id=request.POST['id_turma'])
             atividade = Atividade(
                 nome=request.POST['nome'],
@@ -123,7 +125,7 @@ def professor(request):
                 turma=turma,
             )
             atividade.save()
-        elif ('deletar' in request.POST):
+        elif ('post_deletar' in request.POST):
             turma = Turma.objects.get(id=request.POST['id_turma'])
             turma.delete()
 
