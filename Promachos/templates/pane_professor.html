@@ -19,11 +19,16 @@
           <h3 align="center">Abrir nova atividade</h3>
           <br>
           <form method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="atividade" value="True">
+            <input type="hidden" name="post_atividade" value="True">
             <input type="hidden" name="id_turma" value={{turma.id}}>
             {% csrf_token %}
-            {{form}}
-            <input class="btn btn-default" type="submit" value="Criar">
+			{% for field in form %}
+			<div class="form-group">
+				<label for="{{field.id}}">{{field.label}}:</label>
+				{{field}}
+            </div>
+			{% endfor %}
+            <p><button class="btn btn-lg btn-success btn-block" type="submit">Criar</button></p>
           </form>
           <br>
         </div>
@@ -45,7 +50,7 @@
           <br>
           <form method="POST" enctype="multipart/form-data">
             <label for="close_class">Fechar turma:</label>
-            <input type="hidden" name="deletar" value="True">
+            <input type="hidden" name="post_deletar" value="True">
             <input type="hidden" name="id_turma" value={{turma.id}}>
             {% csrf_token %}
             <input class="btn btn-default" type="submit" value="Fechar">

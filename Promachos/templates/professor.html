@@ -102,10 +102,10 @@
                   <p><h3>Abrir nova turma</h3></p>
                     <br>
 					<form method="post" enctype="multipart/form-data">
-						<input type="hidden" name="turma" value="True">
+						<input type="hidden" name="post_turma" value="True">
 						{% csrf_token %}
 						{{form}}
-						<input class="btn btn-default" type="submit" value="Submit">
+                       <p><button class="btn btn-lg btn-success btn-block" type="submit">Concluir</button></p>
 					</form>
 				 </div>
                 </div>
