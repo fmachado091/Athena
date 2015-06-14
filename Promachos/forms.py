@@ -57,4 +57,16 @@ class AtividadeCreationForm(ModelForm):
                 'required': 'False',
                 'rows': '5',
             }),
+            'arquivo_roteiro': forms.TextInput(attrs={
+                'required': 'True',
+            }),
+            'arquivo_entrada': forms.TextInput(attrs={
+                'required': 'True',
+            }),
+            'arquivo_saida': forms.TextInput(attrs={
+                'required': 'True',
+            }),
+            'data_limite': forms.TextInput(attrs={
+                'required': 'True',
+            }),
         }

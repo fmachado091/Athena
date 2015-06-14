@@ -1,4 +1,4 @@
-<div role="tabpanel" class="tab-pane fade" id={{turma.nome}}>
+<div role="tabpanel" class="tab-pane fade" id={{turma.id}}>
   <div class="row content">
     <div class="col-xs-12 col-md-3">
       <div class="thumbnail">
@@ -6,7 +6,7 @@
           <h3 align="center">Atividades</h3>
           <br>
 		  {% for atividade in atividades %}
-          <p>{{atividade.data_limite}} - <a href="#"> {{atividade.nome}} </a></p>
+          <p>{{atividade.data_limite}} - <a href="../atividades/{{atividade.id}}"> {{atividade.nome}} </a></p>
 		  {% endfor %}
           <br>
         </div>
