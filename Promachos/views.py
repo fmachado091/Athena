@@ -3,7 +3,7 @@
 from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.core.context_processors import csrf
-from Cerberus.forms import MyRegistrationForm
+from Cerberus.forms import UserRegistrationForm
 from django.template import RequestContext
 from django.shortcuts import render, render_to_response
 from .forms import UploadFileForm, TurmaCreationForm, AtividadeCreationForm
@@ -48,7 +48,7 @@ def login(request):
 
 def register_user(request):
     if request.method == 'POST':
-        form = MyRegistrationForm(request.POST)
+        form = UserRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
             return render_to_response(
@@ -58,7 +58,7 @@ def register_user(request):
             )
 
     else:
-        form = MyRegistrationForm()
+        form = UserRegistrationForm()
     args = {}
     args.update(csrf(request))
 
@@ -99,10 +99,10 @@ def logout(request):
 
 def professor(request):
 
-    if request.user.is_authenticated() is False:
+    professor = Professor.objects.filter(user=request.user)
+    if request.user.is_authenticated() is False or not professor:
         return HttpResponseRedirect('/login')
 
-    professor = Professor.objects.get(user=request.user)
     form = TurmaCreationForm()
     if request.method == 'POST':
         pprint(request.POST)

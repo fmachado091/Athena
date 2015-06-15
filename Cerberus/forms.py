@@ -3,11 +3,11 @@ from pprint import pprint
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from Athena.models import Professor
+from Athena.models import Professor, Aluno
 import re
 
 
-class MyRegistrationForm(UserCreationForm):
+class UserRegistrationForm(UserCreationForm):
     travis1 = "Esse valor deve conter apenas letras"
     travis2 = ", números e os caracteres @/./+/-/_."
 
@@ -103,14 +103,26 @@ class MyRegistrationForm(UserCreationForm):
         fields = ('fullname', 'username', 'email', 'password1', 'password2')
 
     def save(self, commit=True):
-        usuario = super(MyRegistrationForm, self).save(commit=False)
+        usuario = super(UserRegistrationForm, self).save(commit=False)
         usuario.email = self.cleaned_data['email']
         pprint(self.cleaned_data['fullname'])
 
         if commit:
             usuario.save()
-            professor = Professor(
-                user=usuario,
-                nome=self.cleaned_data['fullname']
+            matchObjProf = re.match(
+                r'(.*)@ita.br$',
+                usuario.email,
+                re.M | re.I,
             )
-            professor.save()
+            if matchObjProf:
+                professor = Professor(
+                    user=usuario,
+                    nome=self.cleaned_data['fullname']
+                )
+                professor.save()
+            else:
+                aluno = Aluno(
+                    user=usuario,
+                    nome=self.cleaned_data['fullname'],
+                )
+                aluno.save()
