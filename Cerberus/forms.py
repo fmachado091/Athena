@@ -1,18 +1,27 @@
 # -*- coding: utf-8 -*-
-
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from Athena.models import Professor, Aluno
 import re
 
 
-class MyRegistrationForm(UserCreationForm):
+class UserRegistrationForm(UserCreationForm):
     travis1 = "Esse valor deve conter apenas letras"
     travis2 = ", números e os caracteres @/./+/-/_."
 
     password_error_messages = {
         'password_mismatch': ("As senhas inseridas não são compatíveis."),
     }
+
+    fullname = forms.CharField(
+        label=("Nome completo"),
+        max_length=50,
+        error_messages = {
+            'required': ("Este campo é obrigatório."),
+            'unique': ("Um usuário já possui um cadastro com esse nome."),
+        }
+    )
 
     username = forms.RegexField(
         label=("Usuário"),
@@ -90,13 +99,28 @@ class MyRegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2')
+        fields = ('fullname', 'username', 'email', 'password1', 'password2')
 
     def save(self, commit=True):
-        user = super(MyRegistrationForm, self).save(commit=False)
-        user.email = self.cleaned_data['email']
-        # user.set_password(self.cleaned_data['password1'])
+        usuario = super(UserRegistrationForm, self).save(commit=False)
+        usuario.email = self.cleaned_data['email']
 
         if commit:
-            user.save()
-        return user
+            usuario.save()
+            matchObjProf = re.match(
+                r'(.*)@ita.br$',
+                usuario.email,
+                re.M | re.I,
+            )
+            if matchObjProf:
+                professor = Professor(
+                    user=usuario,
+                    nome=self.cleaned_data['fullname']
+                )
+                professor.save()
+            else:
+                aluno = Aluno(
+                    user=usuario,
+                    nome=self.cleaned_data['fullname'],
+                )
+                aluno.save()
