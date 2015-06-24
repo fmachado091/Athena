@@ -8,7 +8,11 @@ from django.template import RequestContext
 from django.shortcuts import render, render_to_response
 from .forms import UploadFileForm, TurmaCreationForm, AtividadeCreationForm
 from Aeacus import compare
+<<<<<<< HEAD
 from Athena.models import Professor, Aluno, Turma, Atividade
+=======
+from Athena.models import Professor, Turma, Atividade, Aluno
+>>>>>>> f152f295cd1dbf9130957abaf125135affd4f22d
 from pprint import pprint
 import re
 import logging
@@ -42,7 +46,7 @@ def login(request):
                 r'(.*)@aluno.ita.br$', user.email, re.M | re.I)
 
             if matchObjAluno:
-                return HttpResponseRedirect('/home')
+                return HttpResponseRedirect('/aluno')
             return HttpResponseRedirect('/professor')
 
         else:
@@ -113,6 +117,7 @@ def professor(request):
     professor = Professor.objects.filter(user=request.user)
     if request.user.is_authenticated() is False or not professor:
         return HttpResponseRedirect('/login')
+    professor = professor[0]
 
     form = TurmaCreationForm()
     if request.method == 'POST':
@@ -166,4 +171,43 @@ def professor(request):
 
 
 def prof_ativ(request):
+    professor = Professor.objects.filter(user=request.user)
+    if request.user.is_authenticated() is False or not professor:
+        return HttpResponseRedirect('/login')
     return render_to_response('prof_ativ.html')
+
+
+def aluno(request):
+    aluno = Aluno.objects.filter(user=request.user)
+    if request.user.is_authenticated() is False or not aluno:
+        return HttpResponseRedirect('/login')
+    aluno = aluno[0]
+
+    turmas = aluno.turma_set.all()
+    """panes = []
+    for turma in turmas:
+        atividades = Atividade.objects.filter(turma=turma)
+        panes.append(
+            render_to_response(
+                'pane_professor.html',
+                {
+                    "turma": turma,
+                    "atividades": atividades,
+                    "form": AtividadeCreationForm(),
+                },
+                context_instance=RequestContext(request),
+            ).content
+        )
+    """
+    return render_to_response(
+        'aluno.html',
+        {"turmas": turmas},
+        context_instance=RequestContext(request),
+    )
+
+
+def aluno_ativ(request):
+    aluno = Aluno.objects.filter(user=request.user)
+    if request.user.is_authenticated() is False or not aluno:
+        return HttpResponseRedirect('/login')
+    return render_to_response('ativ_exemplo.html')
