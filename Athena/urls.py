@@ -15,5 +15,5 @@ urlpatterns = [
     url(r'^professor/$', 'Promachos.views.professor'),
     url(r'^prof_ativ/$', 'Promachos.views.prof_ativ'),
     url(r'^aluno/$', 'Promachos.views.aluno'),
-    url(r'^aluno/$', 'Promachos.views.aluno_ativ'),
+    url(r'^aluno_ativ/$', 'Promachos.views.aluno_ativ'),
 ]
