@@ -18,6 +18,17 @@ logr = logging.getLogger(__name__)
 
 def login(request):
 
+    if request.user.is_authenticated():
+
+        professor = Professor.objects.filter(user=request.user)
+        aluno = Aluno.objects.filter(user=request.user)
+
+        if aluno:
+            return HttpResponseRedirect('/aluno')
+
+        if professor:
+            return HttpResponseRedirect('/professor')
+
     if request.method == 'POST':
 
         username = request.POST.get('username', '')
