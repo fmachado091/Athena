@@ -8,7 +8,7 @@ from django.template import RequestContext
 from django.shortcuts import render, render_to_response
 from .forms import UploadFileForm, TurmaCreationForm, AtividadeCreationForm
 from Aeacus import compare
-from Athena.models import Professor, Turma, Atividade
+from Athena.models import Professor, Turma, Atividade, Aluno
 from pprint import pprint
 import re
 import logging
@@ -31,7 +31,7 @@ def login(request):
                 r'(.*)@aluno.ita.br$', user.email, re.M | re.I)
 
             if matchObjAluno:
-                return HttpResponseRedirect('/home')
+                return HttpResponseRedirect('/aluno')
             return HttpResponseRedirect('/professor')
 
         else:
@@ -155,4 +155,21 @@ def professor(request):
 
 
 def prof_ativ(request):
+    professor = Professor.objects.filter(user=request.user)
+    if request.user.is_authenticated() is False or not professor:
+        return HttpResponseRedirect('/login')
     return render_to_response('prof_ativ.html')
+
+
+def aluno(request):
+    aluno = Aluno.objects.filter(user=request.user)
+    if request.user.is_authenticated() is False or not aluno:
+        return HttpResponseRedirect('/login')
+    return render_to_response('aluno.html')
+
+
+def aluno_ativ(request):
+    aluno = Aluno.objects.filter(user=request.user)
+    if request.user.is_authenticated() is False or not aluno:
+        return HttpResponseRedirect('/login')
+    return render_to_response('ativ_exemplo.html')
