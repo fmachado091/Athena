@@ -102,6 +102,7 @@ def professor(request):
     professor = Professor.objects.filter(user=request.user)
     if request.user.is_authenticated() is False or not professor:
         return HttpResponseRedirect('/login')
+    professor = professor[0]
 
     form = TurmaCreationForm()
     if request.method == 'POST':
@@ -165,7 +166,29 @@ def aluno(request):
     aluno = Aluno.objects.filter(user=request.user)
     if request.user.is_authenticated() is False or not aluno:
         return HttpResponseRedirect('/login')
-    return render_to_response('aluno.html')
+    aluno = aluno[0]
+
+    turmas = aluno.turma_set.all()
+    """panes = []
+    for turma in turmas:
+        atividades = Atividade.objects.filter(turma=turma)
+        panes.append(
+            render_to_response(
+                'pane_professor.html',
+                {
+                    "turma": turma,
+                    "atividades": atividades,
+                    "form": AtividadeCreationForm(),
+                },
+                context_instance=RequestContext(request),
+            ).content
+        )
+    """
+    return render_to_response(
+        'aluno.html',
+        {"turmas": turmas},
+        context_instance=RequestContext(request),
+    )
 
 
 def aluno_ativ(request):

@@ -87,6 +87,11 @@
           <li role="presentation" class="active">
             <a href="#workspace" aria-controls="workspace" role="tab" data-toggle="tab">Workspace</a>
           </li>
+		  {% for turma in turmas %}
+          <li role="presentation">
+            <a href=#{{turma.id}} aria-controls={{turma.id}}  role="tab" data-toggle="tab">{{turma.nome}}</a>
+          </li>
+		  {% endfor %}
           <li role="presentation">
             <a href="#ces-10" aria-controls="ces-10" role="tab" data-toggle="tab">CES-10</a>
           </li>
