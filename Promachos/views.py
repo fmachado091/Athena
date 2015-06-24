@@ -8,11 +8,7 @@ from django.template import RequestContext
 from django.shortcuts import render, render_to_response
 from .forms import UploadFileForm, TurmaCreationForm, AtividadeCreationForm
 from Aeacus import compare
-<<<<<<< HEAD
-from Athena.models import Professor, Aluno, Turma, Atividade
-=======
 from Athena.models import Professor, Turma, Atividade, Aluno
->>>>>>> f152f295cd1dbf9130957abaf125135affd4f22d
 from pprint import pprint
 import re
 import logging
