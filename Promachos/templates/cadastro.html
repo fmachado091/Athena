@@ -37,7 +37,7 @@
 		<label for="{{ form.password2.label }}" class="sr-only"></label>
         	<input type="password" name="password2" id="password2" class="form-control" placeholder="Confirme a sua senha" autofocus>
 		<font color="red">{{ form.password2.errors.as_text }}</font>
-		<font color="red">{{ success_message }}</font><br><br>
+		<font color="green">{{ success_message }}</font><br><br>
 		<!--div class="fieldWrapper">
 			{{ form.username.label_tag }}
 			{{ form.username }} <br><font color="red">{{ form.username.errors.as_text }}</font>

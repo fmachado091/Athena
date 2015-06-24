@@ -8,7 +8,7 @@ from django.template import RequestContext
 from django.shortcuts import render, render_to_response
 from .forms import UploadFileForm, TurmaCreationForm, AtividadeCreationForm
 from Aeacus import compare
-from Athena.models import Professor, Turma, Atividade
+from Athena.models import Professor, Aluno, Turma, Atividade
 from pprint import pprint
 import re
 import logging
@@ -17,6 +17,17 @@ logr = logging.getLogger(__name__)
 
 
 def login(request):
+
+    if request.user.is_authenticated():
+
+        professor = Professor.objects.filter(user=request.user)
+        aluno = Aluno.objects.filter(user=request.user)
+
+        if aluno:
+            return HttpResponseRedirect('/aluno')
+
+        if professor:
+            return HttpResponseRedirect('/professor')
 
     if request.method == 'POST':
 
