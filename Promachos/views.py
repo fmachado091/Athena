@@ -196,3 +196,21 @@ def aluno_ativ(request):
     if request.user.is_authenticated() is False or not aluno:
         return HttpResponseRedirect('/login')
     return render_to_response('ativ_exemplo.html')
+
+
+def aluno_turmas(request):
+    aluno = Aluno.objects.filter(user=request.user)
+    if request.user.is_authenticated() is False or not aluno:
+        return HttpResponseRedirect('/login')
+    aluno = aluno[0]
+
+    turmas = aluno.turma_set.all()
+    todas_turmas = Turma.objects.all()
+
+    return render_to_response(
+        'aluno_turmas.html',
+        {"turmas": turmas,
+         "todas_turmas": todas_turmas,
+        },
+        context_instance=RequestContext(request),
+    )
