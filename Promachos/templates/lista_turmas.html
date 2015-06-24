@@ -10,56 +10,9 @@
   <script src="/static/js/jquery.min.js"></script>
   <script src="/static/js/bootstrap.min.js"></script>
   <style type="text/css">
-    .bs-example{
-        margin: 20px;
-    }
-
-    * {margin: 0; padding: 0;}
-
-    div.list {
-      margin: 20px;
-    }
-    
-    ul {
-      list-style-type: none;
-      width: 500px;
-    }
-
-    ul a {
-      color: #000;
-    }
-
-    ul a:hover {
-      color: #000;
-      text-decoration: none;
-    }
-
-    h3 {
-      font: bold Helvetica, Verdana, sans-serif;
-    }
-
-    li img {
-      float: left;
-      margin: 15px 15px 0 0;
-    }
-
-    li p {
-      font: 200 12px/1.5 Georgia, Times New Roman, serif;
-    }
-
-    li.list {
-      padding: 0 0 10px 0;
-      overflow: auto;
-    }
-
-    li.list:hover {
-      background: #d7e0f9;
-      cursor: pointer;
-    }
-
-    .thumbnail_work {
-      height: 310px;
-      text-align: center;
+    .thumbnail {
+        height: 300px;
+        overflow: hidden;
     }
   </style>
 </head>
@@ -80,151 +33,44 @@
     </div>
   </div>
   <div class="row">
-    <!-- trecho que repete pra cada turma -->
-    <div class="col-xs-6 col-sm-3">
-      <div class="thumbnail">
-        <div class="caption">
-          <h3>Título</h3>
-          <p><strong>Professor:</strong> Nome do professor</p>
-          <p><strong>Descrição:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat.</p>
-          <p><a href="#" class="btn btn-primary" role="button">Inscrever-se</a></p>
+    {% if turmas_registradas %}
+      {% for turma in turmas_registradas %}
+        <!-- trecho que repete pra cada turma -->
+        <div class="col-xs-6 col-sm-3">
+          <div class="thumbnail">
+            <div class="caption">
+              <h3>{{ turma.nome }}</h3>
+              <p><strong>Professor:</strong> {{ turma.professor }}</p>
+              <p><strong>Descrição:</strong> {{ turma.descricao }}</p>
+              <form method="post" enctype="multipart/form-data">
+				<input type="hidden" name="post_sair" value={{turma.id}}>
+				{% csrf_token %}
+                <p><button type="submit" class="btn btn-primary" >Sair</button></p>
+			  </form>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <!-- fim do trecho -->
-    <!-- trecho que repete pra cada turma -->
-    <div class="col-xs-6 col-sm-3">
-      <div class="thumbnail">
-        <div class="caption">
-          <h3>Título</h3>
-          <p><strong>Professor:</strong> Nome do professor</p>
-          <p><strong>Descrição:</strong> -</p>
-          <p><a href="#" class="btn btn-primary" role="button">Inscrever-se</a></p>
+      {% endfor %}
+    {% endif %}
+    {% if turmas_nao_registradas %}
+      {% for turma in turmas_nao_registradas %}
+        <!-- trecho que repete pra cada turma -->
+        <div class="col-xs-6 col-sm-3">
+          <div class="thumbnail">
+            <div class="caption">
+              <h3>{{ turma.nome }}</h3>
+              <p><strong>Professor:</strong> {{ turma.professor }}</p>
+              <p><strong>Descrição:</strong> {{ turma.descricao }}</p>
+              <form method="post" enctype="multipart/form-data">
+				<input type="hidden" name="post_entrar" value={{turma.id}}>
+				{% csrf_token %}
+                <p><button type="submit" class="btn btn-primary" >Inscrever-se</button></p>
+			  </form>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <!-- fim do trecho -->
-    <!-- trecho que repete pra cada turma -->
-    <div class="col-xs-6 col-sm-3">
-      <div class="thumbnail">
-        <div class="caption">
-          <h3>Título</h3>
-          <p><strong>Professor:</strong> Nome do professor</p>
-          <p><strong>Descrição:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua.</p>
-          <p><a href="#" class="btn btn-danger" role="button">Deixar turma</a></p>
-        </div>
-      </div>
-    </div>
-    <!-- fim do trecho -->
-    <!-- trecho que repete pra cada turma -->
-    <div class="col-xs-6 col-sm-3">
-      <div class="thumbnail">
-        <div class="caption">
-          <h3>Título</h3>
-          <p><strong>Professor:</strong> Nome do professor</p>
-          <p><strong>Descrição:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-          cillum dolore eu fugiat nulla pariatur.</p>
-          <p><a href="#" class="btn btn-primary" role="button">Inscrever-se</a></p>
-        </div>
-      </div>
-    </div>
-    <!-- fim do trecho -->
-    <!-- trecho que repete pra cada turma -->
-    <div class="col-xs-6 col-sm-3">
-      <div class="thumbnail">
-        <div class="caption">
-          <h3>Título</h3>
-          <p><strong>Professor:</strong> Nome do professor</p>
-          <p><strong>Descrição:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat.</p>
-          <p><a href="#" class="btn btn-primary" role="button">Inscrever-se</a></p>
-        </div>
-      </div>
-    </div>
-    <!-- fim do trecho -->
-    <!-- trecho que repete pra cada turma -->
-    <div class="col-xs-6 col-sm-3">
-      <div class="thumbnail">
-        <div class="caption">
-          <h3>Título</h3>
-          <p><strong>Professor:</strong> Nome do professor</p>
-          <p><strong>Descrição:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat.</p>
-          <p><a href="#" class="btn btn-primary" role="button">Inscrever-se</a></p>
-        </div>
-      </div>
-    </div>
-    <!-- fim do trecho -->
-    <!-- trecho que repete pra cada turma -->
-    <div class="col-xs-6 col-sm-3">
-      <div class="thumbnail">
-        <div class="caption">
-          <h3>Título</h3>
-          <p><strong>Professor:</strong> Nome do professor</p>
-          <p><strong>Descrição:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat.</p>
-          <p><a href="#" class="btn btn-primary" role="button">Inscrever-se</a></p>
-        </div>
-      </div>
-    </div>
-    <!-- fim do trecho -->
-    <!-- trecho que repete pra cada turma -->
-    <div class="col-xs-6 col-sm-3">
-      <div class="thumbnail">
-        <div class="caption">
-          <h3>Título</h3>
-          <p><strong>Professor:</strong> Nome do professor</p>
-          <p><strong>Descrição:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat.</p>
-          <p><a href="#" class="btn btn-primary" role="button">Inscrever-se</a></p>
-        </div>
-      </div>
-    </div>
-    <!-- fim do trecho -->
-    <!-- trecho que repete pra cada turma -->
-    <div class="col-xs-6 col-sm-3">
-      <div class="thumbnail">
-        <div class="caption">
-          <h3>Título</h3>
-          <p><strong>Professor:</strong> Nome do professor</p>
-          <p><strong>Descrição:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat.</p>
-          <p><a href="#" class="btn btn-primary" role="button">Inscrever-se</a></p>
-        </div>
-      </div>
-    </div>
-    <!-- fim do trecho -->
-    <!-- trecho que repete pra cada turma -->
-    <div class="col-xs-6 col-sm-3">
-      <div class="thumbnail">
-        <div class="caption">
-          <h3>Título</h3>
-          <p><strong>Professor:</strong> Nome do professor</p>
-          <p><strong>Descrição:</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-          consequat.</p>
-          <p><a href="#" class="btn btn-primary" role="button">Inscrever-se</a></p>
-        </div>
-      </div>
-    </div>
+      {% endfor %}
+    {% endif %}
     <!-- fim do trecho -->
   </div>
 </div>

@@ -215,13 +215,28 @@ def aluno_turmas(request):
         return HttpResponseRedirect('/login')
     aluno = aluno[0]
 
-    turmas = aluno.turma_set.all()
+    if request.method == 'POST':
+        pprint(request.POST)
+        if('post_sair' in request.POST):
+            turma = Turma.objects.get(id=request.POST['post_sair'])
+            aluno.turma_set.remove(turma)
+            aluno.save()
+        if('post_entrar' in request.POST):
+            turma = Turma.objects.get(id=request.POST['post_entrar'])
+            aluno.turma_set.add(turma)
+            aluno.save()
+
+    turmas_registradas = aluno.turma_set.all()
     todas_turmas = Turma.objects.all()
+    turmas_nao_registradas = todas_turmas.exclude(
+        id__in=[turma_check.id for turma_check in turmas_registradas]
+    )
 
     return render_to_response(
-        'aluno_turmas.html',
-        {"turmas": turmas,
-         "todas_turmas": todas_turmas,
+        'lista_turmas.html',
+        {
+            "turmas_registradas": turmas_registradas,
+            "turmas_nao_registradas": turmas_nao_registradas,
         },
         context_instance=RequestContext(request),
     )
