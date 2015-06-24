@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from pprint import pprint
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -105,7 +104,6 @@ class UserRegistrationForm(UserCreationForm):
     def save(self, commit=True):
         usuario = super(UserRegistrationForm, self).save(commit=False)
         usuario.email = self.cleaned_data['email']
-        pprint(self.cleaned_data['fullname'])
 
         if commit:
             usuario.save()
