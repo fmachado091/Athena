@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^professor/$', 'Promachos.views.professor'),
     url(r'^prof_ativ/$', 'Promachos.views.prof_ativ'),
     url(r'^aluno/$', 'Promachos.views.aluno'),
-    url(r'^aluno_ativ/$', 'Promachos.views.aluno_ativ'),
+    url(r'^aluno/aluno_ativ/(?P<ativ_id>[0-9]+)/$',
+        'Promachos.views.aluno_ativ'),
     url(r'^aluno/aluno_turmas/$', 'Promachos.views.aluno_turmas'),
 ]

@@ -180,33 +180,41 @@ def aluno(request):
     aluno = aluno[0]
 
     turmas = aluno.turma_set.all()
-    """panes = []
+    panes = []
     for turma in turmas:
         atividades = Atividade.objects.filter(turma=turma)
         panes.append(
             render_to_response(
-                'pane_professor.html',
+                'pane_aluno.html',
                 {
                     "turma": turma,
                     "atividades": atividades,
-                    "form": AtividadeCreationForm(),
                 },
                 context_instance=RequestContext(request),
             ).content
         )
-    """
+
     return render_to_response(
         'aluno.html',
-        {"turmas": turmas},
+        {"turmas": turmas,
+         "panes": panes},
         context_instance=RequestContext(request),
     )
 
 
-def aluno_ativ(request):
+def aluno_ativ(request, ativ_id):
     aluno = Aluno.objects.filter(user=request.user)
     if request.user.is_authenticated() is False or not aluno:
         return HttpResponseRedirect('/login')
-    return render_to_response('ativ_exemplo.html')
+
+    atividade = Atividade.objects.filter(id=ativ_id)
+    atividade = atividade[0]
+
+    return render_to_response(
+        'aluno_ativ.html',
+        {"atividade": atividade},
+        context_instance=RequestContext(request),
+    )
 
 
 def aluno_turmas(request):

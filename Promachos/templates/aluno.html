@@ -92,12 +92,7 @@
             <a href=#{{turma.id}} aria-controls={{turma.id}}  role="tab" data-toggle="tab">{{turma.nome}}</a>
           </li>
 		  {% endfor %}
-          <li role="presentation">
-            <a href="#ces-10" aria-controls="ces-10" role="tab" data-toggle="tab">CES-10</a>
-          </li>
-          <li role="presentation">
-            <a href="#ces-11" aria-controls="ces-11" role="tab" data-toggle="tab">CES-11</a>
-          </li>
+          
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">
@@ -165,74 +160,9 @@
               </div>
             </div> <!-- end of row -->
           </div> <!-- end of workspace tab -->
-
-          <div role="tabpanel" class="tab-pane fade" id="ces-10">
-            <div class="row">
-              <div class="col-xs-12">
-                <div class="list">
-                  <ul>
-                    <a href="../aluno_ativ">
-                      <li class="list">
-                        <img src="/static/img/aluno/check.jpg" width="100px" height="100px">
-                        <h3>Lab 1</h3>
-                        <p><b>Situação:</b> Enviado<br/><b>Data limite:</b> 07/04<br/><b>Nota:</b> 98.4/100.0</p>
-                      </li>
-                    </a>
-
-                    <a href="../aluno_ativ">
-                      <li class="list">
-                        <img src="/static/img/aluno/check.jpg" width="100px" height="100px">
-                        <h3>Lab 2</h3>
-                        <p><b>Situação:</b> Enviado<br/><b>Data limite:</b> 14/04<br/><b>Nota:</b> Não disponível</p>
-                      </li>
-                    </a>
-
-                    <a href="../aluno_ativ">
-                      <li class="list">
-                        <img src="/static/img/aluno/not_check.jpg" width="100px" height="100px">
-                        <h3>Lab 3</h3>
-                        <p><b>Situação:</b> Não enviado<br/><b>Data limite:</b> 21/04<br/><b>Nota:</b> Não disponível</p>
-                      </li>
-                    </a>
-
-                    <a href="../aluno_ativ">
-                      <li class="list">
-                        <img src="/static/img/aluno/not_check.jpg" width="100px" height="100px">
-                        <h3>Lab 4</h3>
-                        <p><b>Situação:</b> Não enviado<br/><b>Data limite:</b> 28/04<br/><b>Nota:</b> Não disponível</p>
-                      </li>
-                    </a>
-                  </ul>
-                </div>
-              </div> <!-- end of col -->
-            </div> <!-- end of row -->
-          </div> <!-- end of ces-10 tab -->
-
-          <div role="tabpanel" class="tab-pane fade" id="ces-11">
-            <div class="row">
-              <div class="col-xs-12">
-                <div class="list">
-                  <ul>
-                    <a href="../aluno_ativ">
-                      <li class="list">
-                        <img src="/static/img/aluno/check.jpg" width="100px" height="100px">
-                        <h3>Lab 1</h3>
-                        <p><b>Situação:</b> Enviado<br/><b>Data limite:</b> 14/04<br/><b>Nota:</b> Não disponível</p>
-                      </li>
-                    </a>
-
-                    <a href="../aluno_ativ">
-                      <li class="list">
-                        <img src="/static/img/aluno/not_check.jpg" width="100px" height="100px">
-                        <h3>Lab 2</h3>
-                        <p><b>Situação:</b> Não enviado<br/><b>Data limite:</b> 21/04<br/><b>Nota:</b> Não disponível</p>
-                      </li>
-                    </a>
-                  </ul>
-                </div>
-              </div> <!-- end of col -->
-            </div> <!-- end of row -->
-          </div> <!-- end of ces-11 tab -->
+          {% for pane in panes %}
+              {{pane |safe}}
+          {% endfor %}          
         </div>
       </div>
     </div>
