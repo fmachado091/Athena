@@ -210,3 +210,36 @@ def aluno_ativ(request):
     if request.user.is_authenticated() is False or not aluno:
         return HttpResponseRedirect('/login')
     return render_to_response('ativ_exemplo.html')
+
+
+def aluno_turmas(request):
+    aluno = Aluno.objects.filter(user=request.user)
+    if request.user.is_authenticated() is False or not aluno:
+        return HttpResponseRedirect('/login')
+    aluno = aluno[0]
+
+    if request.method == 'POST':
+        pprint(request.POST)
+        if('post_sair' in request.POST):
+            turma = Turma.objects.get(id=request.POST['post_sair'])
+            aluno.turma_set.remove(turma)
+            aluno.save()
+        if('post_entrar' in request.POST):
+            turma = Turma.objects.get(id=request.POST['post_entrar'])
+            aluno.turma_set.add(turma)
+            aluno.save()
+
+    turmas_registradas = aluno.turma_set.all()
+    todas_turmas = Turma.objects.all()
+    turmas_nao_registradas = todas_turmas.exclude(
+        id__in=[turma_check.id for turma_check in turmas_registradas]
+    )
+
+    return render_to_response(
+        'lista_turmas.html',
+        {
+            "turmas_registradas": turmas_registradas,
+            "turmas_nao_registradas": turmas_nao_registradas,
+        },
+        context_instance=RequestContext(request),
+    )

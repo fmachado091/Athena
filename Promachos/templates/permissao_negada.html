@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Athena | Permissão negada</title>
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+  <script src="/static/js/jquery.min.js"></script>
+  <script src="/static/js/bootstrap.min.js"></script>
+  <style type="text/css">
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    .content {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .message {
+      top: 20%;
+    }
+  </style>
+</head>
+
+<body>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-6">
+      <img src="/static/img/ita_logo.jpg" style="height: 50px;">
+    </div>
+    <div class="col-xs-6" style="text-align: right;">
+      <p style="line-height: 40px;"><a href="#">logout</a></p>
+    </div>
+  </div>
+  <div class="row content">
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1 message">
+      <div class="alert alert-danger" role="alert"><strong>Ops!</strong> Você não tem permissão para acessar essa página :(</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
