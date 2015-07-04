@@ -9,25 +9,20 @@ from django.shortcuts import render, render_to_response
 from .forms import UploadFileForm, TurmaCreationForm, AtividadeCreationForm
 from Aeacus import compare
 from Athena.models import Professor, Turma, Atividade, Aluno
+from Athena.utils import checar_login_professor, checar_login_aluno
 from pprint import pprint
 import re
-import logging
-
-logr = logging.getLogger(__name__)
 
 
 def login(request):
 
-    if request.user.is_authenticated():
+    professor = checar_login_professor(request)
+    aluno = checar_login_aluno(request)
 
-        professor = Professor.objects.filter(user=request.user)
-        aluno = Aluno.objects.filter(user=request.user)
-
-        if aluno:
-            return HttpResponseRedirect('/aluno')
-
-        if professor:
-            return HttpResponseRedirect('/professor')
+    if professor:
+        return HttpResponseRedirect('/professor')
+    if aluno:
+        return HttpResponseRedirect('/aluno')
 
     if request.method == 'POST':
 
@@ -110,9 +105,11 @@ def logout(request):
 
 def professor(request):
 
-    professor = Professor.objects.filter(user=request.user)
-    if request.user.is_authenticated() is False or not professor:
+    professor = checar_login_professor(request)
+
+    if not professor:
         return HttpResponseRedirect('/login')
+
     professor = professor[0]
 
     form = TurmaCreationForm()
@@ -167,16 +164,22 @@ def professor(request):
 
 
 def prof_ativ(request):
-    professor = Professor.objects.filter(user=request.user)
-    if request.user.is_authenticated() is False or not professor:
+
+    professor = checar_login_professor(request)
+
+    if not professor:
         return HttpResponseRedirect('/login')
+
     return render_to_response('prof_ativ.html')
 
 
 def aluno(request):
-    aluno = Aluno.objects.filter(user=request.user)
-    if request.user.is_authenticated() is False or not aluno:
+
+    aluno = checar_login_aluno(request)
+
+    if not aluno:
         return HttpResponseRedirect('/login')
+
     aluno = aluno[0]
 
     turmas = aluno.turma_set.all()
