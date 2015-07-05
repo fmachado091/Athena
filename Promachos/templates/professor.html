@@ -7,7 +7,14 @@
   <meta name="author" content="">
   <title>Athena | Professor</title>
   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-  <script src="/static/js/jquery.min.js"></script>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css"> 
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script>
+  $(document).ready(function() {
+      $('.datepicker').datepicker({dateFormat: 'yy-mm-dd'});
+  });
+  </script>
   <script src="/static/js/bootstrap.min.js"></script>
   <style type="text/css">
     * {
