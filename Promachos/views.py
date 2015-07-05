@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.http import HttpResponseRedirect
+from django.utils import timezone
 from django.contrib import auth
 from django.core.context_processors import csrf
 from Cerberus.forms import UserRegistrationForm
@@ -8,7 +9,11 @@ from django.template import RequestContext
 from django.shortcuts import render, render_to_response
 from .forms import UploadFileForm, TurmaCreationForm, AtividadeCreationForm
 from Aeacus import compare
-from Athena.models import Turma, Atividade, Aluno, Submissao
+from Athena.models import Aluno
+from Athena.models import Turma
+from Athena.models import Atividade
+from Athena.models import Submissao
+from Athena.models import RelAlunoAtividade
 from Athena.utils import checar_login_professor, checar_login_aluno
 from pprint import pprint
 import re
@@ -231,15 +236,71 @@ def aluno_ativ(request, ativ_id):
     aluno = Aluno.objects.filter(user=request.user)
     if request.user.is_authenticated() is False or not aluno:
         return HttpResponseRedirect('/login')
+    aluno = aluno[0]
 
     atividade = Atividade.objects.filter(id=ativ_id)
     if not atividade:
         return HttpResponseRedirect('/aluno')
     atividade = atividade[0]
 
+    relAlunoAtividade = RelAlunoAtividade.objects.filter(
+        aluno=aluno,
+        atividade=atividade
+    )
+    if relAlunoAtividade:
+        relAlunoAtividade = relAlunoAtividade[0]
+
+    if request.method == 'POST':
+
+        atividade.arquivo_entrada.open()
+        entrada = atividade.arquivo_entrada.read()
+        atividade.arquivo_entrada.close()
+
+        atividade.arquivo_saida.open()
+        saida = atividade.arquivo_saida.read()
+        atividade.arquivo_saida.close()
+
+        fonte = request.FILES['arquivo_codigo']
+
+        status, resultado = compare.mover(entrada, saida, fonte)
+        nota = 0
+        if status == "WA":
+            lines_saida = saida.count('\n')
+            lines_diff = resultado.count('<br>')/2
+            nota = ((lines_saida - lines_diff)*100.0/lines_saida)
+            nota = int(nota)
+        if status == "AC":
+            nota = 100
+
+        submissao = Submissao(
+            data_envio=timezone.now().date(),
+            arquivo_codigo=request.FILES['arquivo_codigo'],
+            resultado=status,
+            nota=nota,
+            atividade=atividade,
+            aluno=aluno,
+        )
+        submissao.save()
+
+        if relAlunoAtividade:
+            relAlunoAtividade.foiEntregue = True
+        else:
+            relAlunoAtividade = RelAlunoAtividade(
+                foiEntregue=True,
+            )
+
+    submissao = Submissao.objects.filter(
+        atividade=atividade,
+        aluno=aluno
+    )
+    if submissao:
+        submissao = submissao[0]
+
     return render_to_response(
         'aluno_ativ.html',
-        {"atividade": atividade},
+        {"atividade": atividade,
+         "submissao": submissao,
+         "relAlunoAtividade": relAlunoAtividade},
         context_instance=RequestContext(request),
     )
 
