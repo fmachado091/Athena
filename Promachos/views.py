@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.http import HttpResponseRedirect
+from django.utils import timezone
 from django.contrib import auth
 from django.core.context_processors import csrf
 from Cerberus.forms import UserRegistrationForm
@@ -231,11 +232,44 @@ def aluno_ativ(request, ativ_id):
     aluno = Aluno.objects.filter(user=request.user)
     if request.user.is_authenticated() is False or not aluno:
         return HttpResponseRedirect('/login')
+    aluno = aluno[0]
 
     atividade = Atividade.objects.filter(id=ativ_id)
     if not atividade:
         return HttpResponseRedirect('/aluno')
     atividade = atividade[0]
+
+    if request.method == 'POST':
+
+        atividade.arquivo_entrada.open()
+        entrada = atividade.arquivo_entrada.read()
+        atividade.arquivo_entrada.close()
+
+        atividade.arquivo_saida.open()
+        saida = atividade.arquivo_saida.read()
+        atividade.arquivo_saida.close()
+
+        fonte = request.FILES['arquivo_codigo']
+
+        status, resultado = compare.mover(entrada, saida, fonte)
+        nota = 0
+        if status == "WA":
+            lines_saida = saida.count('\n')
+            lines_diff = resultado.count('<br>')/2
+            nota = ((lines_saida - lines_diff)*100.0/lines_saida)
+            nota = int(nota)
+        if status == "AC":
+            nota = 100
+
+        submissao = Submissao(
+            data_envio=timezone.now().date(),
+            arquivo_codigo=request.FILES['arquivo_codigo'],
+            resultado=status,
+            nota=nota,
+            atividade=atividade,
+            aluno=aluno,
+        )
+        submissao.save()
 
     return render_to_response(
         'aluno_ativ.html',

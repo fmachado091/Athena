@@ -25,6 +25,11 @@ def _is_blank(myString):
     return not(myString and myString.strip())
 
 
+def _copy_file(origem, destino):
+    with open(destino, 'wb+') as destination:
+        destination.write(origem)
+
+
 def _bytes_to_text(bytes, text):
     with open(text, 'wb+') as destination:
         for chunk in bytes.chunks():
@@ -49,7 +54,7 @@ def mover(entrada, resposta, codigo):
 
     out, err = _deletar_codigo_antigo()
     if not _is_blank(err):
-        return "error ao deletar arquivos antigos:\n" + out
+        return ("CE", "error ao deletar arquivos antigos:\n" + out)
 
     # prepara arquivo de codigo e compila
     os.chdir(DIRETORIO_DO_ARQUIVO)
@@ -61,27 +66,27 @@ def mover(entrada, resposta, codigo):
     )
 
     if not _is_blank(err):
-        return ("Error de compilacao!\n" + err).replace("\n", "<br>")
+        return ("CE", ("Error de compilacao!\n" + err).replace("\n", "<br>"))
 
     # mover programa.out de /compiler para /runner
     os.chdir(DIRETORIO_DO_ARQUIVO)
-    _execute("mv compiler/programa.out runner")
+    _execute("mv compiler/code/programa.out runner")
 
     # prepara arquivos de entrada/saida e roda
     os.chdir(DIRETORIO_DO_ARQUIVO)
     os.chdir("runner")
-    _bytes_to_text(entrada, 'entrada.txt')
-    _bytes_to_text(resposta, 'resposta.txt')
+    _copy_file(entrada, 'entrada.txt')
+    _copy_file(resposta, 'resposta.txt')
 
     out, err = _execute("python runner.py")
     if not _is_blank(err):
-        return "erro de execucao\n" + out
+        return ("RTE", "erro de execucao\n" + out)
 
     # diff das saidas
     outdiff, err = _execute("diff saida.txt resposta.txt")
 
     if not _is_blank(outdiff):
         outdiff = outdiff.replace("\n", "<br>")
-        return outdiff
+        return ("WA", outdiff)
     else:
-        return "saidas iguais"
+        return ("AC", "saidas iguais")
