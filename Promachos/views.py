@@ -180,15 +180,18 @@ def prof_ativ(request, id_ativ):
 
     status_aluno = []
 
-    for aluno in atividade.alunos.all():
+    for aluno in atividade.turma.alunos.all():
         submissao = Submissao.objects.filter(atividade=atividade, aluno=aluno)
-        # relacao = RelAlunoAtividade.objects.filter(
-        #   atividade=atividade, aluno=aluno
-        # )
+        if submissao:
+            submissao = submissao[0]
 
-        status_aluno.append(
-            (aluno.nome, submissao.data_envio, submissao.resultado)
-        )
+            status_aluno.append(
+                (aluno.nome, submissao.data_envio, submissao.resultado)
+            )
+        else:
+            status_aluno.append(
+                (aluno.nome, "Não enviado", "-")
+            )
 
     return render_to_response(
         'prof_ativ.html',
@@ -288,7 +291,10 @@ def aluno_ativ(request, ativ_id):
         else:
             relAlunoAtividade = RelAlunoAtividade(
                 foiEntregue=True,
+                aluno=aluno,
+                atividade=atividade,
             )
+        relAlunoAtividade.save()
 
     submissao = Submissao.objects.filter(
         atividade=atividade,

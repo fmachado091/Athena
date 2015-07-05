@@ -3,7 +3,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 
-
 urlpatterns = patterns(
     '',
     (r'^admin/', include(admin.site.urls)),
@@ -13,7 +12,7 @@ urlpatterns = patterns(
     (r'^logout/$', 'Promachos.views.logout'),
     (r'^cadastro/$', 'Promachos.views.register_user'),
     (r'^professor/$', 'Promachos.views.professor'),
-    (r'^prof_ativ/$', 'Promachos.views.prof_ativ'),
+    (r'^prof_ativ/(?P<id_ativ>[0-9]+)/$', 'Promachos.views.prof_ativ'),
     (r'^aluno/$', 'Promachos.views.aluno'),
     (
         r'^aluno/aluno_ativ/(?P<ativ_id>[0-9]+)/$',
