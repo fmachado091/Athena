@@ -153,7 +153,7 @@ def professor(request):
                 {
                     "turma": turma,
                     "atividades": atividades,
-                    "form": AtividadeCreationForm(),
+                    "form": AtividadeCreationForm(prefix=turma.id),
                 },
                 context_instance=RequestContext(request),
             ).content
@@ -188,7 +188,7 @@ def prof_ativ(request, id_ativ):
             status_aluno.append(
                 (aluno.nome, submissao.data_envio, submissao.resultado)
             )
-        else: 
+        else:
             status_aluno.append(
                 (aluno.nome, "Não enviado", "-")
             )
@@ -245,6 +245,7 @@ def aluno_ativ(request, ativ_id):
     if not atividade:
         return HttpResponseRedirect('/aluno')
     atividade = atividade[0]
+    resultado = ""
 
     relAlunoAtividade = RelAlunoAtividade.objects.filter(
         aluno=aluno,
@@ -304,9 +305,12 @@ def aluno_ativ(request, ativ_id):
 
     return render_to_response(
         'aluno_ativ.html',
-        {"atividade": atividade,
-         "submissao": submissao,
-         "relAlunoAtividade": relAlunoAtividade},
+        {
+            "atividade": atividade,
+            "submissao": submissao,
+            "relAlunoAtividade": relAlunoAtividade,
+            "resultado": resultado,
+        },
         context_instance=RequestContext(request),
     )
 
