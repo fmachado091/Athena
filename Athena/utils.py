@@ -1,9 +1,8 @@
-from django.contrib import auth
-from django.template import RequestContext
 from Athena.models import Professor, Aluno
 
 
 def checar_login_professor(request):
+
     if not request.user.is_authenticated():
         return False
 
@@ -13,6 +12,7 @@ def checar_login_professor(request):
 
 
 def checar_login_aluno(request):
+
     if not request.user.is_authenticated():
         return False
 
