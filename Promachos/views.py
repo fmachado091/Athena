@@ -243,21 +243,13 @@ def aluno_ativ(request, ativ_id):
         return HttpResponseRedirect('/aluno')
     atividade = atividade[0]
 
-<<<<<<< HEAD
-    submissao = Submissao.objects.filter(
-        atividade=atividade,
-        aluno=aluno
-    )
-    if submissao:
-        submissao = submissao[0]
-
     relAlunoAtividade = RelAlunoAtividade.objects.filter(
         aluno=aluno,
         atividade=atividade
     )
     if relAlunoAtividade:
         relAlunoAtividade = relAlunoAtividade[0]
-=======
+
     if request.method == 'POST':
 
         atividade.arquivo_entrada.open()
@@ -289,7 +281,20 @@ def aluno_ativ(request, ativ_id):
             aluno=aluno,
         )
         submissao.save()
->>>>>>> bd1a3a35ff2ee3ef34b2d2f1cdd70c7e9dd4cdd9
+
+        if relAlunoAtividade:
+            relAlunoAtividade.foiEntregue = True
+        else:
+            relAlunoAtividade = RelAlunoAtividade(
+                foiEntregue=True,
+            )
+
+    submissao = Submissao.objects.filter(
+        atividade=atividade,
+        aluno=aluno
+    )
+    if submissao:
+        submissao = submissao[0]
 
     return render_to_response(
         'aluno_ativ.html',
