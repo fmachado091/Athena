@@ -20,12 +20,11 @@
       <div class="col-xs-4">
         <p><h2>{{ atividade.nome }}</h2></p>
         <div class="form-group">
-         <p align="justify"><b>Descrição: </b>{{ atividade.descricao }}</p>
-         <p><b>Atividade:</b> <a href="#">CESXX_Lab##.pdf</a></p>
+          <p align="justify"><b>Descrição: </b>{{ atividade.descricao }}</p>
+          <p><b>Atividade:</b> <a href="{{ atividade.arquivo_roteiro.url }}">{{ atividade.nome_roteiro }}</a></p>
         </div>
         <form method="POST" enctype="multipart/form-data">
           {% csrf_token %}
-          <input type="hidden" name="post_turma" value="True">
           <div class="form-group">
             <label for>Enviar solução:</label>
             <input id="id_arquivo_codigo" name="arquivo_codigo" required="True" type="file">
@@ -34,15 +33,31 @@
             <input class="btn btn-default" type="submit" value="Submit">
           </div>
         </form>
-        <div class="form-group">
-            <p><b>Status:</b> Entregue</p>
-            <p><b>Nota:</b> - / 100.0</p>
-            <p><b>Data limite:</b> Sex, 22/05/2015 - 23h55</p>
-            <p><b>Último envio:</b> Qua, 22/04/2015 - 22h50</p>
-            <p><b>Comentário:</b> -</p>
+        {% if submissao and relAlunoAtividade %}
+           {% if relAlunoAtividade.foiEntregue %}
+             <div class="form-group">
+               <p><b>Status:</b> Entregue.</p>
+               <p><b>Nota:</b> {{ submissao.nota }}</p>
+               <p><b>Data limite:</b> {{ atividade.data_limite }}</p>
+               <p><b>Último envio:</b> {{ submissao.data_envio }}</p>
+             </div>
+           {% else %}
+             <div class="form-group">
+               <p><b>Status:</b> Não entregue.</p>
+               <p><b>Nota:</b> -</p>
+               <p><b>Data limite:</b> {{ atividade.data_limite }}</p>
+               <p><b>Último envio:</b> -</p>
+             </div>
+           {% endif %}
+        {% else %}
+          <div class="form-group">
+            <p><b>Status:</b> Não entregue.</p>
+            <p><b>Nota:</b> -</p>
+            <p><b>Data limite:</b> {{ atividade.data_limite }}</p>
+            <p><b>Último envio:</b> -</p>
           </div>
-          <a href="../../">Voltar</a>
-        </form>
+        {% endif %}
+        <a href="../../">Voltar</a>
       </div>
     </div>
   </div> <!-- end of container -->

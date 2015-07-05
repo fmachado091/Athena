@@ -9,7 +9,11 @@ from django.template import RequestContext
 from django.shortcuts import render, render_to_response
 from .forms import UploadFileForm, TurmaCreationForm, AtividadeCreationForm
 from Aeacus import compare
-from Athena.models import Turma, Atividade, Aluno, Submissao
+from Athena.models import Aluno
+from Athena.models import Turma
+from Athena.models import Atividade
+from Athena.models import Submissao
+from Athena.models import RelAlunoAtividade
 from Athena.utils import checar_login_professor, checar_login_aluno
 from pprint import pprint
 import re
@@ -239,6 +243,13 @@ def aluno_ativ(request, ativ_id):
         return HttpResponseRedirect('/aluno')
     atividade = atividade[0]
 
+    relAlunoAtividade = RelAlunoAtividade.objects.filter(
+        aluno=aluno,
+        atividade=atividade
+    )
+    if relAlunoAtividade:
+        relAlunoAtividade = relAlunoAtividade[0]
+
     if request.method == 'POST':
 
         atividade.arquivo_entrada.open()
@@ -271,9 +282,25 @@ def aluno_ativ(request, ativ_id):
         )
         submissao.save()
 
+        if relAlunoAtividade:
+            relAlunoAtividade.foiEntregue = True
+        else:
+            relAlunoAtividade = RelAlunoAtividade(
+                foiEntregue=True,
+            )
+
+    submissao = Submissao.objects.filter(
+        atividade=atividade,
+        aluno=aluno
+    )
+    if submissao:
+        submissao = submissao[0]
+
     return render_to_response(
         'aluno_ativ.html',
-        {"atividade": atividade},
+        {"atividade": atividade,
+         "submissao": submissao,
+         "relAlunoAtividade": relAlunoAtividade},
         context_instance=RequestContext(request),
     )
 
