@@ -8,26 +8,21 @@ from django.template import RequestContext
 from django.shortcuts import render, render_to_response
 from .forms import UploadFileForm, TurmaCreationForm, AtividadeCreationForm
 from Aeacus import compare
-from Athena.models import Professor, Turma, Atividade, Aluno
+from Athena.models import Turma, Atividade, Aluno, Submissao
+from Athena.utils import checar_login_professor, checar_login_aluno
 from pprint import pprint
 import re
-import logging
-
-logr = logging.getLogger(__name__)
 
 
 def login(request):
 
-    if request.user.is_authenticated():
+    professor = checar_login_professor(request)
+    aluno = checar_login_aluno(request)
 
-        professor = Professor.objects.filter(user=request.user)
-        aluno = Aluno.objects.filter(user=request.user)
-
-        if aluno:
-            return HttpResponseRedirect('/aluno')
-
-        if professor:
-            return HttpResponseRedirect('/professor')
+    if professor:
+        return HttpResponseRedirect('/professor')
+    if aluno:
+        return HttpResponseRedirect('/aluno')
 
     if request.method == 'POST':
 
@@ -110,9 +105,11 @@ def logout(request):
 
 def professor(request):
 
-    professor = Professor.objects.filter(user=request.user)
-    if request.user.is_authenticated() is False or not professor:
+    professor = checar_login_professor(request)
+
+    if not professor:
         return HttpResponseRedirect('/login')
+
     professor = professor[0]
 
     form = TurmaCreationForm()
@@ -166,17 +163,45 @@ def professor(request):
     )
 
 
-def prof_ativ(request):
-    professor = Professor.objects.filter(user=request.user)
-    if request.user.is_authenticated() is False or not professor:
+def prof_ativ(request, id_ativ):
+
+    professor = checar_login_professor(request)
+
+    if not professor:
         return HttpResponseRedirect('/login')
-    return render_to_response('prof_ativ.html')
+
+    atividade = Atividade.objects.get(id=id_ativ)
+    # atividade1 = Atividade.objects.get(id=request.GET.get('id_ativ'))
+
+    status_aluno = []
+
+    for aluno in atividade.alunos.all():
+        submissao = Submissao.objects.filter(atividade=atividade, aluno=aluno)
+        # relacao = RelAlunoAtividade.objects.filter(
+        #   atividade=atividade, aluno=aluno
+        # )
+
+        status_aluno.append(
+            (aluno.nome, submissao.data_envio, submissao.resultado)
+        )
+
+    return render_to_response(
+        'prof_ativ.html',
+        {
+            "atividade": atividade,
+            "status_aluno": status_aluno,
+        },
+        context_instance=RequestContext(request),
+    )
 
 
 def aluno(request):
-    aluno = Aluno.objects.filter(user=request.user)
-    if request.user.is_authenticated() is False or not aluno:
+
+    aluno = checar_login_aluno(request)
+
+    if not aluno:
         return HttpResponseRedirect('/login')
+
     aluno = aluno[0]
 
     turmas = aluno.turma_set.all()

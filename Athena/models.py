@@ -57,7 +57,7 @@ class Turma(models.Model):
 class Atividade(models.Model):
 
     def estaFechada(self):
-        return self.data_limite <= timezone.now()
+        return self.data_limite >= timezone.now().date()
 
     nome = models.CharField(max_length=50)
     descricao = models.CharField(
