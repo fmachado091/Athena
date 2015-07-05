@@ -67,7 +67,7 @@ class AtividadeCreationForm(ModelForm):
                 'required': 'True',
             }),
             'data_limite': forms.TextInput(attrs={
-                'class': 'datepicker',
+                'id': 'datepicker',
                 'required': 'True',
             }),
         }
