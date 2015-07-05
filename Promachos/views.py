@@ -208,6 +208,8 @@ def aluno_ativ(request, ativ_id):
         return HttpResponseRedirect('/login')
 
     atividade = Atividade.objects.filter(id=ativ_id)
+    if not atividade:
+        return HttpResponseRedirect('/aluno')
     atividade = atividade[0]
 
     return render_to_response(
