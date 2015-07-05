@@ -40,6 +40,7 @@
                <p><b>Nota:</b> {{ submissao.nota }}</p>
                <p><b>Data limite:</b> {{ atividade.data_limite }}</p>
                <p><b>Último envio:</b> {{ submissao.data_envio }}</p>
+               <p><b>Comentário:<br></b>{{resultado|safe}}</p>
              </div>
            {% else %}
              <div class="form-group">
