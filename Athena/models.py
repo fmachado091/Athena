@@ -1,10 +1,16 @@
+import os
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
 
 def atividade_path(instance, filename):
-    return 'atividades/{0}/{1}'.format(instance.id, filename)
+    return 'atividades/{prof}/{turma}/{id}/{name}'.format(
+        prof=instance.turma.professor.id,
+        turma=instance.turma.id,
+        id=instance.nome,
+        name=filename,
+    )
 
 
 def submissao_path(instance, filename):
@@ -81,6 +87,15 @@ class Atividade(models.Model):
 
     def __str__(self):
         return '%s %s' % (self.nome, self.turma.nome)
+
+    def nome_roteiro(self):
+        return os.path.basename(self.arquivo_roteiro.name)
+
+    def nome_entrada(self):
+        return os.path.basename(self.arquivo_entrada.name)
+
+    def nome_saida(self):
+        return os.path.basename(self.arquivo_saida.name)
 
 
 class Submissao(models.Model):

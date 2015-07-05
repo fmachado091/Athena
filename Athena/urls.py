@@ -1,22 +1,21 @@
-from django.conf.urls import include, url
+from django.conf.urls import patterns, include
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 
 
-urlpatterns = [
-    # Examples:
-    # url(r'^$', 'Athena.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
+urlpatterns = patterns('',
 
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', 'Promachos.views.login'),
-    url(r'^home$', 'Promachos.views.home'),
-    url(r'^login/$', 'Promachos.views.login'),
-    url(r'^logout/$', 'Promachos.views.logout'),
-    url(r'^cadastro/$', 'Promachos.views.register_user'),
-    url(r'^professor/$', 'Promachos.views.professor'),
-    url(r'^prof_ativ/$', 'Promachos.views.prof_ativ'),
-    url(r'^aluno/$', 'Promachos.views.aluno'),
-    url(r'^aluno/aluno_ativ/(?P<ativ_id>[0-9]+)/$',
+    (r'^admin/', include(admin.site.urls)),
+    (r'^$', 'Promachos.views.login'),
+    (r'^home$', 'Promachos.views.home'),
+    (r'^login/$', 'Promachos.views.login'),
+    (r'^logout/$', 'Promachos.views.logout'),
+    (r'^cadastro/$', 'Promachos.views.register_user'),
+    (r'^professor/$', 'Promachos.views.professor'),
+    (r'^prof_ativ/$', 'Promachos.views.prof_ativ'),
+    (r'^aluno/$', 'Promachos.views.aluno'),
+    (r'^aluno/aluno_ativ/(?P<ativ_id>[0-9]+)/$',
         'Promachos.views.aluno_ativ'),
-    url(r'^aluno/aluno_turmas/$', 'Promachos.views.aluno_turmas'),
-]
+    (r'^aluno/aluno_turmas/$', 'Promachos.views.aluno_turmas'),
+) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
