@@ -4,11 +4,15 @@
       <div class="thumbnail">
         <div class="caption">
           <h3 align="center">Atividades</h3>
-          <br>
-		  {% for atividade in atividades %}
-          <p>{{atividade.data_limite}} - <a href="../atividades/{{atividade.id}}"> {{atividade.nome}} </a></p>
-		  {% endfor %}
-          <br>
+            <br>
+                      {% for atividade in atividades %}
+              <form method="GET" enctype="multipart/form-data">
+                <input type="hidden" name="load_atividade" value="True">
+                <input type="hidden" name="id_ativ" value={{atividade.id}}>
+                <p>{{atividade.data_limite}} - <a href="../prof_ativ/{{atividade.id}}/" type="submit"> {{atividade.nome}} </a></p>
+              </form>
+                      {% endfor %}
+            <br>
         </div>
       </div>
     </div>
@@ -26,7 +30,7 @@
 			<div class="form-group">
 				<label for="{{field.id}}">{{field.label}}:</label>
 				{{field}}
-            </div>
+                        </div>
 			{% endfor %}
             <p><button class="btn btn-lg btn-success btn-block" type="submit">Criar</button></p>
           </form>

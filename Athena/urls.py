@@ -15,7 +15,8 @@ urlpatterns = patterns(
     (r'^professor/$', 'Promachos.views.professor'),
     (r'^prof_ativ/$', 'Promachos.views.prof_ativ'),
     (r'^aluno/$', 'Promachos.views.aluno'),
-    (r'^aluno/aluno_ativ/(?P<ativ_id>[0-9]+)/$',
-        'Promachos.views.aluno_ativ'),
+    (r'^aluno/aluno_ativ/(?P<ativ_id>[0-9]+)/$', 
+        'Promachos.views.aluno_ativ'
+    ),
     (r'^aluno/aluno_turmas/$', 'Promachos.views.aluno_turmas'),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
