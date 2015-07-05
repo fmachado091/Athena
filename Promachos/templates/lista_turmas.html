@@ -10,9 +10,18 @@
   <script src="/static/js/jquery.min.js"></script>
   <script src="/static/js/bootstrap.min.js"></script>
   <style type="text/css">
+    h3 {
+      font: bold Helvetica, Verdana, sans-serif;
+    }
+
     .thumbnail {
-        height: 300px;
-        overflow: hidden;
+      height: 300px;
+      overflow: hidden;
+    }
+
+    .descricao {
+      height: 120px;
+      overflow: auto;
     }
   </style>
 </head>
@@ -24,7 +33,7 @@
       <img src="/static/img/ita_logo.jpg" style="height: 50px;">
     </div>
     <div class="col-xs-6" style="text-align: right;">
-      <p style="line-height: 40px;"><a href="aluno.html">voltar para workspace</a> | <a href="#">logout</a></p>
+      <p style="line-height: 40px;"><a href="/aluno/">voltar para workspace</a> | <a href="#">logout</a></p>
     </div>
   </div>
   <div class="row" style="padding-bottom: 25px;">
@@ -41,7 +50,10 @@
             <div class="caption">
               <h3>{{ turma.nome }}</h3>
               <p><strong>Professor:</strong> {{ turma.professor }}</p>
-              <p><strong>Descrição:</strong> {{ turma.descricao }}</p>
+              <div class="descricao">
+                <p><strong>Descrição:</strong> {{ turma.descricao }}</p>
+              </div>
+              <br>
               <form method="post" enctype="multipart/form-data">
 				<input type="hidden" name="post_sair" value={{turma.id}}>
 				{% csrf_token %}
@@ -60,7 +72,10 @@
             <div class="caption">
               <h3>{{ turma.nome }}</h3>
               <p><strong>Professor:</strong> {{ turma.professor }}</p>
-              <p><strong>Descrição:</strong> {{ turma.descricao }}</p>
+              <div class="descricao">
+                <p><strong>Descrição:</strong> {{ turma.descricao }}</p>
+              </div>
+              <br>
               <form method="post" enctype="multipart/form-data">
 				<input type="hidden" name="post_entrar" value={{turma.id}}>
 				{% csrf_token %}
