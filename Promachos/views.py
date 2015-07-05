@@ -153,7 +153,7 @@ def professor(request):
                 {
                     "turma": turma,
                     "atividades": atividades,
-                    "form": AtividadeCreationForm(),
+                    "form": AtividadeCreationForm(prefix=turma.id),
                 },
                 context_instance=RequestContext(request),
             ).content
