@@ -18,7 +18,7 @@
       padding-top: 20px;
     }
 
-    h2, h3, h4 {
+    h2, h3, h4, h5 {
       text-align: center;
     }
 
@@ -54,14 +54,19 @@
       <img src="/static/img/ita_logo.jpg" style="height: 50px;">
     </div>
     <div class="col-xs-6" style="text-align: right;">
-      <p style="line-height: 40px;"><a href="#">logout</a></p>
+      <p style="line-height: 40px;"><a href="/logout/">logout</a></p>
     </div>
   </div>
   <div class="row content">
     <div class="col-sm-offset-4 col-xs-12 col-sm-4">
-      <h2>Lab 1 - Distância entre pontos</h2>
-      <h3>CES-10 - Prof. Fulano</h3>
-      <h4>Status: aberto (até XX/XX/XXXX)</h4>
+      <h2>{{atividade.nome}}</h2>
+      <h3>{{atividade.turma}} - Prof. {{atividade.turma.professor.nome}}</h3>
+            {% if atividade.estaFechada %}
+      <h4>Status: aberto (até {{atividade.data_limite}})</h4>
+            {% else %} 
+      <h5>Status: fechado (em {{atividade.data_limite}})</h5>
+            {% endif %}
+
       <section class="tabela">
         <table>
           <thead>
@@ -73,39 +78,11 @@
           </thead>
           <tbody>
             <tr>
-              <td><a href="">Avatar Gigrande</a></td>
-              <td>Sim</td>
-              <td>Erro de compilação</td>
-            </tr>
-            <tr>
-              <td><a href="">Cesinha Complovin</a></td>
-              <td>Sim</td>
-              <td>95.6</td>
-            </tr>
-            <tr>
-              <td><a href="">CHIM-BI-NHA</a></td>
-              <td>Sim</td>
-              <td>100.0</td>
-            </tr>
-            <tr>
-              <td><a href="">John Suhimaster</a></td>
-              <td>Sim</td>
-              <td>TLE</td>
-            </tr>
-            <tr>
-              <td><a href="">Jusy Soneca</a></td>
-              <td>Sim</td>
-              <td>91.8</td>
-            </tr>
-            <tr>
-              <td><a href="">Tiago Guilon</a></td>
-              <td>Sim</td>
-              <td>75.0</td>
-            </tr>
-            <tr>
-              <td><a href="">Xing Flango</a></td>
-              <td>Não</td>
-              <td>0.0</td>
+                        {% for nome,data,resultado in status_aluno %} 
+              <td><a href="">{{nome}}</a></td>
+              <td>{{data}}</td>
+              <td>{{resultado}}</td>
+                        {% endfor %}
             </tr>
           </tbody>
         </table>

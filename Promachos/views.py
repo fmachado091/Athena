@@ -163,14 +163,32 @@ def professor(request):
     )
 
 
-def prof_ativ(request):
+def prof_ativ(request,id_ativ):
 
     professor = checar_login_professor(request)
 
     if not professor:
         return HttpResponseRedirect('/login')
 
-    return render_to_response('prof_ativ.html')
+    atividade = Atividade.objects.get(id=id_ativ)
+    ## atividade1 = Atividade.objects.get(id=request.GET.get('id_ativ'))
+
+    status_aluno = []
+
+    for aluno in atividade.alunos.all():
+        submissao = Submissao.objects.filter(atividade=atividade, aluno=aluno)
+        ## relacao = RelAlunoAtividade.objects.filter(atividade=atividade, aluno=aluno)
+
+        status_aluno.append((aluno.nome,submissao.data_envio,submissao.resultado))
+
+    return render_to_response(
+        'prof_ativ.html',
+        {
+            "atividade": atividade,
+            "status_aluno": status_aluno,
+        },
+        context_instance=RequestContext(request),
+    )
 
 
 def aluno(request):
