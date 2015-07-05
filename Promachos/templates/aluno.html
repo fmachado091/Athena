@@ -61,6 +61,14 @@
       height: 310px;
       text-align: center;
     }
+
+    .tab-pane {
+      padding-top: 20px;
+    }
+
+    .detalhes {
+      text-align: center;
+    }
   </style>
 </head>
 
@@ -97,11 +105,6 @@
         <!-- Tab panes -->
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane fade in active" id="workspace">
-            <div class="row">
-              <div class="col-xs-12">
-                &nbsp;
-              </div>
-            </div>
             <div class="row">
               <div class="col-xs-2 col-md-1" style="text-align: right;">
                 <p><h4>Menu</h4></p>
@@ -160,6 +163,18 @@
               </div>
             </div> <!-- end of row -->
           </div> <!-- end of workspace tab -->
+          <!-- trecho que repete pra cada turma -->
+          <div class="col-xs-6 col-sm-3">
+            <div class="thumbnail">
+              <div class="caption">
+                <h3>Lab # - Título</h3>
+                <p><strong>Status:</strong> Não entregue</p>
+                <p><strong>Data limite:</strong> Sex, 22/05/2015 - 23h55</p>
+                <p class="detalhes"><a href="#">Mais detalhes</a></p>
+              </div>
+            </div>
+          </div>
+          <!-- fim do trecho -->
           {% for pane in panes %}
               {{pane |safe}}
           {% endfor %}          
