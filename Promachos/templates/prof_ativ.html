@@ -91,7 +91,11 @@
               <p><button class="btn btn-lg btn-success btn-block" type="submit">Concluir</button></p>
             </form>
             <br>
-            <p><a href="#" class="btn btn-lg btn-block btn-danger" role="button">Encerrar atividade</a></p>
+            <form method="post" enctype="multiplart/form-data">
+              <input type="hidden" name="post_del_ativ" value="True">
+              {% csrf_token %}
+              <p><button class="btn btn-lg btn-block btn-danger" type="submit" href="/professor">Deletar atividade</button></p>
+            </form>
             <br>
           </div>
         </div>

@@ -183,8 +183,12 @@ def prof_ativ(request, id_ativ):
     if not professor:
         return HttpResponseRedirect('/login')
 
-    atividade = Atividade.objects.get(id=id_ativ)
+    atividade = Atividade.objects.filter(id=id_ativ)
     # atividade1 = Atividade.objects.get(id=request.GET.get('id_ativ'))
+
+    if not atividade:
+        return HttpResponseRedirect('/professor')
+    atividade = atividade[0]
 
     status_aluno = []
 
@@ -205,6 +209,24 @@ def prof_ativ(request, id_ativ):
             status_aluno.append(
                 (aluno.nome, "Não enviado", "-")
             )
+
+    if request.method == 'POST':
+        pprint(request.POST)
+        if('post_del_ativ' in request.POST):
+            submissoes = Submissao.objects.filter(
+                atividade=atividade,
+            )
+
+            for submissao in submissoes:
+                submissao.remove_file()
+            submissoes.delete()
+
+            atividade.remove_roteiro()
+            atividade.remove_entrada()
+            atividade.remove_saida()
+            atividade.delete()
+
+            return HttpResponseRedirect('/professor')
 
     return render_to_response(
         'prof_ativ.html',
