@@ -304,7 +304,7 @@ def aluno_ativ(request, ativ_id):
             for s in resultado.split():
                 if s.isdigit():
                     nums.append(int(s))
-            lines_gabarito = gabarito.count('\n')
+            lines_gabarito = gabarito.count('\n') + 1
             resultado = resultado.split('\n')
             resultado.pop(0)
             gabarito = gabarito.split('\n')
