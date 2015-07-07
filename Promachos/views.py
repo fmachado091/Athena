@@ -283,7 +283,7 @@ def aluno_ativ(request, ativ_id):
         relAlunoAtividade = relAlunoAtividade[0]
 
     lista_saida = []
-    compilation_error = ""
+    rte_ce_error = ""
     if request.method == 'POST':
 
         atividade.arquivo_entrada.open()
@@ -317,8 +317,8 @@ def aluno_ativ(request, ativ_id):
             nota = int(nota)
         elif status == "AC":
             nota = 100
-        elif status == "CE":
-            compilation_error = resultado
+        elif status == "CE" or status == "RTE":
+            rte_ce_error = resultado
 
         submissoes = Submissao.objects.filter(
             aluno=aluno,
@@ -366,7 +366,7 @@ def aluno_ativ(request, ativ_id):
             "lista_saida": lista_saida,
             "resultado": resultado,
             "status": status,
-            "compilation_error": compilation_error,
+            "compilation_error": rte_ce_error,
         },
         context_instance=RequestContext(request),
     )

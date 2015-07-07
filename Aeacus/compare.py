@@ -80,8 +80,8 @@ def mover(entrada, resposta, codigo):
     _copy_file(resposta, 'resposta.txt')
 
     out, err = _execute("python runner.py")
-    if not _is_blank(err):
-        return ("RTE", "erro de execucao\n" + out)
+    if not _is_blank(out):
+        return ("RTE", out.replace("\n", "<br>"))
 
     # diff das saidas
     outdiff, err = _execute("cat saida.txt")
