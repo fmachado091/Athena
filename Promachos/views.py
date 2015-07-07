@@ -8,6 +8,7 @@ from Cerberus.forms import UserRegistrationForm
 from django.template import RequestContext
 from django.shortcuts import render, render_to_response
 from .forms import UploadFileForm, TurmaCreationForm, AtividadeCreationForm
+from .forms import AtividadeEditForm
 from Aeacus import compare
 from Athena.models import Turma
 from Athena.models import Atividade
@@ -184,34 +185,27 @@ def prof_ativ(request, id_ativ):
         return HttpResponseRedirect('/login')
 
     atividade = Atividade.objects.filter(id=id_ativ)
-    # atividade1 = Atividade.objects.get(id=request.GET.get('id_ativ'))
-
     if not atividade:
         return HttpResponseRedirect('/professor')
+
     atividade = atividade[0]
-
-    status_aluno = []
-
-    for aluno in atividade.turma.alunos.all():
-        submissao = Submissao.objects.filter(atividade=atividade, aluno=aluno)
-        if submissao:
-            submissao = submissao[0]
-
-            status_aluno.append(
-                (
-                    aluno.nome,
-                    submissao.data_envio,
-                    submissao.resultado,
-                    submissao.arquivo_codigo.url
-                )
-            )
-        else:
-            status_aluno.append(
-                (aluno.nome, "Não enviado", "-")
-            )
 
     if request.method == 'POST':
         pprint(request.POST)
+        if('post_edit_atividade' in request.POST):
+            atividade.nome = request.POST['nome']
+            atividade.descricao = request.POST['descricao']
+            atividade.data_limite = request.POST['data_limite']
+            files = request.FILES
+            if 'arquivo_roteiro' in files:
+                atividade.arquivo_roteiro = files['arquivo_roteiro']
+            if 'arquivo_entrada' in files:
+                atividade.arquivo_entrada = files['arquivo_entrada']
+            if 'arquivo_saida' in files:
+                atividade.arquivo_saida = files['arquivo_saida']
+            atividade.save()
+            atividade = Atividade.objects.get(id=id_ativ)
+
         if('post_del_ativ' in request.POST):
             submissoes = Submissao.objects.filter(
                 atividade=atividade,
@@ -228,11 +222,33 @@ def prof_ativ(request, id_ativ):
 
             return HttpResponseRedirect('/professor')
 
+    status_aluno = []
+
+    for aluno in atividade.turma.alunos.all():
+        submissao = Submissao.objects.filter(atividade=atividade, aluno=aluno)
+        if submissao:
+            submissao = submissao[0]
+
+            status_aluno.append(
+                (
+                    aluno.nome,
+                    submissao.data_envio,
+                    submissao.resultado,
+                    submissao.arquivo_codigo.url,
+                    submissao.nota,
+                )
+            )
+        else:
+            status_aluno.append(
+                (aluno.nome, "Não enviado", "-")
+            )
+
     return render_to_response(
         'prof_ativ.html',
         {
             "atividade": atividade,
             "status_aluno": status_aluno,
+            "form": AtividadeEditForm(instance=atividade),
         },
         context_instance=RequestContext(request),
     )
