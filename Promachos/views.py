@@ -149,6 +149,25 @@ def professor(request):
             atividade.save()
         elif ('post_deletar' in request.POST):
             turma = Turma.objects.get(id=request.POST['id_turma'])
+
+            atividades = Atividade.objects.filter(
+                turma=turma,
+            )
+
+            for atividade in atividades:
+                submissoes = Submissao.objects.filter(
+                    atividade=atividade,
+                )
+
+                for submissao in submissoes:
+                    submissao.remove_file()
+                submissoes.delete()
+
+                atividade.remove_roteiro()
+                atividade.remove_entrada()
+                atividade.remove_saida()
+
+            atividades.delete()
             turma.delete()
 
     turmas = Turma.objects.filter(professor=professor)
