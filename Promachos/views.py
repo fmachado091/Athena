@@ -129,13 +129,15 @@ def professor(request):
             turma.save()
         elif ('post_atividade' in request.POST):
             turma = Turma.objects.get(id=request.POST['id_turma'])
+            turma_id = turma.id
+            prefixo = str(turma_id) + '-'
             atividade = Atividade(
-                nome=request.POST['nome'],
-                descricao=request.POST['descricao'],
-                data_limite=request.POST['data_limite'],
-                arquivo_roteiro=request.FILES['arquivo_roteiro'],
-                arquivo_entrada=request.FILES['arquivo_entrada'],
-                arquivo_saida=request.FILES['arquivo_saida'],
+                nome=request.POST[prefixo + 'nome'],
+                descricao=request.POST[prefixo + 'descricao'],
+                data_limite=request.POST[prefixo + 'data_limite'],
+                arquivo_roteiro=request.FILES[prefixo + 'arquivo_roteiro'],
+                arquivo_entrada=request.FILES[prefixo + 'arquivo_entrada'],
+                arquivo_saida=request.FILES[prefixo + 'arquivo_saida'],
                 turma=turma,
             )
             atividade.save()
@@ -270,7 +272,7 @@ def aluno_ativ(request, ativ_id):
         nota = 0
         if status == "WA":
             lines_saida = saida.count('\n')
-            lines_diff = resultado.count('<br>')/2
+            lines_diff = resultado.count('<br>')/4
             nota = ((lines_saida - lines_diff)*100.0/lines_saida)
             nota = int(nota)
         if status == "AC":
@@ -300,8 +302,10 @@ def aluno_ativ(request, ativ_id):
         atividade=atividade,
         aluno=aluno
     )
+    status = "Nao entregue"
     if submissao:
         submissao = submissao[0]
+        status = submissao.resultado
 
     return render_to_response(
         'aluno_ativ.html',
@@ -310,6 +314,7 @@ def aluno_ativ(request, ativ_id):
             "submissao": submissao,
             "relAlunoAtividade": relAlunoAtividade,
             "resultado": resultado,
+            "status": status,
         },
         context_instance=RequestContext(request),
     )

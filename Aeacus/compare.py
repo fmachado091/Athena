@@ -83,7 +83,7 @@ def mover(entrada, resposta, codigo):
         return ("RTE", "erro de execucao\n" + out)
 
     # diff das saidas
-    outdiff, err = _execute("diff saida.txt resposta.txt")
+    outdiff, err = _execute("diff -u saida.txt resposta.txt")
 
     if not _is_blank(outdiff):
         outdiff = outdiff.replace("\n", "<br>")
