@@ -9,7 +9,6 @@ from django.template import RequestContext
 from django.shortcuts import render, render_to_response
 from .forms import UploadFileForm, TurmaCreationForm, AtividadeCreationForm
 from Aeacus import compare
-from Athena.models import Aluno
 from Athena.models import Turma
 from Athena.models import Atividade
 from Athena.models import Submissao
@@ -195,7 +194,12 @@ def prof_ativ(request, id_ativ):
             submissao = submissao[0]
 
             status_aluno.append(
-                (aluno.nome, submissao.data_envio, submissao.resultado)
+                (
+                    aluno.nome,
+                    submissao.data_envio,
+                    submissao.resultado,
+                    submissao.arquivo_codigo.url
+                )
             )
         else:
             status_aluno.append(
@@ -259,9 +263,12 @@ def aluno(request):
 
 
 def aluno_ativ(request, ativ_id):
-    aluno = Aluno.objects.filter(user=request.user)
-    if request.user.is_authenticated() is False or not aluno:
+
+    aluno = checar_login_aluno(request)
+
+    if not aluno:
         return HttpResponseRedirect('/login')
+
     aluno = aluno[0]
 
     atividade = Atividade.objects.filter(id=ativ_id)
@@ -278,6 +285,7 @@ def aluno_ativ(request, ativ_id):
         relAlunoAtividade = relAlunoAtividade[0]
 
     lista_saida = []
+    rte_ce_error = ""
     if request.method == 'POST':
 
         atividade.arquivo_entrada.open()
@@ -298,7 +306,7 @@ def aluno_ativ(request, ativ_id):
             for s in resultado.split():
                 if s.isdigit():
                     nums.append(int(s))
-            lines_gabarito = gabarito.count('\n')
+            lines_gabarito = gabarito.count('\n') + 1
             resultado = resultado.split('\n')
             resultado.pop(0)
             gabarito = gabarito.split('\n')
@@ -309,8 +317,10 @@ def aluno_ativ(request, ativ_id):
             pprint(lines_gabarito)
             nota = (((lines_gabarito - num_diffs)*100.0)/lines_gabarito)
             nota = int(nota)
-        if status == "AC":
+        elif status == "AC":
             nota = 100
+        elif status == "CE" or status == "RTE":
+            rte_ce_error = resultado
 
         submissoes = Submissao.objects.filter(
             aluno=aluno,
@@ -349,23 +359,35 @@ def aluno_ativ(request, ativ_id):
         submissao = submissao[len(submissao) - 1]
         status = submissao.resultado
 
+    pprint(timezone.now().date())
+
+    prazo_valido = True
+    if timezone.now().date() > atividade.data_limite:
+        prazo_valido = False
+
     return render_to_response(
         'aluno_ativ.html',
         {
             "atividade": atividade,
             "submissao": submissao,
+            "prazo_valido": prazo_valido,
             "relAlunoAtividade": relAlunoAtividade,
             "lista_saida": lista_saida,
+            "resultado": resultado,
             "status": status,
+            "compilation_error": rte_ce_error,
         },
         context_instance=RequestContext(request),
     )
 
 
 def aluno_turmas(request):
-    aluno = Aluno.objects.filter(user=request.user)
-    if request.user.is_authenticated() is False or not aluno:
+
+    aluno = checar_login_aluno(request)
+
+    if not aluno:
         return HttpResponseRedirect('/login')
+
     aluno = aluno[0]
 
     if request.method == 'POST':

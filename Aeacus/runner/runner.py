@@ -28,15 +28,11 @@ process = subprocess.Popen(
 process.wait()
 out, err = process.communicate()
 code = process.poll()
-print(out)
-print(err)
-print "returncode of subprocess:"
-print code
 if (code == -9):
-    print "Time Limit Exceeded"
+    print("Time Limit Exceeded")
 elif (code == -6):
-    print "Memory Exceeded"
+    print("Memory Exceeded")
 elif (code == -11):
-    print "Segmentation Fault"
+    print("Segmentation Fault")
 elif (code == -8):
-    print "Division by zero"
+    print("Division by zero")

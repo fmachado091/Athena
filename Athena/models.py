@@ -128,6 +128,9 @@ class Submissao(models.Model):
     )
     aluno = models.ForeignKey(Aluno, help_text="Aluno que enviou a submissao")
 
+    def nome_codigo(self):
+        return os.path.basename(self.arquivo_codigo.name)
+
     def remove_file(self, *args, **kwargs):
         os.remove(os.path.join(settings.MEDIA_ROOT, self.arquivo_codigo.name))
 

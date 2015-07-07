@@ -28,6 +28,7 @@
           <p align="justify"><b>Descrição: </b>{{ atividade.descricao }}</p>
           <p><b>Atividade:</b> <a href="{{ atividade.arquivo_roteiro.url }}" target="_blank">{{ atividade.nome_roteiro }}</a></p>
         </div>
+        {% if prazo_valido %}
         <form method="POST" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="form-group">
@@ -38,13 +39,18 @@
             <input class="btn btn-default" type="submit" value="Submit">
           </div>
         </form>
-        {% if submissao and relAlunoAtividade %}
+        {% else %}
+        <p style="color:red"><b>Prazo vencido.</b></p>
+        {% endif %}
+         {% if submissao and relAlunoAtividade %}
            {% if relAlunoAtividade.foiEntregue %}
              <div class="form-group">
+               <p><b>Última submissão:</b> <a href="{{ submissao.arquivo_codigo.url }}" target="_blank">{{ submissao.nome_codigo }}</a></p>
                <p><b>Status:</b> {{status}}</p>
                <p><b>Nota:</b> {{ submissao.nota }}</p>
                <p><b>Data limite:</b> {{ atividade.data_limite }}</p>
                <p><b>Último envio:</b> {{ submissao.data_envio }}</p>
+               <p><b>Erros:</b> {{ compilation_error|safe }}</p>
                 <!-- TABELA COMECA AQUI!!! -->
                 <table class="table">
                   <tr>
