@@ -111,7 +111,7 @@
                   <p><h3>Últimas submissões</h3></p>
                   <br>
                   {% for nome_ativ,data,nome_turma in ultimas_submissoes %}
-                  <p>{{nome_ativ}} - Último envio em: {{data}} - Turma:{{nome_turma}}</p>
+                  <p><font color="green">{{nome_ativ}}</font> - Turma: <font color="green">{{nome_turma}}</font> - Último envio em: {{data}}</p>
                   {% endfor %}
                   </div>
                 </div>
@@ -123,7 +123,7 @@
                   <h3>Atividades pendentes</h3>
                   <br>
                   {% for data,turma,nome in atividades_pendentes %}
-                  <p>{{data}} {{turma.nome}} {{nome}}</p>
+                  <p>{{data}} - <font color="green">{{turma.nome}}</font> > <font color="green">{{nome}}</font></p>
                   {% endfor %}
                   <br>
                   </div>

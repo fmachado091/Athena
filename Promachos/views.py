@@ -297,11 +297,12 @@ def aluno(request):
                 aluno=aluno,
             )
             if not atividade.estaFechada():
-                atividades_pendentes.append(
-                    (atividade.data_limite,
-                     atividade.turma,
-                     atividade.nome)
-                )
+                if not submissao:
+                    atividades_pendentes.append(
+                        (atividade.data_limite,
+                         atividade.turma,
+                         atividade.nome)
+                    )
             if submissao:
                 submissao = submissao[len(submissao)-1]
 
