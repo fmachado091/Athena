@@ -17,6 +17,7 @@
 import subprocess
 import os
 from Aeacus.compiler import compile
+from pprint import pprint
 
 DIRETORIO_DO_ARQUIVO = os.path.dirname(os.path.realpath(__file__))
 
@@ -84,10 +85,17 @@ def mover(entrada, resposta, codigo):
 
     # diff das saidas
     outdiff, err = _execute("diff -yb saida.txt resposta.txt")
+    num_diffs, err = _execute('diff saida.txt resposta.txt | grep -c "^>"')
+    num_diffs.replace("\n", "")
+    num_diffs = int(num_diffs)
+    pprint(num_diffs)
 
-    if not _is_blank(outdiff):
+    if num_diffs != 0:
+        pprint(num_diffs)
         outdiff = outdiff.replace("\n", "<br>")
         outdiff = outdiff.replace(" ", "&nbsp;")
-        return ("WA", outdiff)
+        cabecalho = "Seu codigo tem: " + str(num_diffs) + " erros" + "<br>"
+        cabecalho += "Sua resposta                       Resposta esperada<br>"
+        return ("WA", cabecalho + outdiff)
     else:
         return ("AC", "saidas iguais")
