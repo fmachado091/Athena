@@ -48,7 +48,10 @@ def login(request):
         else:
             return render_to_response(
                 'login.html',
-                {"invalid_message": "Login inválido. Tente novamente."},
+                {
+                    "invalid_message": "Login inválido. Tente novamente.",
+                    "success_message": ""
+                },
                 context_instance=RequestContext(request),
             )
 
@@ -63,8 +66,11 @@ def register_user(request):
         if form.is_valid():
             form.save()
             return render_to_response(
-                'cadastro.html',
-                {"success_message": "O cadastro foi realizado com sucesso!"},
+                'login.html',
+                {
+                    "invalid_message": "",
+                    "success_message": "O cadastro foi realizado com sucesso!"
+                },
                 context_instance=RequestContext(request),
             )
 
