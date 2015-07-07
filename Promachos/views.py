@@ -269,11 +269,17 @@ def aluno_ativ(request, ativ_id):
         fonte = request.FILES['arquivo_codigo']
 
         status, resultado = compare.mover(entrada, saida, fonte)
+        pprint(status)
         nota = 0
         if status == "WA":
-            lines_saida = saida.count('\n')
-            lines_diff = resultado.count('<br>')/4
-            nota = ((lines_saida - lines_diff)*100.0/lines_saida)
+            nums = []
+            for s in resultado.split():
+                if s.isdigit():
+                    nums.append(int(s))
+            num_diffs = nums[0]
+            lines_diff = resultado.count('<br>') - 2
+            pprint(lines_diff)
+            nota = (((lines_diff - num_diffs)*100.0)/lines_diff)
             nota = int(nota)
         if status == "AC":
             nota = 100
@@ -304,7 +310,7 @@ def aluno_ativ(request, ativ_id):
     )
     status = "Nao entregue"
     if submissao:
-        submissao = submissao[0]
+        submissao = submissao[len(submissao) - 1]
         status = submissao.resultado
 
     return render_to_response(
