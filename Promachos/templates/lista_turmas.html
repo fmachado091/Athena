@@ -33,7 +33,7 @@
       <img src="/static/img/ita_logo.jpg" style="height: 50px;">
     </div>
     <div class="col-xs-6" style="text-align: right;">
-      <p style="line-height: 40px;"><a href="/aluno/" class="btn btn-default" role="button">voltar para workspace</a> | <a href="#" class="btn btn-danger" role="button">logout</a></p>
+      <p style="line-height: 40px;"><a href="/aluno/" class="btn btn-default" role="button">voltar para workspace</a> | <a href="/logout" class="btn btn-danger" role="button">logout</a></p>
     </div>
   </div>
   <div class="row" style="padding-bottom: 25px;">
@@ -57,7 +57,7 @@
               <form method="post" enctype="multipart/form-data">
 				<input type="hidden" name="post_sair" value={{turma.id}}>
 				{% csrf_token %}
-                <p><button type="submit" class="btn btn-primary" >Sair</button></p>
+                <p><button type="submit" class="btn btn-danger" >Sair</button></p>
 			  </form>
             </div>
           </div>

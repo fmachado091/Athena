@@ -110,11 +110,9 @@
                   <div class="caption">
                   <p><h3>Últimas submissões</h3></p>
                   <br>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  {% for nome_ativ,data,nome_turma in ultimas_submissoes %}
+                  <p><font color="green">{{nome_ativ}}</font> - Turma: <font color="green">{{nome_turma}}</font> - Último envio em: {{data}}</p>
+                  {% endfor %}
                   </div>
                 </div>
               </div>
@@ -124,9 +122,9 @@
                   <div class="caption">
                   <h3>Atividades pendentes</h3>
                   <br>
-                  <p>[21/04] <a href="#">CES-10</a> > <a href="#">Lab 3</a></p>
-                  <p>[21/04] <a href="#">CES-11</a> > <a href="#">Lab 2</a></p>
-                  <p>[28/04] <a href="#">CES-10</a> > <a href="#">Lab 4</a></p>
+                  {% for data,turma,nome in atividades_pendentes %}
+                  <p>{{data}} - <font color="green">{{turma.nome}}</font> > <font color="green">{{nome}}</font></p>
+                  {% endfor %}
                   <br>
                   </div>
                 </div>
