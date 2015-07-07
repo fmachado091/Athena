@@ -32,7 +32,7 @@
       width: 100%;
     }
 
-    th {
+    th, tr {
       border-bottom: 1px solid #ddd;
     }
 
@@ -61,14 +61,14 @@
       <img src="/static/img/ita_logo.jpg" style="height: 50px;">
     </div>
     <div class="col-xs-6" style="text-align: right;">
-      <p style="line-height: 40px;"><a href="/professor/" class="btn btn-primary" role="button">Voltar para workspace</a> | <a href="/logout/" class="btn btn-danger" role="button">logout</a></p>
+      <p style="line-height: 40px;"><a href="/professor/" class="btn btn-default" role="button">Voltar para workspace</a> | <a href="/logout/" class="btn btn-danger" role="button">logout</a></p>
     </div>
   </div>
   <div class="row content">
     <div class="col-xs-12 col-sm-3">
       <div class="thumbnail">
         <div class="caption">
-          <a href="#" id="edit_ativ" class="btn btn-lg btn-block btn-primary" role="button">Editar atividade</a>
+          <a href="#" id="edit_ativ" class="btn btn-lg btn-block btn-default" role="button">Editar atividade</a>
           <div class="editar_atividade" style="display: none;">
             <br>
             <form>
@@ -112,16 +112,18 @@
             <tr>
               <th>Nome</th>
               <th>Enviado</th>
-              <th>Resultado</th>
+              <th>Status</th>
+              <th>Nota</th>
             </tr>
           </thead>
           <tbody>
               {% for nome,data,resultado,code_url in status_aluno %} 
               <tr>
-              <td><a href="{{code_url}}">{{nome}}</a></td>
-              <td>{{data}}</td>
-              <td>>{{resultado}}</td>
-              </tr
+                <td><a href="{{code_url}}">{{nome}}</a></td>
+                <td>{{data}}</td>
+                <td>>{{resultado}}</td>
+                <td> >PREENCHER< </td>
+              </tr>
               {% endfor %}
           </tbody>
         </table>
