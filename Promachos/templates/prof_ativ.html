@@ -76,13 +76,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
               {% for nome,data,resultado,code_url in status_aluno %} 
+              <tr>
               <td><a href="{{code_url}}">{{nome}}</a></td>
               <td>{{data}}</td>
-              <td>{{resultado}}</td>
+              <td>>{{resultado}}</td>
+              </tr
               {% endfor %}
-            </tr>
           </tbody>
         </table>
       </section>
