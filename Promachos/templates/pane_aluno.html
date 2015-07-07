@@ -6,9 +6,11 @@
                 <h3>{{ tuple.0.nome }}</h3>
                   {% if tuple.1 %}
                     <p><strong>Status:</strong> {{ tuple.1.resultado }}</p>
+                    <p><strong>Nota:</strong> {{ tuple.1.nota }}</p>
                     <p><strong>Data limite:</strong> {{ tuple.0.data_limite }}</p>
                   {% else %}
                     <p><strong>Status:</strong> Não entregue.</p>
+                    <p><strong>Nota:</strong> -</p>
                     <p><strong>Data limite:</strong> {{ tuple.0.data_limite }}</p>
                   {% endif %}
                 <p class="detalhes"><a href="aluno_ativ/{{ tuple.0.id }}/">Mais detalhes</a></p>

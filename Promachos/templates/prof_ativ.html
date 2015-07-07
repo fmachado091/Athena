@@ -103,11 +103,11 @@
     </div>
     <div class="col-sm-offset-1 col-xs-12 col-sm-4">
       <h2>{{atividade.nome}}</h2>
-      <h3>{{atividade.turma}} - Prof. {{atividade.turma.professor.nome}}</h3>
+      <h3>{{atividade.turma.nome}} - Prof. {{atividade.turma.professor.nome}}</h3>
             {% if atividade.estaFechada %}
-      <h4>Status: aberto (até {{atividade.data_limite}})</h4>
+      <h4>Status: fechada (em {{atividade.data_limite}})</h4>
             {% else %}
-      <h5>Status: fechado (em {{atividade.data_limite}})</h5>
+      <h5>Status: aberta (até {{atividade.data_limite}})</h5>
             {% endif %}
 
       <section class="tabela">
