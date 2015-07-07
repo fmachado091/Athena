@@ -357,11 +357,18 @@ def aluno_ativ(request, ativ_id):
         submissao = submissao[len(submissao) - 1]
         status = submissao.resultado
 
+    pprint(timezone.now().date())
+
+    prazo_valido = True
+    if timezone.now().date() > atividade.data_limite:
+        prazo_valido = False
+
     return render_to_response(
         'aluno_ativ.html',
         {
             "atividade": atividade,
             "submissao": submissao,
+            "prazo_valido": prazo_valido,
             "relAlunoAtividade": relAlunoAtividade,
             "lista_saida": lista_saida,
             "resultado": resultado,
