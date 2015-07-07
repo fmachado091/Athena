@@ -36,7 +36,7 @@
         {% if submissao and relAlunoAtividade %}
            {% if relAlunoAtividade.foiEntregue %}
              <div class="form-group">
-               <p><b>Status:</b> Entregue.</p>
+               <p><b>Status:</b> {{status}}</p>
                <p><b>Nota:</b> {{ submissao.nota }}</p>
                <p><b>Data limite:</b> {{ atividade.data_limite }}</p>
                <p><b>Último envio:</b> {{ submissao.data_envio }}</p>
