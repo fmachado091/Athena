@@ -217,13 +217,27 @@ def aluno(request):
     turmas = aluno.turma_set.all()
     panes = []
     for turma in turmas:
+
+        tuple_ativ_subm=[]
         atividades = Atividade.objects.filter(turma=turma)
+
+        for atividade in atividades:
+            submissao = Submissao.objects.filter(
+                atividade=atividade,
+                aluno=aluno,
+            )
+            if submissao:
+                submissao=submissao[len(submissao)-1]
+
+            tuple_ativ_subm.append([atividade, submissao])
+
         panes.append(
             render_to_response(
                 'pane_aluno.html',
                 {
+                    "aluno": aluno,
                     "turma": turma,
-                    "atividades": atividades,
+                    "tuple_ativ_subm": tuple_ativ_subm,
                 },
                 context_instance=RequestContext(request),
             ).content

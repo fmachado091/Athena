@@ -1,17 +1,20 @@
 <div role="tabpanel" class="tab-pane fade" id={{turma.id}}>
-  <div class="row content">
-    <div class="col-xs-12 col-md-3">
-      <div class="thumbnail">
-        <div class="caption">
-          <h3 align="center">Atividades</h3>
-          <br>
-		  {% for atividade in atividades %}
-          <p>{{atividade.data_limite}} - <a href="aluno_ativ/{{ atividade.id }}/"> {{atividade.nome}} </a></p>
+	  {% for tuple in tuple_ativ_subm %}
+          <div class="col-xs-6 col-sm-3">
+            <div class="thumbnail">
+              <div class="caption">
+                <h3>{{ tuple.0.nome }}</h3>
+                  {% if tuple.1 %}
+                    <p><strong>Status:</strong> {{ tuple.1.resultado }}</p>
+                    <p><strong>Data limite:</strong> {{ tuple.0.data_limite }}</p>
+                  {% else %}
+                    <p><strong>Status:</strong> Não entregue.</p>
+                    <p><strong>Data limite:</strong> {{ tuple.0.data_limite }}</p>
+                  {% endif %}
+                <p class="detalhes"><a href="aluno_ativ/{{ tuple.0.id }}/">Mais detalhes</a></p>
+              </div>
+            </div>
+          </div>
 		  {% endfor %}
-          <br>
-        </div>
-      </div>
-    </div>
 
-  </div> <!-- end of row -->
 </div>
