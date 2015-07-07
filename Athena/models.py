@@ -99,6 +99,15 @@ class Atividade(models.Model):
     def nome_saida(self):
         return os.path.basename(self.arquivo_saida.name)
 
+    def remove_roteiro(self, *args, **kwargs):
+        os.remove(os.path.join(settings.MEDIA_ROOT, self.arquivo_roteiro.name))
+
+    def remove_entrada(self, *args, **kwargs):
+        os.remove(os.path.join(settings.MEDIA_ROOT, self.arquivo_entrada.name))
+
+    def remove_saida(self, *args, **kwargs):
+        os.remove(os.path.join(settings.MEDIA_ROOT, self.arquivo_saida.name))
+
 
 class Submissao(models.Model):
 
