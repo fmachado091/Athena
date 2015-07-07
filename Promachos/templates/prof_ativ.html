@@ -6,6 +6,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+  <script src="/static/js/jquery.min.js"></script>
   <script src="/static/js/lista_notas.js"></script>
   <style type="text/css">
     * {
@@ -44,6 +45,13 @@
       text-align: right;
     }
   </style>
+  <script>
+        $(document).ready(function(){
+            $("#edit_ativ").click(function(){
+                $("div.editar_atividade").show();
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -53,11 +61,43 @@
       <img src="/static/img/ita_logo.jpg" style="height: 50px;">
     </div>
     <div class="col-xs-6" style="text-align: right;">
-      <p style="line-height: 40px;"><a href="/logout/" class="btn btn-danger" role="button">logout</a></p>
+      <p style="line-height: 40px;"><a href="/professor/" class="btn btn-primary" role="button">Voltar para workspace</a> | <a href="/logout/" class="btn btn-danger" role="button">logout</a></p>
     </div>
   </div>
   <div class="row content">
-    <div class="col-sm-offset-4 col-xs-12 col-sm-4">
+    <div class="col-xs-12 col-sm-3">
+      <div class="thumbnail">
+        <div class="caption">
+          <a href="#" id="edit_ativ" class="btn btn-lg btn-block btn-primary" role="button">Editar atividade</a>
+          <div class="editar_atividade" style="display: none;">
+            <br>
+            <form>
+              <div class="form-group">
+                <label for="titulo_ativ">Novo título:</label>
+                <input type="text" id="titulo_ativ" style="width: 100%;" required>
+              </div>
+              <div class="form-group">
+                <label for="desc_ativ">Nova descrição:</label>
+                <textarea id="desc_ativ" style="width: 100%; resize: none;" rows="5"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="inputFile">Novo roteiro:</label>
+                <input type="file" id="inputFile">
+              </div>
+              <div class="form-group">
+                <label for="date">Novo prazo de entrega:</label><br>
+                >> COLOCAR CALENDÁRIO BIZURADO
+              </div>
+              <p><button class="btn btn-lg btn-success btn-block" type="submit">Concluir</button></p>
+            </form>
+            <br>
+            <p><a href="#" class="btn btn-lg btn-block btn-danger" role="button">Encerrar atividade</a></p>
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-offset-1 col-xs-12 col-sm-4">
       <h2>{{atividade.nome}}</h2>
       <h3>{{atividade.turma}} - Prof. {{atividade.turma.professor.nome}}</h3>
             {% if atividade.estaFechada %}
@@ -86,12 +126,6 @@
           </tbody>
         </table>
       </section>
-    </div>
-    <div class="col-sm-offset-4 col-xs-12 col-sm-4">
-      <footer>
-        <p><a href="#">Encerrar atividade</a></p>
-        <p><a href="/professor/">Voltar para workspace</a></p>
-      </footer>
     </div>
   </div>
 </div>
