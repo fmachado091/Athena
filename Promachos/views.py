@@ -16,6 +16,7 @@ from Athena.models import Submissao
 from Athena.models import RelAlunoAtividade
 from Athena.utils import checar_login_professor, checar_login_aluno
 from pprint import pprint
+from itertools import izip_longest
 import re
 
 
@@ -270,6 +271,7 @@ def aluno_ativ(request, ativ_id):
     if relAlunoAtividade:
         relAlunoAtividade = relAlunoAtividade[0]
 
+    lista_saida = []
     if request.method == 'POST':
 
         atividade.arquivo_entrada.open()
@@ -277,12 +279,12 @@ def aluno_ativ(request, ativ_id):
         atividade.arquivo_entrada.close()
 
         atividade.arquivo_saida.open()
-        saida = atividade.arquivo_saida.read()
+        gabarito = atividade.arquivo_saida.read()
         atividade.arquivo_saida.close()
 
         fonte = request.FILES['arquivo_codigo']
 
-        status, resultado = compare.mover(entrada, saida, fonte)
+        status, resultado = compare.mover(entrada, gabarito, fonte)
         pprint(status)
         nota = 0
         if status == "WA":
@@ -290,10 +292,16 @@ def aluno_ativ(request, ativ_id):
             for s in resultado.split():
                 if s.isdigit():
                     nums.append(int(s))
+            lines_gabarito = gabarito.count('\n')
+            resultado = resultado.split('\n')
+            resultado.pop(0)
+            gabarito = gabarito.split('\n')
+            for linha in izip_longest(resultado, gabarito):
+                lista_saida.append(linha)
+            pprint(lista_saida)
             num_diffs = nums[0]
-            lines_diff = resultado.count('<br>') - 2
-            pprint(lines_diff)
-            nota = (((lines_diff - num_diffs)*100.0)/lines_diff)
+            pprint(lines_gabarito)
+            nota = (((lines_gabarito - num_diffs)*100.0)/lines_gabarito)
             nota = int(nota)
         if status == "AC":
             nota = 100
@@ -333,7 +341,7 @@ def aluno_ativ(request, ativ_id):
             "atividade": atividade,
             "submissao": submissao,
             "relAlunoAtividade": relAlunoAtividade,
-            "resultado": resultado,
+            "lista_saida": lista_saida,
             "status": status,
         },
         context_instance=RequestContext(request),

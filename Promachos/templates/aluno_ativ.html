@@ -9,7 +9,7 @@
   <link href="/static/css/bootstrap.min.css" rel="stylesheet"> <!-- Bootstrap core CSS -->
   <style type="text/css">
     .table th, td {
-       text-align: center;   
+       text-align: center;
     }
   </style>
 </head>
@@ -45,7 +45,31 @@
                <p><b>Nota:</b> {{ submissao.nota }}</p>
                <p><b>Data limite:</b> {{ atividade.data_limite }}</p>
                <p><b>Último envio:</b> {{ submissao.data_envio }}</p>
-               <p><b>Resultado:<br></b>{{resultado|safe}}</p>
+                <!-- TABELA COMECA AQUI!!! -->
+                <table class="table">
+                  <tr>
+                    <th>#</th>
+                    <th>Saída do aluno</th>
+                    <th>Saída do professor</th>
+                  </tr>
+                  {% for saida in lista_saida %}
+                  <tr>
+                      <td>{{forloop.counter}}</td>
+                      {% if saida.0 %}
+                          <td>{{saida.0}}</td>
+                      {% else %}
+                          <td></td>
+                      {% endif %}
+                      {% if saida.1 %}
+                          <td>{{saida.1}}</td>
+                      {% else %}
+                          <td></td>
+                      {% endif %}
+                  </tr>
+                  {% endfor %}
+                </table>
+                <!-- TABELA TERMINA AQUI!!! -->
+
              </div>
            {% else %}
              <div class="form-group">
@@ -67,30 +91,6 @@
     </div>
     <div class="row">
       <div class="col-xs-12 col-sm-6">
-        <!-- TABELA COMECA AQUI!!! -->
-        <table class="table">
-          <tr>
-            <th>#</th>
-            <th>Saída do professor</th>
-            <th>Saída do aluno</th>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>1</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>2</td>
-            <td>2</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>3</td>
-            <td>3</td>
-          </tr>
-        </table>
-        <!-- TABELA TERMINA AQUI!!! -->
         <a class="btn btn-primary" role="button" href="../../">Voltar</a>
       </div>
     </div>

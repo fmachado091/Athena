@@ -84,7 +84,7 @@ def mover(entrada, resposta, codigo):
         return ("RTE", "erro de execucao\n" + out)
 
     # diff das saidas
-    outdiff, err = _execute("diff -yb saida.txt resposta.txt")
+    outdiff, err = _execute("cat saida.txt")
     num_diffs, err = _execute('diff saida.txt resposta.txt | grep -c "^>"')
     num_diffs.replace("\n", "")
     num_diffs = int(num_diffs)
@@ -92,10 +92,7 @@ def mover(entrada, resposta, codigo):
 
     if num_diffs != 0:
         pprint(num_diffs)
-        outdiff = outdiff.replace("\n", "<br>")
-        outdiff = outdiff.replace(" ", "&nbsp;")
-        cabecalho = "Seu codigo tem: " + str(num_diffs) + " erros" + "<br>"
-        cabecalho += "Sua resposta                       Resposta esperada<br>"
+        cabecalho = str(num_diffs) + "\n"
         return ("WA", cabecalho + outdiff)
     else:
         return ("AC", "saidas iguais")
