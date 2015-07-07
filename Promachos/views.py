@@ -284,6 +284,8 @@ def aluno(request):
 
     turmas = aluno.turma_set.all()
     panes = []
+    atividades_pendentes = []
+
     for turma in turmas:
 
         tuple_ativ_subm = []
@@ -294,6 +296,12 @@ def aluno(request):
                 atividade=atividade,
                 aluno=aluno,
             )
+            if not atividade.estaFechada():
+                atividades_pendentes.append(
+                    (atividade.data_limite,
+                     atividade.turma,
+                     atividade.nome)
+                )
             if submissao:
                 submissao = submissao[len(submissao)-1]
 
@@ -311,10 +319,23 @@ def aluno(request):
             ).content
         )
 
+    submissoes = Submissao.objects.filter(aluno=aluno)
+
+    ultimas_submissoes = []
+
+    for submissao in submissoes:
+        atividade = submissao.atividade
+        data_envio = submissao.data_envio
+        turma = atividade.turma
+
+        ultimas_submissoes.append((atividade.nome, data_envio, turma.nome))
+
     return render_to_response(
         'aluno.html',
         {"turmas": turmas,
-         "panes": panes},
+         "panes": panes,
+         "ultimas_submissoes": ultimas_submissoes,
+         "atividades_pendentes": atividades_pendentes, },
         context_instance=RequestContext(request),
     )
 
