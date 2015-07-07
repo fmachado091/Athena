@@ -278,6 +278,7 @@ def aluno_ativ(request, ativ_id):
         relAlunoAtividade = relAlunoAtividade[0]
 
     lista_saida = []
+    compilation_error = ""
     if request.method == 'POST':
 
         atividade.arquivo_entrada.open()
@@ -309,8 +310,10 @@ def aluno_ativ(request, ativ_id):
             pprint(lines_gabarito)
             nota = (((lines_gabarito - num_diffs)*100.0)/lines_gabarito)
             nota = int(nota)
-        if status == "AC":
+        elif status == "AC":
             nota = 100
+        elif status == "CE":
+            compilation_error = resultado
 
         submissoes = Submissao.objects.filter(
             aluno=aluno,
@@ -356,7 +359,9 @@ def aluno_ativ(request, ativ_id):
             "submissao": submissao,
             "relAlunoAtividade": relAlunoAtividade,
             "lista_saida": lista_saida,
+            "resultado": resultado,
             "status": status,
+            "compilation_error": compilation_error,
         },
         context_instance=RequestContext(request),
     )

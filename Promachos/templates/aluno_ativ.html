@@ -45,6 +45,7 @@
                <p><b>Nota:</b> {{ submissao.nota }}</p>
                <p><b>Data limite:</b> {{ atividade.data_limite }}</p>
                <p><b>Último envio:</b> {{ submissao.data_envio }}</p>
+               <p><b>Erros:</b> {{ compilation_error|safe }}</p>
                 <!-- TABELA COMECA AQUI!!! -->
                 <table class="table">
                   <tr>
