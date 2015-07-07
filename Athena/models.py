@@ -3,6 +3,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
+from Athena import settings
+
 
 def atividade_path(instance, filename):
     return 'atividades/{prof}/{turma}/{id}/{name}'.format(
@@ -125,6 +127,9 @@ class Submissao(models.Model):
         help_text="Atividade relacionada a submissao"
     )
     aluno = models.ForeignKey(Aluno, help_text="Aluno que enviou a submissao")
+
+    def remove_file(self, *args, **kwargs):
+        os.remove(os.path.join(settings.MEDIA_ROOT, self.arquivo_codigo.name))
 
     def __str__(self):
         return '%s %s' % (self.atividade.nome, self.aluno.nome)

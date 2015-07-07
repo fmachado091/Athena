@@ -312,6 +312,14 @@ def aluno_ativ(request, ativ_id):
         if status == "AC":
             nota = 100
 
+        submissoes = Submissao.objects.filter(
+            aluno=aluno,
+            atividade=atividade,
+        )
+        for submissao in submissoes:
+            submissao.remove_file()
+        submissoes.delete()
+
         submissao = Submissao(
             data_envio=timezone.now().date(),
             arquivo_codigo=request.FILES['arquivo_codigo'],
