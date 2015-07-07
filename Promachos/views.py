@@ -195,7 +195,12 @@ def prof_ativ(request, id_ativ):
             submissao = submissao[0]
 
             status_aluno.append(
-                (aluno.nome, submissao.data_envio, submissao.resultado)
+                (
+                    aluno.nome,
+                    submissao.data_envio,
+                    submissao.resultado,
+                    submissao.arquivo_codigo.url
+                )
             )
         else:
             status_aluno.append(
